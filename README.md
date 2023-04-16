@@ -1,6 +1,8 @@
 # net.wikipunk/mtg
 Unofficial Magic: The Gathering RDF vocabulary
 
+![plotoptix render](resources/mtg.png)
+
 ## :rdfs/seeAlso
 * [Scryfall](https://scryfall.com/docs/api)
 * [Comprehensive
