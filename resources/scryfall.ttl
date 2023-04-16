@@ -1,0 +1,273 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix mtg: <https://wikipunk.net/mtg/> .
+@prefix scryfall: <https://wikipunk.net/scryfall/> .
+@prefix jsonschema: <https://www.w3.org/2019/wot/json-schema#> .
+@prefix db: <https://wikipunk.net/db/> .
+@prefix db.type: <https://wikipunk.net/db/type/> .
+@prefix db.cardinality: <https://wikipunk.net/db/cardinality/> .
+@prefix db.unique: <https://wikipunk.net/db/unique/> .
+
+scryfall: a owl:Ontology ;
+  rdfs:label "Scryfall Ontology" ;
+  rdfs:comment "Ontology for Scryfall data" ;
+  prov:wasDerivedFrom <https://scryfall.com/docs/api> .
+
+# Card Objects
+scryfall:Card a owl:Class ;
+  rdfs:label "Card" ;
+  rdfs:comment "A card object represents a Magic card in Scryfall’s database." .
+
+# Properties
+scryfall:cmc a owl:DatatypeProperty ;
+  db:valueType db.type:double ;
+  db:cardinality db.cardinality:one ;
+  rdfs:domain scryfall:Card ;
+  rdfs:range xsd:float ;
+  rdfs:label "CMC" .
+
+scryfall:color a owl:DatatypeProperty ;
+  db:valueType db.type:string ;
+  db:cardinality db.cardinality:many ;
+  rdfs:domain scryfall:Card ;
+  rdfs:range xsd:string ;
+  rdfs:label "Color" .
+
+scryfall:flavorText a owl:DatatypeProperty ;
+  db:valueType db.type:string ;
+  db:cardinality db.cardinality:one ;
+  rdfs:domain scryfall:Card ;
+  rdfs:range xsd:string ;
+  rdfs:label "Flavor Text" .
+
+scryfall:keyword a owl:DatatypeProperty ;
+  db:valueType db.type:string ;
+  db:cardinality db.cardinality:many ;
+  rdfs:domain scryfall:Card ;
+  rdfs:range xsd:string ;
+  rdfs:label "Keyword" .
+
+scryfall:layout a owl:DatatypeProperty ;
+  db:valueType db.type:string ;
+  db:cardinality db.cardinality:one ;
+  rdfs:domain scryfall:Card ;
+  rdfs:range xsd:string ;
+  rdfs:label "Layout" .
+
+scryfall:manaCost a owl:DatatypeProperty ;
+  db:valueType db.type:string ;
+  db:cardinality db.cardinality:one ;
+  rdfs:domain scryfall:Card ;
+  rdfs:range xsd:string ;
+  rdfs:label "Mana Cost" .
+
+scryfall:oracleID a owl:DatatypeProperty ;
+  db:valueType db.type:string ;
+  db:cardinality db.cardinality:one ;
+  db:unique db.unique:identity ;
+  rdfs:domain scryfall:Card ;
+  rdfs:range xsd:string ;
+  rdfs:label "Oracle ID" .
+
+scryfall:oracleText a owl:DatatypeProperty ;
+  db:valueType db.type:string ;
+  db:cardinality db.cardinality:one ;
+  rdfs:domain scryfall:Card ;
+  rdfs:range xsd:string ;
+  rdfs:label "Oracle Text" .
+
+scryfall:power a owl:DatatypeProperty ;
+  db:valueType db.type:string ;
+  db:cardinality db.cardinality:one ;
+  rdfs:domain scryfall:Card ;
+  rdfs:range xsd:string ;
+  rdfs:label "Power" .
+
+scryfall:priceUSD a owl:DatatypeProperty ;
+  db:valueType db.type:double ;
+  db:cardinality db.cardinality:one ;
+  rdfs:domain scryfall:Card ;
+  rdfs:range xsd:float ;
+  rdfs:label "Price USD" .
+
+scryfall:priceUSDFoil a owl:DatatypeProperty ;
+  db:valueType db.type:double ;
+  db:cardinality db.cardinality:one ;
+  rdfs:domain scryfall:Card ;
+  rdfs:range xsd:float ;
+  rdfs:label "Price USD Foil" .
+
+scryfall:rarity a owl:DatatypeProperty ;
+  db:valueType db.type:string ;
+  db:cardinality db.cardinality:one ;
+  rdfs:domain scryfall:Card ;
+  rdfs:range xsd:string ;
+  rdfs:label "Rarity" .
+
+scryfall:releaseDate a owl:DatatypeProperty ;
+  db:valueType db.type:instant ;
+  db:cardinality db.cardinality:one ;
+  rdfs:domain scryfall:Card ;
+  rdfs:range xsd:date ;
+  rdfs:label "Release Date" .
+
+scryfall:set a owl:DatatypeProperty ;
+  db:valueType db.type:string ;
+  db:cardinality db.cardinality:one ;
+  rdfs:domain scryfall:Card ;
+  rdfs:range xsd:string ;
+  rdfs:label "Set" .
+
+scryfall:toughness a owl:DatatypeProperty ;
+  db:valueType db.type:string ;
+  db:cardinality db.cardinality:one ;
+  rdfs:domain scryfall:Card ;
+  rdfs:range xsd:string ;
+  rdfs:label "Toughness" .
+
+scryfall:typeLine a owl:DatatypeProperty ;
+  db:valueType db.type:string ;
+  db:cardinality db.cardinality:one ;
+  rdfs:domain scryfall:Card ;
+  rdfs:range xsd:string ;
+  rdfs:label "Type Line" .
+
+scryfall:uri a owl:DatatypeProperty ;
+  db:valueType db.type:string ;
+  db:cardinality db.cardinality:one ;
+  rdfs:domain scryfall:Card ;
+  rdfs:range xsd:anyURI ;
+  rdfs:label "URI" .
+
+scryfall:name a owl:DatatypeProperty ;
+  db:valueType db.type:string ;
+  db:cardinality db.cardinality:one ;
+  rdfs:domain scryfall:Card ;
+  rdfs:range xsd:string ;
+  rdfs:label "Name" .
+
+scryfall:face a owl:ObjectProperty ;
+  db:valueType db.type:ref ;
+  db:cardinality db.cardinality:many ;
+  rdfs:domain scryfall:Card ;
+  rdfs:range scryfall:Card ;
+  rdfs:label "Card Face" .
+
+scryfall:related a owl:ObjectProperty ;
+  db:valueType db.type:ref ;
+  db:cardinality db.cardinality:many ;
+  rdfs:domain scryfall:Card ;
+  rdfs:range scryfall:Card ;
+  rdfs:label "Related card, token, meld part, etc." .
+
+scryfall:component a owl:ObjectProperty ;
+  db:valueType db.type:ref ;
+  db:cardinality db.cardinality:one ;
+  rdfs:domain scryfall:Card ;
+  rdfs:range xsd:string ;
+  rdfs:label "Card Component" .
+
+# JSON Schema for Scryfall API JSON data
+scryfall:JsonSchema a jsonschema:ObjectSchema ;
+  jsonschema:properties [
+    a jsonschema:ObjectSchema ;
+    jsonschema:propertyName "cmc" ;
+    jsonschema:propertyType scryfall:cmc ;
+    jsonschema:required false
+    ] ,
+    [
+    a jsonschema:ArraySchema ;
+    jsonschema:propertyName "colors" ;
+    jsonschema:items [
+      a jsonschema:ObjectSchema ;
+      jsonschema:propertyType scryfall:color
+      ] ;
+    jsonschema:minItems 0 ;
+    jsonschema:maxItems 5 ;
+    jsonschema:required false
+    ] ,
+    [
+    a jsonschema:ObjectSchema ;
+    jsonschema:propertyName "flavor_text" ;
+    jsonschema:propertyType scryfall:flavorText ;
+    jsonschema:required false
+    ] ,
+    [
+    a jsonschema:ArraySchema ;
+    jsonschema:propertyName "keywords" ;
+    jsonschema:items [
+      a jsonschema:ObjectSchema ;
+      jsonschema:propertyType scryfall:keyword
+      ] ;
+    jsonschema:required false
+    ] ,
+    [
+    a jsonschema:ObjectSchema ;
+    jsonschema:propertyName "layout" ;
+    jsonschema:propertyType scryfall:layout ;
+    jsonschema:required false
+    ] ,
+    [
+    a jsonschema:ObjectSchema ;
+    jsonschema:propertyName "mana_cost" ;
+    jsonschema:propertyType scryfall:manaCost ;
+    jsonschema:required false
+    ] ,
+    [
+    a jsonschema:ObjectSchema ;
+    jsonschema:propertyName "oracle_id" ;
+    jsonschema:propertyType scryfall:oracleID ;
+    jsonschema:required true
+    ] ,
+    [
+    a jsonschema:ObjectSchema ;
+    jsonschema:propertyName "oracle_text" ;
+    jsonschema:propertyType scryfall:oracleText ;
+    jsonschema:required true
+    ] ,
+    [
+    a jsonschema:ObjectSchema ;
+    jsonschema:propertyName "power" ;
+    jsonschema:propertyType scryfall:power ;
+    jsonschema:required false
+    ] ,
+    [
+    a jsonschema:ObjectSchema ;
+    jsonschema:propertyName "rarity" ;
+    jsonschema:propertyType scryfall:rarity ;
+    jsonschema:required false
+    ] ,
+    [
+    a jsonschema:ObjectSchema ;
+    jsonschema:propertyName "released_at" ;
+    jsonschema:propertyType scryfall:releaseDate ;
+    jsonschema:required false
+    ] ,
+    [
+    a jsonschema:ObjectSchema ;
+    jsonschema:propertyName "set" ;
+    jsonschema:propertyType scryfall:set ;
+    jsonschema:required true
+    ] ,
+    [
+    a jsonschema:ObjectSchema ;
+    jsonschema:propertyName "toughness" ;
+    jsonschema:propertyType scryfall:toughness ;
+    jsonschema:required false
+    ] ,
+    [
+    a jsonschema:ObjectSchema ;
+    jsonschema:propertyName "type_line" ;
+    jsonschema:propertyType scryfall:typeLine ;
+    jsonschema:required true
+    ] ,
+    [
+    a jsonschema:ObjectSchema ;
+    jsonschema:propertyName "uri" ;
+    jsonschema:propertyType scryfall:uri ;
+    jsonschema:required true
+    ] .

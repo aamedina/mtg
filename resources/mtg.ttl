@@ -1,0 +1,3069 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix schema: <http://schema.org/> .
+@prefix mtg: <https://wikipunk.net/mtg/> .
+@prefix mtg.rules: <https://wikipunk.net/mtg/rules/> .
+@prefix db: <https://wikipunk.net/db/> .
+@prefix db.type: <https://wikipunk.net/db/type/> .
+@prefix db.cardinality: <https://wikipunk.net/db/cardinality/> .
+@prefix db.unique: <https://wikipunk.net/db/unique/> .
+
+mtg: a owl:Ontology ;
+  rdfs:label "Magic: The Gathering Ontology" ;
+  prov:wasDerivedFrom <https://media.wizards.com/2023/downloads/MagicCompRules%2020230414.txt> ;
+  rdfs:seeAlso <https://magic.wizards.com/en/game-info/gameplay/rules-and-formats/rules> .
+
+# Classes
+
+mtg:Card a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:Card ;
+  rdfs:label "Card" .
+
+mtg:Supertype a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:205_4 ;
+  rdfs:label "Supertype" .
+
+mtg:CardType a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:CardType ;
+  rdfs:label "Card Type" .
+
+mtg:Subtype a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:205_3 ;
+  rdfs:label "Subtype" .
+
+# Super Types
+mtg:Basic a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:205_4c ;
+  rdfs:subClassOf mtg:Supertype ;
+  rdfs:label "Basic" .
+
+mtg:Legendary a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:205_4d ;
+  rdfs:subClassOf mtg:Supertype ;
+  rdfs:label "Legendary" .
+
+mtg:Ongoing a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:205_4h;
+  rdfs:subClassOf mtg:Supertype ;
+  rdfs:label "Ongoing" .
+
+mtg:Snow a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:205_4g ;
+  rdfs:subClassOf mtg:Supertype ;
+  rdfs:label "Snow" .
+
+mtg:World a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:205_4f ;
+  rdfs:subClassOf mtg:Supertype ;
+  rdfs:label "World" .
+
+# Card Types
+
+mtg:Artifact a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:Artifacts ;
+  rdfs:subClassOf mtg:CardType ;
+  rdfs:label "Artifact" .
+
+mtg:Battle a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:Battles ;
+  rdfs:subClassOf mtg:CardType ;
+  rdfs:label "Battle" .
+
+mtg:Conspiracy a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:Conspiracies ;
+  rdfs:subClassOf mtg:CardType ;
+  rdfs:label "Conspiracy" .
+
+mtg:Creature a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:Creatures ;
+  rdfs:subClassOf mtg:CardType ;
+  rdfs:label "Creature" .
+
+mtg:Dungeon a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:Dungeons ;
+  rdfs:subClassOf mtg:CardType ;
+  rdfs:label "Dungeon" .
+
+mtg:Enchantment a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:Enchantments ;
+  rdfs:subClassOf mtg:CardType ;
+  rdfs:label "Enchantment" .
+
+mtg:Instant a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:Instants ;
+  rdfs:subClassOf mtg:CardType ;
+  rdfs:label "Instant" .
+
+mtg:Land a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:Lands ;
+  rdfs:subClassOf mtg:CardType ;
+  rdfs:label "Land" .
+
+mtg:Phenomenon a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:Phenomena ;
+  rdfs:subClassOf mtg:CardType ;
+  rdfs:label "Phenomenon" .
+
+mtg:Plane a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:Planes ;
+  rdfs:subClassOf mtg:CardType ;
+  rdfs:label "Plane" .
+
+mtg:Planeswalker a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:Planeswalkers ;
+  rdfs:subClassOf mtg:CardType ;
+  rdfs:label "Planeswalker" .
+
+mtg:Scheme a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:Schemes ;
+  rdfs:subClassOf mtg:CardType ;
+  rdfs:label "Scheme" .
+
+mtg:Sorcery a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:Sorceries ;
+  rdfs:subClassOf mtg:CardType ;
+  rdfs:label "Sorcery" .
+
+mtg:Tribal a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:Tribals ;
+  rdfs:subClassOf mtg:CardType ;
+  rdfs:label "Tribal" .
+
+mtg:Vanguard a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:Vanguards ;
+  rdfs:subClassOf mtg:CardType ;
+  rdfs:label "Vanguard" .
+
+# The mana symbols are {W}, {U}, {B}, {R}, {G}, and {C}; the numerical symbols {0}, {1}, {2}, {3}, {4}, and so on; the variable symbol {X}; the hybrid symbols {W/U}, {W/B}, {U/B}, {U/R}, {B/R}, {B/G}, {R/G}, {R/W}, {G/W}, and {Gp/U};
+
+mtg:Mana a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:Mana ;
+  rdfs:label "Mana" .
+
+mtg:Color a owl:Class ;
+  rdfs:label "Color" ;
+  prov:wasDerivedFrom mtg.rules:Colors .
+
+mtg:White a owl:NamedIndividual, mtg:Color ;
+  rdfs:label "White" .
+
+mtg:Blue a owl:NamedIndividual, mtg:Color ;
+  rdfs:label "Blue" .
+
+mtg:Black a owl:NamedIndividual, mtg:Color ;
+  rdfs:label "Black" .
+
+mtg:Red a owl:NamedIndividual, mtg:Color ;
+  rdfs:label "Red" .
+
+mtg:Green a owl:NamedIndividual, mtg:Color ;
+  rdfs:label "Green" .
+
+mtg:WhiteMana a owl:NamedIndividual, mtg:Mana, mtg:White ;
+  rdfs:label "{W}" .
+
+mtg:BlueMana a owl:NamedIndividual, mtg:Mana, mtg:Blue ;
+  rdfs:label "{U}" .
+
+mtg:BlackMana a owl:NamedIndividual, mtg:Mana, mtg:Black ;
+  rdfs:label "{B}" .
+
+mtg:RedMana a owl:NamedIndividual, mtg:Mana, mtg:Red ;
+  rdfs:label "{R}" .
+
+mtg:GreenMana a owl:NamedIndividual, mtg:Mana, mtg:Green ;
+  rdfs:label "{G}" .
+
+mtg:ColorlessMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{C}" .
+
+mtg:ZeroMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{0}" .
+
+mtg:OneMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{1}" .
+
+mtg:TwoMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{2}" .
+
+mtg:ThreeMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{3}" .
+
+mtg:FourMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{4}" .
+
+mtg:FiveMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{5}" .
+
+mtg:SixMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{6}" .
+
+mtg:SevenMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{7}" .
+
+mtg:EightMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{8}" .
+
+mtg:NineMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{9}" .
+
+mtg:TenMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{10}" .
+
+mtg:ElevenMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{11}" .
+
+mtg:TwelveMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{12}" .
+
+mtg:ThirteenMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{13}" .
+
+mtg:FourteenMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{14}" .
+
+mtg:FifteenMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{15}" .
+
+mtg:SixteenMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{16}" .
+
+mtg:SeventeenMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{17}" .
+
+mtg:EighteenMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{18}" .
+
+mtg:NineteenMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{19}" .
+
+mtg:TwentyMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{20}" .
+
+mtg:InfinityMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{∞}" .
+
+mtg:VariableMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{X}" .
+
+mtg:SnowMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{S}" .
+
+mtg:WhiteBlueMana a owl:NamedIndividual, mtg:White, mtg:Blue, mtg:Mana ;
+  rdfs:label "{W/U}" .
+
+mtg:WhiteBlackMana a owl:NamedIndividual, mtg:White, mtg:Black, mtg:Mana ;
+  rdfs:label "{W/B}" .
+
+mtg:BlueBlackMana a owl:NamedIndividual, mtg:Blue, mtg:Black, mtg:Mana ;
+  rdfs:label "{U/B}" .
+
+mtg:BlueRedMana a owl:NamedIndividual, mtg:Blue, mtg:Red, mtg:Mana ;
+  rdfs:label "{U/R}" .
+
+mtg:BlackRedMana a owl:NamedIndividual, mtg:Black, mtg:Red, mtg:Mana ;
+  rdfs:label "{B/R}" .
+
+mtg:BlackGreenMana a owl:NamedIndividual, mtg:Black, mtg:Green, mtg:Mana ;
+  rdfs:label "{B/G}" .
+
+mtg:RedGreenMana a owl:NamedIndividual, mtg:Red, mtg:Green, mtg:Mana ;
+  rdfs:label "{R/G}" .
+
+mtg:RedWhiteMana a owl:NamedIndividual, mtg:Red, mtg:White, mtg:Mana ;
+  rdfs:label "{R/W}" .
+
+mtg:GreenWhiteMana a owl:NamedIndividual, mtg:Green, mtg:White, mtg:Mana ;
+  rdfs:label "{G/W}" .
+
+mtg:GreenBlueMana a owl:NamedIndividual, mtg:Green, mtg:Blue, mtg:Mana ;
+  rdfs:label "{G/U}" .
+
+# the monocolored hybrid symbols {2/W}, {2/U}, {2/B}, {2/R}, and {2/G}
+
+mtg:WhiteHybridMana a owl:NamedIndividual, mtg:White, mtg:Mana ;
+  rdfs:label "{2/W}" .
+
+mtg:BlueHybridMana a owl:NamedIndividual, mtg:Blue, mtg:Mana ;
+  rdfs:label "{2/U}" .
+
+mtg:BlackHybridMana a owl:NamedIndividual, mtg:Black, mtg:Mana ;
+  rdfs:label "{2/B}" .
+
+mtg:RedHybridMana a owl:NamedIndividual, mtg:Red, mtg:Mana ;
+  rdfs:label "{2/R}" .
+
+mtg:GreenHybridMana a owl:NamedIndividual, mtg:Green, mtg:Mana ;
+  rdfs:label "{2/G}" .
+
+# the Phyrexian mana symbols {W/P}, {U/P}, {B/P}, {R/P}, and {G/P}; the hybrid Phyrexian symbols {W/U/P}, {W/B/P}, {U/B/P}, {U/R/P}, {B/R/P}, {B/G/P}, {R/G/P}, {R/W/P}, {G/W/P}, and {G/U/P}; and the snow mana symbol {S}.
+
+mtg:PhyrexianMana a owl:NamedIndividual, mtg:Mana ;
+  rdfs:label "{P}" .
+
+mtg:WhitePhyrexianMana a owl:NamedIndividual, mtg:White, mtg:PhyrexianMana ;
+  rdfs:label "{W/P}" .
+
+mtg:BluePhyrexianMana a owl:NamedIndividual, mtg:Blue, mtg:PhyrexianMana ;
+  rdfs:label "{U/P}" .
+
+mtg:BlackPhyrexianMana a owl:NamedIndividual, mtg:Black, mtg:PhyrexianMana ;
+  rdfs:label "{B/P}" .
+
+mtg:RedPhyrexianMana a owl:NamedIndividual, mtg:Red, mtg:PhyrexianMana ;
+  rdfs:label "{R/P}" .
+
+mtg:GreenPhyrexianMana a owl:NamedIndividual, mtg:Green, mtg:PhyrexianMana ;
+  rdfs:label "{G/P}" .
+
+mtg:WhiteBluePhyrexianMana a owl:NamedIndividual, mtg:White, mtg:Blue, mtg:PhyrexianMana ;
+  rdfs:label "{W/U/P}" .
+
+mtg:WhiteBlackPhyrexianMana a owl:NamedIndividual, mtg:White, mtg:Black, mtg:PhyrexianMana ;
+  rdfs:label "{W/B/P}" .
+
+mtg:BlueBlackPhyrexianMana a owl:NamedIndividual, mtg:Blue, mtg:Black, mtg:PhyrexianMana ;
+  rdfs:label "{U/B/P}" .
+
+mtg:BlueRedPhyrexianMana a owl:NamedIndividual, mtg:Blue, mtg:Red, mtg:PhyrexianMana ;
+  rdfs:label "{U/R/P}" .
+
+mtg:BlackRedPhyrexianMana a owl:NamedIndividual, mtg:Black, mtg:Red, mtg:PhyrexianMana ;
+  rdfs:label "{B/R/P}" .
+
+mtg:BlackGreenPhyrexianMana a owl:NamedIndividual, mtg:Black, mtg:Green, mtg:PhyrexianMana ;
+  rdfs:label "{B/G/P}" .
+
+mtg:RedGreenPhyrexianMana a owl:NamedIndividual, mtg:Red, mtg:Green, mtg:PhyrexianMana ;
+  rdfs:label "{R/G/P}" .
+
+mtg:RedWhitePhyrexianMana a owl:NamedIndividual, mtg:Red, mtg:White, mtg:PhyrexianMana ;
+  rdfs:label "{R/W/P}" .
+
+mtg:GreenWhitePhyrexianMana a owl:NamedIndividual, mtg:Green, mtg:White, mtg:PhyrexianMana ;
+  rdfs:label "{G/W/P}" .
+
+mtg:GreenBluePhyrexianMana a owl:NamedIndividual, mtg:Green, mtg:Blue, mtg:PhyrexianMana ;
+  rdfs:label "{G/U/P}" .
+
+# Advisor is a mtg:Creature
+mtg:Advisor a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Advisor" .
+# Aetherborn is a mtg:Creature
+mtg:Aetherborn a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Aetherborn" .
+# Alien is a mtg:Creature
+mtg:Alien a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Alien" .
+# Ally is a mtg:Creature
+mtg:Ally a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Ally" .
+# Angel is a mtg:Creature
+mtg:Angel a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Angel" .
+# Antelope is a mtg:Creature
+mtg:Antelope a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Antelope" .
+# Ape is a mtg:Creature
+mtg:Ape a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Ape" .
+# Archer is a mtg:Creature
+mtg:Archer a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Archer" .
+# Archon is a mtg:Creature
+mtg:Archon a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Archon" .
+# Army is a mtg:Creature
+mtg:Army a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Army" .
+# Artificer is a mtg:Creature
+mtg:Artificer a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Artificer" .
+# Assassin is a mtg:Creature
+mtg:Assassin a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Assassin" .
+# Assembly-Worker is a mtg:Creature
+mtg:AssemblyWorker a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Assembly-Worker" .
+# Astartes is a mtg:Creature
+mtg:Astartes a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Astartes" .
+# Atog is a mtg:Creature
+mtg:Atog a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Atog" .
+# Aurochs is a mtg:Creature
+mtg:Aurochs a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Aurochs" .
+# Avatar is a mtg:Creature
+mtg:Avatar a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Avatar" .
+# Azra is a mtg:Creature
+mtg:Azra a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Azra" .
+# Badger is a mtg:Creature
+mtg:Badger a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Badger" .
+# Balloon is a mtg:Creature
+mtg:Balloon a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Balloon" .
+# Barbarian is a mtg:Creature
+mtg:Barbarian a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Barbarian" .
+# Bard is a mtg:Creature
+mtg:Bard a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Bard" .
+# Basilisk is a mtg:Creature
+mtg:Basilisk a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Basilisk" .
+# Bat is a mtg:Creature
+mtg:Bat a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Bat" .
+# Bear is a mtg:Creature
+mtg:Bear a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Bear" .
+# Beast is a mtg:Creature
+mtg:Beast a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Beast" .
+# Beeble is a mtg:Creature
+mtg:Beeble a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Beeble" .
+# Beholder is a mtg:Creature
+mtg:Beholder a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Beholder" .
+# Berserker is a mtg:Creature
+mtg:Berserker a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Berserker" .
+# Bird is a mtg:Creature
+mtg:Bird a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Bird" .
+# Blinkmoth is a mtg:Creature
+mtg:Blinkmoth a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Blinkmoth" .
+# Boar is a mtg:Creature
+mtg:Boar a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Boar" .
+# Bringer is a mtg:Creature
+mtg:Bringer a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Bringer" .
+# Brushwagg is a mtg:Creature
+mtg:Brushwagg a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Brushwagg" .
+# C'tan is a mtg:Creature
+mtg:Ctan a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "C'tan" .
+# Camarid is a mtg:Creature
+mtg:Camarid a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Camarid" .
+# Camel is a mtg:Creature
+mtg:Camel a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Camel" .
+# Caribou is a mtg:Creature
+mtg:Caribou a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Caribou" .
+# Carrier is a mtg:Creature
+mtg:Carrier a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Carrier" .
+# Cat is a mtg:Creature
+mtg:Cat a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Cat" .
+# Centaur is a mtg:Creature
+mtg:Centaur a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Centaur" .
+# Cephalid is a mtg:Creature
+mtg:Cephalid a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Cephalid" .
+# Chicken is a mtg:Creature
+mtg:Chicken a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Chicken" .
+# Child is a mtg:Creature
+mtg:Child a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Child" .
+# Chimera is a mtg:Creature
+mtg:Chimera a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Chimera" .
+# Citizen is a mtg:Creature
+mtg:Citizen a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Citizen" .
+# Cleric is a mtg:Creature
+mtg:Cleric a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Cleric" .
+# Clown is a mtg:Creature
+mtg:Clown a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Clown" .
+# Cockatrice is a mtg:Creature
+mtg:Cockatrice a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Cockatrice" .
+# Construct is a mtg:Creature
+mtg:Construct a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Construct" .
+# Coward is a mtg:Creature
+mtg:Coward a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Coward" .
+# Crab is a mtg:Creature
+mtg:Crab a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Crab" .
+# Crocodile is a mtg:Creature
+mtg:Crocodile a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Crocodile" .
+# Custodes is a mtg:Creature
+mtg:Custodes a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Custodes" .
+# Cyclops is a mtg:Creature
+mtg:Cyclops a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Cyclops" .
+# Dauthi is a mtg:Creature
+mtg:Dauthi a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Dauthi" .
+# Demigod is a mtg:Creature
+mtg:Demigod a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Demigod" .
+# Demon is a mtg:Creature
+mtg:Demon a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Demon" .
+# Deserter is a mtg:Creature
+mtg:Deserter a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Deserter" .
+# Devil is a mtg:Creature
+mtg:Devil a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Devil" .
+# Dinosaur is a mtg:Creature
+mtg:Dinosaur a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Dinosaur" .
+# Djinn is a mtg:Creature
+mtg:Djinn a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Djinn" .
+# Dog is a mtg:Creature
+mtg:Dog a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Dog" .
+# Dragon is a mtg:Creature
+mtg:Dragon a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Dragon" .
+# Drake is a mtg:Creature
+mtg:Drake a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Drake" .
+# Dreadnought is a mtg:Creature
+mtg:Dreadnought a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Dreadnought" .
+# Drone is a mtg:Creature
+mtg:Drone a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Drone" .
+# Druid is a mtg:Creature
+mtg:Druid a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Druid" .
+# Dryad is a mtg:Creature
+mtg:Dryad a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Dryad" .
+# Dwarf is a mtg:Creature
+mtg:Dwarf a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Dwarf" .
+# Efreet is a mtg:Creature
+mtg:Efreet a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Efreet" .
+# Egg is a mtg:Creature
+mtg:Egg a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Egg" .
+# Elder is a mtg:Creature
+mtg:Elder a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Elder" .
+# Eldrazi is a mtg:Creature
+mtg:Eldrazi a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Eldrazi" .
+# Elemental is a mtg:Creature
+mtg:Elemental a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Elemental" .
+# Elephant is a mtg:Creature
+mtg:Elephant a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Elephant" .
+# Elf is a mtg:Creature
+mtg:Elf a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Elf" .
+# Elk is a mtg:Creature
+mtg:Elk a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Elk" .
+# Employee is a mtg:Creature
+mtg:Employee a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Employee" .
+# Eye is a mtg:Creature
+mtg:Eye a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Eye" .
+# Faerie is a mtg:Creature
+mtg:Faerie a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Faerie" .
+# Ferret is a mtg:Creature
+mtg:Ferret a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Ferret" .
+# Fish is a mtg:Creature
+mtg:Fish a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Fish" .
+# Flagbearer is a mtg:Creature
+mtg:Flagbearer a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Flagbearer" .
+# Fox is a mtg:Creature
+mtg:Fox a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Fox" .
+# Fractal is a mtg:Creature
+mtg:Fractal a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Fractal" .
+# Frog is a mtg:Creature
+mtg:Frog a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Frog" .
+# Fungus is a mtg:Creature
+mtg:Fungus a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Fungus" .
+# Gamer is a mtg:Creature
+mtg:Gamer a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Gamer" .
+# Gargoyle is a mtg:Creature
+mtg:Gargoyle a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Gargoyle" .
+# Germ is a mtg:Creature
+mtg:Germ a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Germ" .
+# Giant is a mtg:Creature
+mtg:Giant a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Giant" .
+# Gith is a mtg:Creature
+mtg:Gith a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Gith" .
+# Gnoll is a mtg:Creature
+mtg:Gnoll a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Gnoll" .
+# Gnome is a mtg:Creature
+mtg:Gnome a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Gnome" .
+# Goat is a mtg:Creature
+mtg:Goat a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Goat" .
+# Goblin is a mtg:Creature
+mtg:Goblin a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Goblin" .
+# God is a mtg:Creature
+mtg:God a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "God" .
+# Golem is a mtg:Creature
+mtg:Golem a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Golem" .
+# Gorgon is a mtg:Creature
+mtg:Gorgon a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Gorgon" .
+# Graveborn is a mtg:Creature
+mtg:Graveborn a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Graveborn" .
+# Gremlin is a mtg:Creature
+mtg:Gremlin a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Gremlin" .
+# Griffin is a mtg:Creature
+mtg:Griffin a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Griffin" .
+# Guest is a mtg:Creature
+mtg:Guest a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Guest" .
+# Hag is a mtg:Creature
+mtg:Hag a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Hag" .
+# Halfling is a mtg:Creature
+mtg:Halfling a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Halfling" .
+# Hamster is a mtg:Creature
+mtg:Hamster a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Hamster" .
+# Harpy is a mtg:Creature
+mtg:Harpy a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Harpy" .
+# Head is a mtg:Creature
+mtg:Head a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Head" .
+# Hellion is a mtg:Creature
+mtg:Hellion a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Hellion" .
+# Hippo is a mtg:Creature
+mtg:Hippo a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Hippo" .
+# Hippogriff is a mtg:Creature
+mtg:Hippogriff a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Hippogriff" .
+# Homarid is a mtg:Creature
+mtg:Homarid a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Homarid" .
+# Homunculus is a mtg:Creature
+mtg:Homunculus a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Homunculus" .
+# Hornet is a mtg:Creature
+mtg:Hornet a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Hornet" .
+# Horror is a mtg:Creature
+mtg:Horror a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Horror" .
+# Horse is a mtg:Creature
+mtg:Horse a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Horse" .
+# Human is a mtg:Creature
+mtg:Human a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Human" .
+# Hydra is a mtg:Creature
+mtg:Hydra a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Hydra" .
+# Hyena is a mtg:Creature
+mtg:Hyena a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Hyena" .
+# Illusion is a mtg:Creature
+mtg:Illusion a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Illusion" .
+# Imp is a mtg:Creature
+mtg:Imp a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Imp" .
+# Incarnation is a mtg:Creature
+mtg:Incarnation a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Incarnation" .
+# Inkling is a mtg:Creature
+mtg:Inkling a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Inkling" .
+# Inquisitor is a mtg:Creature
+mtg:Inquisitor a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Inquisitor" .
+# Insect is a mtg:Creature
+mtg:Insect a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Insect" .
+# Jackal is a mtg:Creature
+mtg:Jackal a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Jackal" .
+# Jellyfish is a mtg:Creature
+mtg:Jellyfish a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Jellyfish" .
+# Juggernaut is a mtg:Creature
+mtg:Juggernaut a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Juggernaut" .
+# Kavu is a mtg:Creature
+mtg:Kavu a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Kavu" .
+# Kirin is a mtg:Creature
+mtg:Kirin a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Kirin" .
+# Kithkin is a mtg:Creature
+mtg:Kithkin a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Kithkin" .
+# Knight is a mtg:Creature
+mtg:Knight a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Knight" .
+# Kobold is a mtg:Creature
+mtg:Kobold a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Kobold" .
+# Kor is a mtg:Creature
+mtg:Kor a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Kor" .
+# Kraken is a mtg:Creature
+mtg:Kraken a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Kraken" .
+# Lamia is a mtg:Creature
+mtg:Lamia a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Lamia" .
+# Lammasu is a mtg:Creature
+mtg:Lammasu a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Lammasu" .
+# Leech is a mtg:Creature
+mtg:Leech a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Leech" .
+# Leviathan is a mtg:Creature
+mtg:Leviathan a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Leviathan" .
+# Lhurgoyf is a mtg:Creature
+mtg:Lhurgoyf a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Lhurgoyf" .
+# Licid is a mtg:Creature
+mtg:Licid a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Licid" .
+# Lizard is a mtg:Creature
+mtg:Lizard a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Lizard" .
+# Manticore is a mtg:Creature
+mtg:Manticore a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Manticore" .
+# Masticore is a mtg:Creature
+mtg:Masticore a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Masticore" .
+# Mercenary is a mtg:Creature
+mtg:Mercenary a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Mercenary" .
+# Merfolk is a mtg:Creature
+mtg:Merfolk a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Merfolk" .
+# Metathran is a mtg:Creature
+mtg:Metathran a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Metathran" .
+# Minion is a mtg:Creature
+mtg:Minion a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Minion" .
+# Minotaur is a mtg:Creature
+mtg:Minotaur a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Minotaur" .
+# Mite is a mtg:Creature
+mtg:Mite a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Mite" .
+# Mole is a mtg:Creature
+mtg:Mole a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Mole" .
+# Monger is a mtg:Creature
+mtg:Monger a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Monger" .
+# Mongoose is a mtg:Creature
+mtg:Mongoose a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Mongoose" .
+# Monk is a mtg:Creature
+mtg:Monk a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Monk" .
+# Monkey is a mtg:Creature
+mtg:Monkey a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Monkey" .
+# Moonfolk is a mtg:Creature
+mtg:Moonfolk a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Moonfolk" .
+# Mouse is a mtg:Creature
+mtg:Mouse a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Mouse" .
+# Mutant is a mtg:Creature
+mtg:Mutant a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Mutant" .
+# Myr is a mtg:Creature
+mtg:Myr a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Myr" .
+# Mystic is a mtg:Creature
+mtg:Mystic a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Mystic" .
+# Naga is a mtg:Creature
+mtg:Naga a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Naga" .
+# Nautilus is a mtg:Creature
+mtg:Nautilus a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Nautilus" .
+# Necron is a mtg:Creature
+mtg:Necron a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Necron" .
+# Nephilim is a mtg:Creature
+mtg:Nephilim a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Nephilim" .
+# Nightmare is a mtg:Creature
+mtg:Nightmare a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Nightmare" .
+# Nightstalker is a mtg:Creature
+mtg:Nightstalker a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Nightstalker" .
+# Ninja is a mtg:Creature
+mtg:Ninja a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Ninja" .
+# Noble is a mtg:Creature
+mtg:Noble a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Noble" .
+# Noggle is a mtg:Creature
+mtg:Noggle a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Noggle" .
+# Nomad is a mtg:Creature
+mtg:Nomad a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Nomad" .
+# Nymph is a mtg:Creature
+mtg:Nymph a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Nymph" .
+# Octopus is a mtg:Creature
+mtg:Octopus a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Octopus" .
+# Ogre is a mtg:Creature
+mtg:Ogre a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Ogre" .
+# Ooze is a mtg:Creature
+mtg:Ooze a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Ooze" .
+# Orb is a mtg:Creature
+mtg:Orb a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Orb" .
+# Orc is a mtg:Creature
+mtg:Orc a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Orc" .
+# Orgg is a mtg:Creature
+mtg:Orgg a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Orgg" .
+# Otter is a mtg:Creature
+mtg:Otter a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Otter" .
+# Ouphe is a mtg:Creature
+mtg:Ouphe a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Ouphe" .
+# Ox is a mtg:Creature
+mtg:Ox a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Ox" .
+# Oyster is a mtg:Creature
+mtg:Oyster a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Oyster" .
+# Pangolin is a mtg:Creature
+mtg:Pangolin a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Pangolin" .
+# Peasant is a mtg:Creature
+mtg:Peasant a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Peasant" .
+# Pegasus is a mtg:Creature
+mtg:Pegasus a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Pegasus" .
+# Pentavite is a mtg:Creature
+mtg:Pentavite a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Pentavite" .
+# Performer is a mtg:Creature
+mtg:Performer a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Performer" .
+# Pest is a mtg:Creature
+mtg:Pest a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Pest" .
+# Phelddagrif is a mtg:Creature
+mtg:Phelddagrif a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Phelddagrif" .
+# Phoenix is a mtg:Creature
+mtg:Phoenix a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Phoenix" .
+# Phyrexian is a mtg:Creature
+mtg:Phyrexian a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Phyrexian" .
+# Pilot is a mtg:Creature
+mtg:Pilot a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Pilot" .
+# Pincher is a mtg:Creature
+mtg:Pincher a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Pincher" .
+# Pirate is a mtg:Creature
+mtg:Pirate a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Pirate" .
+# Plant is a mtg:Creature
+mtg:Plant a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Plant" .
+# Praetor is a mtg:Creature
+mtg:Praetor a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Praetor" .
+# Primarch is a mtg:Creature
+mtg:Primarch a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Primarch" .
+# Prism is a mtg:Creature
+mtg:Prism a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Prism" .
+# Processor is a mtg:Creature
+mtg:Processor a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Processor" .
+# Rabbit is a mtg:Creature
+mtg:Rabbit a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Rabbit" .
+# Raccoon is a mtg:Creature
+mtg:Raccoon a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Raccoon" .
+# Ranger is a mtg:Creature
+mtg:Ranger a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Ranger" .
+# Rat is a mtg:Creature
+mtg:Rat a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Rat" .
+# Rebel is a mtg:Creature
+mtg:Rebel a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Rebel" .
+# Reflection is a mtg:Creature
+mtg:Reflection a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Reflection" .
+# Reveler is a mtg:Creature
+mtg:Reveler a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Reveler" .
+# Rhino is a mtg:Creature
+mtg:Rhino a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Rhino" .
+# Rigger is a mtg:Creature
+mtg:Rigger a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Rigger" .
+# Robot is a mtg:Creature
+mtg:Robot a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Robot" .
+# Rogue is a mtg:Creature
+mtg:Rogue a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Rogue" .
+# Sable is a mtg:Creature
+mtg:Sable a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Sable" .
+# Salamander is a mtg:Creature
+mtg:Salamander a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Salamander" .
+# Samurai is a mtg:Creature
+mtg:Samurai a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Samurai" .
+# Sand is a mtg:Creature
+mtg:Sand a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Sand" .
+# Saproling is a mtg:Creature
+mtg:Saproling a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Saproling" .
+# Satyr is a mtg:Creature
+mtg:Satyr a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Satyr" .
+# Scarecrow is a mtg:Creature
+mtg:Scarecrow a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Scarecrow" .
+# Scion is a mtg:Creature
+mtg:Scion a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Scion" .
+# Scorpion is a mtg:Creature
+mtg:Scorpion a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Scorpion" .
+# Scout is a mtg:Creature
+mtg:Scout a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Scout" .
+# Sculpture is a mtg:Creature
+mtg:Sculpture a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Sculpture" .
+# Serf is a mtg:Creature
+mtg:Serf a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Serf" .
+# Serpent is a mtg:Creature
+mtg:Serpent a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Serpent" .
+# Servo is a mtg:Creature
+mtg:Servo a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Servo" .
+# Shade is a mtg:Creature
+mtg:Shade a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Shade" .
+# Shaman is a mtg:Creature
+mtg:Shaman a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Shaman" .
+# Shapeshifter is a mtg:Creature
+mtg:Shapeshifter a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Shapeshifter" .
+# Shark is a mtg:Creature
+mtg:Shark a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Shark" .
+# Sheep is a mtg:Creature
+mtg:Sheep a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Sheep" .
+# Siren is a mtg:Creature
+mtg:Siren a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Siren" .
+# Skeleton is a mtg:Creature
+mtg:Skeleton a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Skeleton" .
+# Slith is a mtg:Creature
+mtg:Slith a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Slith" .
+# Sliver is a mtg:Creature
+mtg:Sliver a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Sliver" .
+# Slug is a mtg:Creature
+mtg:Slug a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Slug" .
+# Snake is a mtg:Creature
+mtg:Snake a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Snake" .
+# Soldier is a mtg:Creature
+mtg:Soldier a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Soldier" .
+# Soltari is a mtg:Creature
+mtg:Soltari a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Soltari" .
+# Spawn is a mtg:Creature
+mtg:Spawn a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Spawn" .
+# Specter is a mtg:Creature
+mtg:Specter a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Specter" .
+# Spellshaper is a mtg:Creature
+mtg:Spellshaper a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Spellshaper" .
+# Sphinx is a mtg:Creature
+mtg:Sphinx a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Sphinx" .
+# Spider is a mtg:Creature
+mtg:Spider a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Spider" .
+# Spike is a mtg:Creature
+mtg:Spike a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Spike" .
+# Spirit is a mtg:Creature
+mtg:Spirit a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Spirit" .
+# Splinter is a mtg:Creature
+mtg:Splinter a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Splinter" .
+# Sponge is a mtg:Creature
+mtg:Sponge a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Sponge" .
+# Squid is a mtg:Creature
+mtg:Squid a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Squid" .
+# Squirrel is a mtg:Creature
+mtg:Squirrel a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Squirrel" .
+# Starfish is a mtg:Creature
+mtg:Starfish a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Starfish" .
+# Surrakar is a mtg:Creature
+mtg:Surrakar a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Surrakar" .
+# Survivor is a mtg:Creature
+mtg:Survivor a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Survivor" .
+# Teddy is a mtg:Creature
+mtg:Teddy a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Teddy" .
+# Tentacle is a mtg:Creature
+mtg:Tentacle a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Tentacle" .
+# Tetravite is a mtg:Creature
+mtg:Tetravite a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Tetravite" .
+# Thalakos is a mtg:Creature
+mtg:Thalakos a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Thalakos" .
+# Thopter is a mtg:Creature
+mtg:Thopter a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Thopter" .
+# Thrull is a mtg:Creature
+mtg:Thrull a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Thrull" .
+# Tiefling is a mtg:Creature
+mtg:Tiefling a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Tiefling" .
+# Treefolk is a mtg:Creature
+mtg:Treefolk a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Treefolk" .
+# Trilobite is a mtg:Creature
+mtg:Trilobite a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Trilobite" .
+# Triskelavite is a mtg:Creature
+mtg:Triskelavite a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Triskelavite" .
+# Troll is a mtg:Creature
+mtg:Troll a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Troll" .
+# Turtle is a mtg:Creature
+mtg:Turtle a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Turtle" .
+# Tyranid is a mtg:Creature
+mtg:Tyranid a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Tyranid" .
+# Unicorn is a mtg:Creature
+mtg:Unicorn a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Unicorn" .
+# Vampire is a mtg:Creature
+mtg:Vampire a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Vampire" .
+# Vedalken is a mtg:Creature
+mtg:Vedalken a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Vedalken" .
+# Viashino is a mtg:Creature
+mtg:Viashino a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Viashino" .
+# Volver is a mtg:Creature
+mtg:Volver a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Volver" .
+# Wall is a mtg:Creature
+mtg:Wall a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Wall" .
+# Walrus is a mtg:Creature
+mtg:Walrus a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Walrus" .
+# Warlock is a mtg:Creature
+mtg:Warlock a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Warlock" .
+# Warrior is a mtg:Creature
+mtg:Warrior a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Warrior" .
+# Wasp is a mtg:Creature
+mtg:Wasp a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Wasp" .
+# Weird is a mtg:Creature
+mtg:Weird a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Weird" .
+# Werewolf is a mtg:Creature
+mtg:Werewolf a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Werewolf" .
+# Whale is a mtg:Creature
+mtg:Whale a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Whale" .
+# Wizard is a mtg:Creature
+mtg:Wizard a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Wizard" .
+# Wolf is a mtg:Creature
+mtg:Wolf a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Wolf" .
+# Wolverine is a mtg:Creature
+mtg:Wolverine a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Wolverine" .
+# Wombat is a mtg:Creature
+mtg:Wombat a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Wombat" .
+# Worm is a mtg:Creature
+mtg:Worm a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Worm" .
+# Wraith is a mtg:Creature
+mtg:Wraith a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Wraith" .
+# Wurm is a mtg:Creature
+mtg:Wurm a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Wurm" .
+# Yeti is a mtg:Creature
+mtg:Yeti a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Yeti" .
+# Zombie is a mtg:Creature
+mtg:Zombie a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Zombie" .
+# Zubera is a mtg:Creature
+mtg:Zubera a owl:NamedIndividual, mtg:Creature ;
+  rdfs:label "Zubera" .
+
+# Abian is a mtg:Planeswalker
+mtg:Abian a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Abian" .
+# Ajani is a mtg:Planeswalker
+mtg:Ajani a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Ajani" .
+# Aminatou is a mtg:Planeswalker
+mtg:Aminatou a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Aminatou" .
+# Angrath is a mtg:Planeswalker
+mtg:Angrath a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Angrath" .
+# Arlinn is a mtg:Planeswalker
+mtg:Arlinn a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Arlinn" .
+# Ashiok is a mtg:Planeswalker
+mtg:Ashiok a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Ashiok" .
+# B.O.B. is a mtg:Planeswalker
+mtg:BOB a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "B.O.B." .
+# Bahamut is a mtg:Planeswalker
+mtg:Bahamut a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Bahamut" .
+# Basri is a mtg:Planeswalker
+mtg:Basri a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Basri" .
+# Bolas is a mtg:Planeswalker
+mtg:Bolas a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Bolas" .
+# Calix is a mtg:Planeswalker
+mtg:Calix a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Calix" .
+# Chandra is a mtg:Planeswalker
+mtg:Chandra a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Chandra" .
+# Comet is a mtg:Planeswalker
+mtg:Comet a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Comet" .
+# Dack is a mtg:Planeswalker
+mtg:Dack a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Dack" .
+# Dakkon is a mtg:Planeswalker
+mtg:Dakkon a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Dakkon" .
+# Daretti is a mtg:Planeswalker
+mtg:Daretti a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Daretti" .
+# Davriel is a mtg:Planeswalker
+mtg:Davriel a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Davriel" .
+# Dihada is a mtg:Planeswalker
+mtg:Dihada a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Dihada" .
+# Domri is a mtg:Planeswalker
+mtg:Domri a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Domri" .
+# Dovin is a mtg:Planeswalker
+mtg:Dovin a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Dovin" .
+# Duck is a mtg:Planeswalker
+mtg:Duck a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Duck" .
+# Dungeon is a mtg:Planeswalker
+mtg:Dungeon a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Dungeon" .
+# Ellywick is a mtg:Planeswalker
+mtg:Ellywick a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Ellywick" .
+# Elminster is a mtg:Planeswalker
+mtg:Elminster a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Elminster" .
+# Elspeth is a mtg:Planeswalker
+mtg:Elspeth a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Elspeth" .
+# Ersta is a mtg:Planeswalker
+mtg:Ersta a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Ersta" .
+# Estrid is a mtg:Planeswalker
+mtg:Estrid a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Estrid" .
+# Freyalise is a mtg:Planeswalker
+mtg:Freyalise a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Freyalise" .
+# Garruk is a mtg:Planeswalker
+mtg:Garruk a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Garruk" .
+# Gideon is a mtg:Planeswalker
+mtg:Gideon a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Gideon" .
+# Grist is a mtg:Planeswalker
+mtg:Grist a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Grist" .
+# Huatli is a mtg:Planeswalker
+mtg:Huatli a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Huatli" .
+# Inzerva is a mtg:Planeswalker
+mtg:Inzerva a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Inzerva" .
+# Jace is a mtg:Planeswalker
+mtg:Jace a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Jace" .
+# Jared is a mtg:Planeswalker
+mtg:Jared a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Jared" .
+# Jaya is a mtg:Planeswalker
+mtg:Jaya a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Jaya" .
+# Jeska is a mtg:Planeswalker
+mtg:Jeska a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Jeska" .
+# Kaito is a mtg:Planeswalker
+mtg:Kaito a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Kaito" .
+# Karn is a mtg:Planeswalker
+mtg:Karn a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Karn" .
+# Kasmina is a mtg:Planeswalker
+mtg:Kasmina a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Kasmina" .
+# Kaya is a mtg:Planeswalker
+mtg:Kaya a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Kaya" .
+# Kiora is a mtg:Planeswalker
+mtg:Kiora a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Kiora" .
+# Koth is a mtg:Planeswalker
+mtg:Koth a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Koth" .
+# Liliana is a mtg:Planeswalker
+mtg:Liliana a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Liliana" .
+# Lolth is a mtg:Planeswalker
+mtg:Lolth a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Lolth" .
+# Lukka is a mtg:Planeswalker
+mtg:Lukka a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Lukka" .
+# Master is a mtg:Planeswalker
+mtg:Master a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Master" .
+# Minsc is a mtg:Planeswalker
+mtg:Minsc a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Minsc" .
+# Mordenkainen is a mtg:Planeswalker
+mtg:Mordenkainen a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Mordenkainen" .
+# Nahiri is a mtg:Planeswalker
+mtg:Nahiri a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Nahiri" .
+# Narset is a mtg:Planeswalker
+mtg:Narset a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Narset" .
+# Niko is a mtg:Planeswalker
+mtg:Niko a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Niko" .
+# Nissa is a mtg:Planeswalker
+mtg:Nissa a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Nissa" .
+# Nixilis is a mtg:Planeswalker
+mtg:Nixilis a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Nixilis" .
+# Oko is a mtg:Planeswalker
+mtg:Oko a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Oko" .
+# Ral is a mtg:Planeswalker
+mtg:Ral a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Ral" .
+# Rowan is a mtg:Planeswalker
+mtg:Rowan a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Rowan" .
+# Saheeli is a mtg:Planeswalker
+mtg:Saheeli a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Saheeli" .
+# Samut is a mtg:Planeswalker
+mtg:Samut a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Samut" .
+# Sarkhan is a mtg:Planeswalker
+mtg:Sarkhan a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Sarkhan" .
+# Serra is a mtg:Planeswalker
+mtg:Serra a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Serra" .
+# Sivitri is a mtg:Planeswalker
+mtg:Sivitri a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Sivitri" .
+# Sorin is a mtg:Planeswalker
+mtg:Sorin a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Sorin" .
+# Szat is a mtg:Planeswalker
+mtg:Szat a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Szat" .
+# Tamiyo is a mtg:Planeswalker
+mtg:Tamiyo a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Tamiyo" .
+# Tasha is a mtg:Planeswalker
+mtg:Tasha a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Tasha" .
+# Teferi is a mtg:Planeswalker
+mtg:Teferi a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Teferi" .
+# Teyo is a mtg:Planeswalker
+mtg:Teyo a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Teyo" .
+# Tezzeret is a mtg:Planeswalker
+mtg:Tezzeret a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Tezzeret" .
+# Tibalt is a mtg:Planeswalker
+mtg:Tibalt a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Tibalt" .
+# Tyvar is a mtg:Planeswalker
+mtg:Tyvar a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Tyvar" .
+# Ugin is a mtg:Planeswalker
+mtg:Ugin a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Ugin" .
+# Urza is a mtg:Planeswalker
+mtg:Urza a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Urza" .
+# Venser is a mtg:Planeswalker
+mtg:Venser a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Venser" .
+# Vivien is a mtg:Planeswalker
+mtg:Vivien a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Vivien" .
+# Vraska is a mtg:Planeswalker
+mtg:Vraska a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Vraska" .
+# Will is a mtg:Planeswalker
+mtg:Will a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Will" .
+# Windgrace is a mtg:Planeswalker
+mtg:Windgrace a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Windgrace" .
+# Wrenn is a mtg:Planeswalker
+mtg:Wrenn a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Wrenn" .
+# Xenagos is a mtg:Planeswalker
+mtg:Xenagos a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Xenagos" .
+# Yanggu is a mtg:Planeswalker
+mtg:Yanggu a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Yanggu" .
+# Yanling is a mtg:Planeswalker
+mtg:Yanling a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Yanling" .
+# Zariel is a mtg:Planeswalker
+mtg:Zariel a owl:NamedIndividual, mtg:Planeswalker ;
+  rdfs:label "Zariel" .
+
+# Cloud is a mtg:Land
+mtg:Cloud a owl:NamedIndividual, mtg:Land ;
+  rdfs:label "Cloud" .
+# Desert is a mtg:Land
+mtg:Desert a owl:NamedIndividual, mtg:Land ;
+  rdfs:label "Desert" .
+# Forest is a mtg:Land
+mtg:Forest a owl:NamedIndividual, mtg:Land ;
+  rdfs:label "Forest" .
+# Gate is a mtg:Land
+mtg:Gate a owl:NamedIndividual, mtg:Land ;
+  rdfs:label "Gate" .
+# Island is a mtg:Land
+mtg:Island a owl:NamedIndividual, mtg:Land ;
+  rdfs:label "Island" .
+# Lair is a mtg:Land
+mtg:Lair a owl:NamedIndividual, mtg:Land ;
+  rdfs:label "Lair" .
+# Locus is a mtg:Land
+mtg:Locus a owl:NamedIndividual, mtg:Land ;
+  rdfs:label "Locus" .
+# Mine is a mtg:Land
+mtg:Mine a owl:NamedIndividual, mtg:Land ;
+  rdfs:label "Mine" .
+# Mountain is a mtg:Land
+mtg:Mountain a owl:NamedIndividual, mtg:Land ;
+  rdfs:label "Mountain" .
+# Sphere is a mtg:Land
+mtg:Sphere a owl:NamedIndividual, mtg:Land ;
+  rdfs:label "Sphere" .
+# Plains is a mtg:Land
+mtg:Plains a owl:NamedIndividual, mtg:Land ;
+  rdfs:label "Plains" .
+# Power-Plant is a mtg:Land
+mtg:PowerPlant a owl:NamedIndividual, mtg:Land ;
+  rdfs:label "Power-Plant" .
+# Swamp is a mtg:Land
+mtg:Swamp a owl:NamedIndividual, mtg:Land ;
+  rdfs:label "Swamp" .
+# Tower is a mtg:Land
+mtg:Tower a owl:NamedIndividual, mtg:Land ;
+  rdfs:label "Tower" .
+# Urza's is a mtg:Land
+mtg:Urzas a owl:NamedIndividual, mtg:Land ;
+  rdfs:label "Urza's" .
+
+# Attraction is a mtg:Artifact
+mtg:Attraction a owl:NamedIndividual, mtg:Artifact ;
+  rdfs:label "Attraction" .
+# Blood is a mtg:Artifact
+mtg:Blood a owl:NamedIndividual, mtg:Artifact ;
+  rdfs:label "Blood" .
+# Clue is a mtg:Artifact
+mtg:Clue a owl:NamedIndividual, mtg:Artifact ;
+  rdfs:label "Clue" .
+# Contraption is a mtg:Artifact
+mtg:Contraption a owl:NamedIndividual, mtg:Artifact ;
+  rdfs:label "Contraption" .
+# Equipment is a mtg:Artifact
+mtg:Equipment a owl:NamedIndividual, mtg:Artifact ;
+  rdfs:label "Equipment" .
+# Food is a mtg:Artifact
+mtg:Food a owl:NamedIndividual, mtg:Artifact ;
+  rdfs:label "Food" .
+# Fortification is a mtg:Artifact
+mtg:Fortification a owl:NamedIndividual, mtg:Artifact ;
+  rdfs:label "Fortification" .
+# Gold is a mtg:Artifact
+mtg:Gold a owl:NamedIndividual, mtg:Artifact ;
+  rdfs:label "Gold" .
+# Powerstone is a mtg:Artifact
+mtg:Powerstone a owl:NamedIndividual, mtg:Artifact ;
+  rdfs:label "Powerstone" .
+# Treasure is a mtg:Artifact
+mtg:Treasure a owl:NamedIndividual, mtg:Artifact ;
+  rdfs:label "Treasure" .
+# Vehicle is a mtg:Artifact
+mtg:Vehicle a owl:NamedIndividual, mtg:Artifact ;
+  rdfs:label "Vehicle" .
+
+# Aura is a mtg:Enchantment
+mtg:Aura a owl:NamedIndividual, mtg:Enchantment ;
+  rdfs:label "Aura" .
+# Background is a mtg:Enchantment
+mtg:Background a owl:NamedIndividual, mtg:Enchantment ;
+  rdfs:label "Background" .
+# Cartouche is a mtg:Enchantment
+mtg:Cartouche a owl:NamedIndividual, mtg:Enchantment ;
+  rdfs:label "Cartouche" .
+# Class is a mtg:Enchantment
+mtg:Class a owl:NamedIndividual, mtg:Enchantment ;
+  rdfs:label "Class" .
+# Curse is a mtg:Enchantment
+mtg:Curse a owl:NamedIndividual, mtg:Enchantment ;
+  rdfs:label "Curse" .
+# Rune is a mtg:Enchantment
+mtg:Rune a owl:NamedIndividual, mtg:Enchantment ;
+  rdfs:label "Rune" .
+# Saga is a mtg:Enchantment
+mtg:Saga a owl:NamedIndividual, mtg:Enchantment ;
+  rdfs:label "Saga" .
+# Shard is a mtg:Enchantment
+mtg:Shard a owl:NamedIndividual, mtg:Enchantment ;
+  rdfs:label "Shard" .
+# Shrine is a mtg:Enchantment
+mtg:Shrine a owl:NamedIndividual, mtg:Enchantment ;
+  rdfs:label "Shrine" .
+
+# Adventure is a mtg:Spell
+mtg:Adventure a owl:NamedIndividual, mtg:Spell ;
+  rdfs:label "Adventure" .
+# Arcane is a mtg:Spell
+mtg:Arcane a owl:NamedIndividual, mtg:Spell ;
+  rdfs:label "Arcane" .
+# Lesson is a mtg:Spell
+mtg:Lesson a owl:NamedIndividual, mtg:Spell ;
+  rdfs:label "Lesson" .
+# Trap is a mtg:Spell
+mtg:Trap a owl:NamedIndividual, mtg:Spell ;
+  rdfs:label "Trap" .
+
+# Keyword Abilities
+
+mtg:KeywordAbility a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:KeywordAbilities ;
+  skos:exactMatch mtg.rules:KeywordAbility ;
+  rdfs:label "Keyword Ability" .
+
+# Living weapon is a mtg:KeywordAbility
+mtg:LivingWeapon a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Living weapon" .
+# Jump-start is a mtg:KeywordAbility
+mtg:JumpStart a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Jump-start" .
+# Basic landcycling is a mtg:KeywordAbility
+mtg:BasicLandcycling a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Basic landcycling" .
+# Commander ninjutsu is a mtg:KeywordAbility
+mtg:CommanderNinjutsu a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Commander ninjutsu" .
+# Legendary landwalk is a mtg:KeywordAbility
+mtg:LegendaryLandwalk a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Legendary landwalk" .
+# Nonbasic landwalk is a mtg:KeywordAbility
+mtg:NonbasicLandwalk a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Nonbasic landwalk" .
+# Totem armor is a mtg:KeywordAbility
+mtg:TotemArmor a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Totem armor" .
+# Megamorph is a mtg:KeywordAbility
+mtg:Megamorph a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Megamorph" .
+# Haunt is a mtg:KeywordAbility
+mtg:Haunt a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Haunt" .
+# Forecast is a mtg:KeywordAbility
+mtg:Forecast a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Forecast" .
+# Graft is a mtg:KeywordAbility
+mtg:Graft a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Graft" .
+# Fortify is a mtg:KeywordAbility
+mtg:Fortify a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Fortify" .
+# Frenzy is a mtg:KeywordAbility
+mtg:Frenzy a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Frenzy" .
+# Gravestorm is a mtg:KeywordAbility
+mtg:Gravestorm a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Gravestorm" .
+# Hideaway is a mtg:KeywordAbility
+mtg:Hideaway a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Hideaway" .
+# Level Up is a mtg:KeywordAbility
+mtg:LevelUp a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Level Up" .
+# Infect is a mtg:KeywordAbility
+mtg:Infect a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Infect" .
+# Reach is a mtg:KeywordAbility
+mtg:Reach a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Reach" .
+# Rampage is a mtg:KeywordAbility
+mtg:Rampage a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Rampage" .
+# Phasing is a mtg:KeywordAbility
+mtg:Phasing a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Phasing" .
+# Multikicker is a mtg:KeywordAbility
+mtg:Multikicker a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Multikicker" .
+# Morph is a mtg:KeywordAbility
+mtg:Morph a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Morph" .
+# Provoke is a mtg:KeywordAbility
+mtg:Provoke a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Provoke" .
+# Modular is a mtg:KeywordAbility
+mtg:Modular a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Modular" .
+# Ninjutsu is a mtg:KeywordAbility
+mtg:Ninjutsu a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Ninjutsu" .
+# Replicate is a mtg:KeywordAbility
+mtg:Replicate a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Replicate" .
+# Recover is a mtg:KeywordAbility
+mtg:Recover a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Recover" .
+# Poisonous is a mtg:KeywordAbility
+mtg:Poisonous a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Poisonous" .
+# Prowl is a mtg:KeywordAbility
+mtg:Prowl a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Prowl" .
+# Reinforce is a mtg:KeywordAbility
+mtg:Reinforce a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Reinforce" .
+# Persist is a mtg:KeywordAbility
+mtg:Persist a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Persist" .
+# Retrace is a mtg:KeywordAbility
+mtg:Retrace a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Retrace" .
+# Rebound is a mtg:KeywordAbility
+mtg:Rebound a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Rebound" .
+# Miracle is a mtg:KeywordAbility
+mtg:Miracle a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Miracle" .
+# Overload is a mtg:KeywordAbility
+mtg:Overload a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Overload" .
+# Outlast is a mtg:KeywordAbility
+mtg:Outlast a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Outlast" .
+# Prowess is a mtg:KeywordAbility
+mtg:Prowess a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Prowess" .
+# Renown is a mtg:KeywordAbility
+mtg:Renown a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Renown" .
+# Myriad is a mtg:KeywordAbility
+mtg:Myriad a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Myriad" .
+# Shroud is a mtg:KeywordAbility
+mtg:Shroud a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Shroud" .
+# Trample is a mtg:KeywordAbility
+mtg:Trample a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Trample" .
+# Vigilance is a mtg:KeywordAbility
+mtg:Vigilance a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Vigilance" .
+# Shadow is a mtg:KeywordAbility
+mtg:Shadow a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Shadow" .
+# Storm is a mtg:KeywordAbility
+mtg:Storm a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Storm" .
+# Soulshift is a mtg:KeywordAbility
+mtg:Soulshift a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Soulshift" .
+# Splice is a mtg:KeywordAbility
+mtg:Splice a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Splice" .
+# Transmute is a mtg:KeywordAbility
+mtg:Transmute a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Transmute" .
+# Ripple is a mtg:KeywordAbility
+mtg:Ripple a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Ripple" .
+# Suspend is a mtg:KeywordAbility
+mtg:Suspend a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Suspend" .
+# Vanishing is a mtg:KeywordAbility
+mtg:Vanishing a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Vanishing" .
+# Transfigure is a mtg:KeywordAbility
+mtg:Transfigure a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Transfigure" .
+# Wither is a mtg:KeywordAbility
+mtg:Wither a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Wither" .
+# Undying is a mtg:KeywordAbility
+mtg:Undying a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Undying" .
+# Soulbond is a mtg:KeywordAbility
+mtg:Soulbond a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Soulbond" .
+# Unleash is a mtg:KeywordAbility
+mtg:Unleash a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Unleash" .
+# Ascend is a mtg:KeywordAbility
+mtg:Ascend a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Ascend" .
+# Assist is a mtg:KeywordAbility
+mtg:Assist a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Assist" .
+# Afterlife is a mtg:KeywordAbility
+mtg:Afterlife a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Afterlife" .
+# Companion is a mtg:KeywordAbility
+mtg:Companion a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Companion" .
+# Fabricate is a mtg:KeywordAbility
+mtg:Fabricate a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Fabricate" .
+# Embalm is a mtg:KeywordAbility
+mtg:Embalm a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Embalm" .
+# Escape is a mtg:KeywordAbility
+mtg:Escape a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Escape" .
+# Fuse is a mtg:KeywordAbility
+mtg:Fuse a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Fuse" .
+# Menace is a mtg:KeywordAbility
+mtg:Menace a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Menace" .
+# Ingest is a mtg:KeywordAbility
+mtg:Ingest a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Ingest" .
+# Melee is a mtg:KeywordAbility
+mtg:Melee a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Melee" .
+# Improvise is a mtg:KeywordAbility
+mtg:Improvise a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Improvise" .
+# Mentor is a mtg:KeywordAbility
+mtg:Mentor a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Mentor" .
+# Partner is a mtg:KeywordAbility
+mtg:Partner a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Partner" .
+# Mutate is a mtg:KeywordAbility
+mtg:Mutate a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Mutate" .
+# Scavenge is a mtg:KeywordAbility
+mtg:Scavenge a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Scavenge" .
+# Tribute is a mtg:KeywordAbility
+mtg:Tribute a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Tribute" .
+# Surge is a mtg:KeywordAbility
+mtg:Surge a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Surge" .
+# Skulk is a mtg:KeywordAbility
+mtg:Skulk a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Skulk" .
+# Undaunted is a mtg:KeywordAbility
+mtg:Undaunted a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Undaunted" .
+# Riot is a mtg:KeywordAbility
+mtg:Riot a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Riot" .
+# Spectacle is a mtg:KeywordAbility
+mtg:Spectacle a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Spectacle" .
+# Forestwalk is a mtg:KeywordAbility
+mtg:Forestwalk a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Forestwalk" .
+# Islandwalk is a mtg:KeywordAbility
+mtg:Islandwalk a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Islandwalk" .
+# Mountainwalk is a mtg:KeywordAbility
+mtg:Mountainwalk a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Mountainwalk" .
+# Double strike is a mtg:KeywordAbility
+mtg:DoubleStrike a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Double strike" .
+# Cumulative upkeep is a mtg:KeywordAbility
+mtg:CumulativeUpkeep a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Cumulative upkeep" .
+# First strike is a mtg:KeywordAbility
+mtg:FirstStrike a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "First strike" .
+# Encore is a mtg:KeywordAbility
+mtg:Encore a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Encore" .
+# Sunburst is a mtg:KeywordAbility
+mtg:Sunburst a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Sunburst" .
+# Deathtouch is a mtg:KeywordAbility
+mtg:Deathtouch a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Deathtouch" .
+# Defender is a mtg:KeywordAbility
+mtg:Defender a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Defender" .
+# Foretell is a mtg:KeywordAbility
+mtg:Foretell a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Foretell" .
+# Amplify is a mtg:KeywordAbility
+mtg:Amplify a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Amplify" .
+# Affinity is a mtg:KeywordAbility
+mtg:Affinity a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Affinity" .
+# Bushido is a mtg:KeywordAbility
+mtg:Bushido a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Bushido" .
+# Convoke is a mtg:KeywordAbility
+mtg:Convoke a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Convoke" .
+# Bloodthirst is a mtg:KeywordAbility
+mtg:Bloodthirst a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Bloodthirst" .
+# Absorb is a mtg:KeywordAbility
+mtg:Absorb a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Absorb" .
+# Aura Swap is a mtg:KeywordAbility
+mtg:AuraSwap a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Aura Swap" .
+# Changeling is a mtg:KeywordAbility
+mtg:Changeling a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Changeling" .
+# Conspire is a mtg:KeywordAbility
+mtg:Conspire a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Conspire" .
+# Cascade is a mtg:KeywordAbility
+mtg:Cascade a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Cascade" .
+# Annihilator is a mtg:KeywordAbility
+mtg:Annihilator a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Annihilator" .
+# Battle Cry is a mtg:KeywordAbility
+mtg:BattleCry a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Battle Cry" .
+# Cipher is a mtg:KeywordAbility
+mtg:Cipher a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Cipher" .
+# Bestow is a mtg:KeywordAbility
+mtg:Bestow a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Bestow" .
+# Dash is a mtg:KeywordAbility
+mtg:Dash a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Dash" .
+# Awaken is a mtg:KeywordAbility
+mtg:Awaken a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Awaken" .
+# Crew is a mtg:KeywordAbility
+mtg:Crew a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Crew" .
+# Aftermath is a mtg:KeywordAbility
+mtg:Aftermath a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Aftermath" .
+# Afflict is a mtg:KeywordAbility
+mtg:Afflict a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Afflict" .
+# Flanking is a mtg:KeywordAbility
+mtg:Flanking a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Flanking" .
+# Echo is a mtg:KeywordAbility
+mtg:Echo a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Echo" .
+# Fading is a mtg:KeywordAbility
+mtg:Fading a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Fading" .
+# Fear is a mtg:KeywordAbility
+mtg:Fear a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Fear" .
+# Eternalize is a mtg:KeywordAbility
+mtg:Eternalize a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Eternalize" .
+# Entwine is a mtg:KeywordAbility
+mtg:Entwine a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Entwine" .
+# Epic is a mtg:KeywordAbility
+mtg:Epic a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Epic" .
+# Dredge is a mtg:KeywordAbility
+mtg:Dredge a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Dredge" .
+# Delve is a mtg:KeywordAbility
+mtg:Delve a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Delve" .
+# Evoke is a mtg:KeywordAbility
+mtg:Evoke a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Evoke" .
+# Exalted is a mtg:KeywordAbility
+mtg:Exalted a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Exalted" .
+# Evolve is a mtg:KeywordAbility
+mtg:Evolve a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Evolve" .
+# Extort is a mtg:KeywordAbility
+mtg:Extort a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Extort" .
+# Dethrone is a mtg:KeywordAbility
+mtg:Dethrone a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Dethrone" .
+# Exploit is a mtg:KeywordAbility
+mtg:Exploit a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Exploit" .
+# Devoid is a mtg:KeywordAbility
+mtg:Devoid a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Devoid" .
+# Emerge is a mtg:KeywordAbility
+mtg:Emerge a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Emerge" .
+# Escalate is a mtg:KeywordAbility
+mtg:Escalate a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Escalate" .
+# Flying is a mtg:KeywordAbility
+mtg:Flying a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Flying" .
+# Haste is a mtg:KeywordAbility
+mtg:Haste a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Haste" .
+# Hexproof is a mtg:KeywordAbility
+mtg:Hexproof a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Hexproof" .
+# Indestructible is a mtg:KeywordAbility
+mtg:Indestructible a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Indestructible" .
+# Intimidate is a mtg:KeywordAbility
+mtg:Intimidate a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Intimidate" .
+# Lifelink is a mtg:KeywordAbility
+mtg:Lifelink a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Lifelink" .
+# Horsemanship is a mtg:KeywordAbility
+mtg:Horsemanship a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Horsemanship" .
+# Kicker is a mtg:KeywordAbility
+mtg:Kicker a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Kicker" .
+# Madness is a mtg:KeywordAbility
+mtg:Madness a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Madness" .
+# Hidden agenda is a mtg:KeywordAbility
+mtg:HiddenAgenda a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Hidden agenda" .
+# Swampwalk is a mtg:KeywordAbility
+mtg:Swampwalk a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Swampwalk" .
+# Desertwalk is a mtg:KeywordAbility
+mtg:Desertwalk a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Desertwalk" .
+# Wizardcycling is a mtg:KeywordAbility
+mtg:Wizardcycling a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Wizardcycling" .
+# Slivercycling is a mtg:KeywordAbility
+mtg:Slivercycling a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Slivercycling" .
+# Cycling is a mtg:KeywordAbility
+mtg:Cycling a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Cycling" .
+# Landwalk is a mtg:KeywordAbility
+mtg:Landwalk a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Landwalk" .
+# Plainswalk is a mtg:KeywordAbility
+mtg:Plainswalk a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Plainswalk" .
+# Champion is a mtg:KeywordAbility
+mtg:Champion a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Champion" .
+# Enchant is a mtg:KeywordAbility
+mtg:Enchant a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Enchant" .
+# Plainscycling is a mtg:KeywordAbility
+mtg:Plainscycling a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Plainscycling" .
+# Islandcycling is a mtg:KeywordAbility
+mtg:Islandcycling a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Islandcycling" .
+# Swampcycling is a mtg:KeywordAbility
+mtg:Swampcycling a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Swampcycling" .
+# Mountaincycling is a mtg:KeywordAbility
+mtg:Mountaincycling a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Mountaincycling" .
+# Forestcycling is a mtg:KeywordAbility
+mtg:Forestcycling a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Forestcycling" .
+# Landcycling is a mtg:KeywordAbility
+mtg:Landcycling a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Landcycling" .
+# Typecycling is a mtg:KeywordAbility
+mtg:Typecycling a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Typecycling" .
+# Split second is a mtg:KeywordAbility
+mtg:SplitSecond a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Split second" .
+# Flash is a mtg:KeywordAbility
+mtg:Flash a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Flash" .
+# Banding is a mtg:KeywordAbility
+mtg:Banding a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Banding" .
+# Augment is a mtg:KeywordAbility
+mtg:Augment a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Augment" .
+# Double agenda is a mtg:KeywordAbility
+mtg:DoubleAgenda a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Double agenda" .
+# Partner with is a mtg:KeywordAbility
+mtg:PartnerWith a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Partner with" .
+# Hexproof from is a mtg:KeywordAbility
+mtg:HexproofFrom a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Hexproof from" .
+# Boast is a mtg:KeywordAbility
+mtg:Boast a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Boast" .
+# Buyback is a mtg:KeywordAbility
+mtg:Buyback a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Buyback" .
+# Ward is a mtg:KeywordAbility
+mtg:Ward a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Ward" .
+# Demonstrate is a mtg:KeywordAbility
+mtg:Demonstrate a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Demonstrate" .
+# Devour is a mtg:KeywordAbility
+mtg:Devour a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Devour" .
+# Flashback is a mtg:KeywordAbility
+mtg:Flashback a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Flashback" .
+# Equip is a mtg:KeywordAbility
+mtg:Equip a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Equip" .
+# Reconfigure is a mtg:KeywordAbility
+mtg:Reconfigure a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Reconfigure" .
+# Compleated is a mtg:KeywordAbility
+mtg:Compleated a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Compleated" .
+# Daybound is a mtg:KeywordAbility
+mtg:Daybound a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Daybound" .
+# Nightbound is a mtg:KeywordAbility
+mtg:Nightbound a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Nightbound" .
+# Decayed is a mtg:KeywordAbility
+mtg:Decayed a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Decayed" .
+# Disturb is a mtg:KeywordAbility
+mtg:Disturb a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Disturb" .
+# Training is a mtg:KeywordAbility
+mtg:Training a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Training" .
+# Cleave is a mtg:KeywordAbility
+mtg:Cleave a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Cleave" .
+# Intensity is a mtg:KeywordAbility
+mtg:Intensity a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Intensity" .
+# Blitz is a mtg:KeywordAbility
+mtg:Blitz a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Blitz" .
+# Casualty is a mtg:KeywordAbility
+mtg:Casualty a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Casualty" .
+# Friends forever is a mtg:KeywordAbility
+mtg:FriendsForever a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Friends forever" .
+# Protection is a mtg:KeywordAbility
+mtg:Protection a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Protection" .
+# Offering is a mtg:KeywordAbility
+mtg:Offering a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Offering" .
+# Enlist is a mtg:KeywordAbility
+mtg:Enlist a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Enlist" .
+# Read Ahead is a mtg:KeywordAbility
+mtg:ReadAhead a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Read Ahead" .
+# Squad is a mtg:KeywordAbility
+mtg:Squad a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Squad" .
+# Ravenous is a mtg:KeywordAbility
+mtg:Ravenous a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Ravenous" .
+# More Than Meets the Eye is a mtg:KeywordAbility
+mtg:MoreThanMeetsTheEye a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "More Than Meets the Eye" .
+# Living metal is a mtg:KeywordAbility
+mtg:LivingMetal a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Living metal" .
+# Unearth is a mtg:KeywordAbility
+mtg:Unearth a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Unearth" .
+# Prototype is a mtg:KeywordAbility
+mtg:Prototype a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Prototype" .
+# For Mirrodin! is a mtg:KeywordAbility
+mtg:ForMirrodin a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "For Mirrodin!" .
+# Toxic is a mtg:KeywordAbility
+mtg:Toxic a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Toxic" .
+
+# Keyword Actions
+mtg:KeywordAction a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:KeywordActions ;
+  rdfs:label "Keyword Action" .
+
+# Meld is a mtg:KeywordAction
+mtg:Meld a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Meld" .
+# Bolster is a mtg:KeywordAction
+mtg:Bolster a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Bolster" .
+# Clash is a mtg:KeywordAction
+mtg:Clash a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Clash" .
+# Fateseal is a mtg:KeywordAction
+mtg:Fateseal a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Fateseal" .
+# Manifest is a mtg:KeywordAction
+mtg:Manifest a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Manifest" .
+# Monstrosity is a mtg:KeywordAction
+mtg:Monstrosity a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Monstrosity" .
+# Populate is a mtg:KeywordAction
+mtg:Populate a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Populate" .
+# Proliferate is a mtg:KeywordAction
+mtg:Proliferate a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Proliferate" .
+# Scry is a mtg:KeywordAction
+mtg:Scry a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Scry" .
+# Support is a mtg:KeywordAction
+mtg:Support a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Support" .
+# Detain is a mtg:KeywordAction
+mtg:Detain a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Detain" .
+# Explore is a mtg:KeywordAction
+mtg:Explore a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Explore" .
+# Fight is a mtg:KeywordAction
+mtg:Fight a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Fight" .
+# Amass is a mtg:KeywordAction
+mtg:Amass a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Amass" .
+# Adapt is a mtg:KeywordAction
+mtg:Adapt a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Adapt" .
+# Assemble is a mtg:KeywordAction
+mtg:Assemble a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Assemble" .
+# Abandon is a mtg:KeywordAction
+mtg:Abandon a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Abandon" .
+# Activate is a mtg:KeywordAction
+mtg:Activate a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Activate" .
+# Attach is a mtg:KeywordAction
+mtg:Attach a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Attach" .
+# Seek is a mtg:KeywordAction
+mtg:Seek a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Seek" .
+# Cast is a mtg:KeywordAction
+mtg:Cast a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Cast" .
+# Counter is a mtg:KeywordAction
+mtg:Counter a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Counter" .
+# Create is a mtg:KeywordAction
+mtg:Create a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Create" .
+# Destroy is a mtg:KeywordAction
+mtg:Destroy a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Destroy" .
+# Discard is a mtg:KeywordAction
+mtg:Discard a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Discard" .
+# Double is a mtg:KeywordAction
+mtg:Double a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Double" .
+# Exchange is a mtg:KeywordAction
+mtg:Exchange a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Exchange" .
+# Exile is a mtg:KeywordAction
+mtg:Exile a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Exile" .
+# Investigate is a mtg:KeywordAction
+mtg:Investigate a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Investigate" .
+# Play is a mtg:KeywordAction
+mtg:Play a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Play" .
+# Regenerate is a mtg:KeywordAction
+mtg:Regenerate a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Regenerate" .
+# Reveal is a mtg:KeywordAction
+mtg:Reveal a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Reveal" .
+# Sacrifice is a mtg:KeywordAction
+mtg:Sacrifice a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Sacrifice" .
+# Set in motion is a mtg:KeywordAction
+mtg:SetInMotion a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Set in motion" .
+# Shuffle is a mtg:KeywordAction
+mtg:Shuffle a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Shuffle" .
+# Tap is a mtg:KeywordAction
+mtg:Tap a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Tap" .
+# Untap is a mtg:KeywordAction
+mtg:Untap a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Untap" .
+# Vote is a mtg:KeywordAction
+mtg:Vote a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Vote" .
+# Transform is a mtg:KeywordAction
+mtg:Transform a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Transform" .
+# Surveil is a mtg:KeywordAction
+mtg:Surveil a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Surveil" .
+# Goad is a mtg:KeywordAction
+mtg:Goad a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Goad" .
+# Planeswalk is a mtg:KeywordAction
+mtg:Planeswalk a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Planeswalk" .
+# Mill is a mtg:KeywordAction
+mtg:Mill a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Mill" .
+# Learn is a mtg:KeywordAction
+mtg:Learn a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Learn" .
+# Conjure is a mtg:KeywordAction
+mtg:Conjure a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Conjure" .
+# Exert is a mtg:KeywordAction
+mtg:Exert a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Exert" .
+# Connive is a mtg:KeywordAction
+mtg:Connive a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Connive" .
+# Venture into the dungeon is a mtg:KeywordAction
+mtg:VentureIntoTheDungeon a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Venture into the dungeon" .
+# Convert is a mtg:KeywordAction
+mtg:Convert a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Convert" .
+# Open an Attraction is a mtg:KeywordAction
+mtg:OpenAnAttraction a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Open an Attraction" .
+# Roll to Visit Your Attractions is a mtg:KeywordAction
+mtg:RollToVisitYourAttractions a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "Roll to Visit Your Attractions" . 
+
+# Ability Words
+mtg:AbilityWord a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:AbilityWord ;
+  rdfs:label "Ability Word" .
+
+# Battalion is a mtg:AbilityWord
+mtg:Battalion a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Battalion" .
+# Bloodrush is a mtg:AbilityWord
+mtg:Bloodrush a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Bloodrush" .
+# Channel is a mtg:AbilityWord
+mtg:Channel a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Channel" .
+# Chroma is a mtg:AbilityWord
+mtg:Chroma a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Chroma" .
+# Cohort is a mtg:AbilityWord
+mtg:Cohort a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Cohort" .
+# Constellation is a mtg:AbilityWord
+mtg:Constellation a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Constellation" .
+# Converge is a mtg:AbilityWord
+mtg:Converge a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Converge" .
+# Delirium is a mtg:AbilityWord
+mtg:Delirium a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Delirium" .
+# Domain is a mtg:AbilityWord
+mtg:Domain a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Domain" .
+# Fateful hour is a mtg:AbilityWord
+mtg:FatefulHour a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Fateful hour" .
+# Ferocious is a mtg:AbilityWord
+mtg:Ferocious a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Ferocious" .
+# Formidable is a mtg:AbilityWord
+mtg:Formidable a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Formidable" .
+# Grandeur is a mtg:AbilityWord
+mtg:Grandeur a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Grandeur" .
+# Hellbent is a mtg:AbilityWord
+mtg:Hellbent a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Hellbent" .
+# Heroic is a mtg:AbilityWord
+mtg:Heroic a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Heroic" .
+# Imprint is a mtg:AbilityWord
+mtg:Imprint a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Imprint" .
+# Inspired is a mtg:AbilityWord
+mtg:Inspired a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Inspired" .
+# Join forces is a mtg:AbilityWord
+mtg:JoinForces a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Join forces" .
+# Kinship is a mtg:AbilityWord
+mtg:Kinship a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Kinship" .
+# Landfall is a mtg:AbilityWord
+mtg:Landfall a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Landfall" .
+# Lieutenant is a mtg:AbilityWord
+mtg:Lieutenant a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Lieutenant" .
+# Metalcraft is a mtg:AbilityWord
+mtg:Metalcraft a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Metalcraft" .
+# Morbid is a mtg:AbilityWord
+mtg:Morbid a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Morbid" .
+# Parley is a mtg:AbilityWord
+mtg:Parley a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Parley" .
+# Radiance is a mtg:AbilityWord
+mtg:Radiance a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Radiance" .
+# Raid is a mtg:AbilityWord
+mtg:Raid a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Raid" .
+# Rally is a mtg:AbilityWord
+mtg:Rally a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Rally" .
+# Spell mastery is a mtg:AbilityWord
+mtg:SpellMastery a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Spell mastery" .
+# Strive is a mtg:AbilityWord
+mtg:Strive a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Strive" .
+# Sweep is a mtg:AbilityWord
+mtg:Sweep a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Sweep" .
+# Tempting offer is a mtg:AbilityWord
+mtg:TemptingOffer a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Tempting offer" .
+# Threshold is a mtg:AbilityWord
+mtg:Threshold a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Threshold" .
+# Will of the council is a mtg:AbilityWord
+mtg:WillOfTheCouncil a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Will of the council" .
+# Adamant is a mtg:AbilityWord
+mtg:Adamant a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Adamant" .
+# Addendum is a mtg:AbilityWord
+mtg:Addendum a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Addendum" .
+# Council's dilemma is a mtg:AbilityWord
+mtg:CouncilsDilemma a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Council's dilemma" .
+# Eminence is a mtg:AbilityWord
+mtg:Eminence a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Eminence" .
+# Enrage is a mtg:AbilityWord
+mtg:Enrage a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Enrage" .
+# Hero's Reward is a mtg:AbilityWord
+mtg:HerosReward a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Hero's Reward" .
+# Kinfall is a mtg:AbilityWord
+mtg:Kinfall a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Kinfall" .
+# Landship is a mtg:AbilityWord
+mtg:Landship a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Landship" .
+# Legacy is a mtg:AbilityWord
+mtg:Legacy a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Legacy" .
+# Revolt is a mtg:AbilityWord
+mtg:Revolt a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Revolt" .
+# Underdog is a mtg:AbilityWord
+mtg:Underdog a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Underdog" .
+# Undergrowth is a mtg:AbilityWord
+mtg:Undergrowth a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Undergrowth" .
+# Magecraft is a mtg:AbilityWord
+mtg:Magecraft a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Magecraft" .
+# Teamwork is a mtg:AbilityWord
+mtg:Teamwork a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Teamwork" .
+# Pack tactics is a mtg:AbilityWord
+mtg:PackTactics a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Pack tactics" .
+# Coven is a mtg:AbilityWord
+mtg:Coven a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Coven" .
+# Alliance is a mtg:AbilityWord
+mtg:Alliance a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Alliance" .
+# Corrupted is a mtg:AbilityWord
+mtg:Corrupted a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Corrupted" .
+
+# Planes
+
+# The Abyss is a mtg:Plane
+mtg:TheAbyss a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "The Abyss" .
+# Alara is a mtg:Plane
+mtg:Alara a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Alara" .
+# Amonkhet is a mtg:Plane
+mtg:Amonkhet a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Amonkhet" .
+# Antausia is a mtg:Plane
+mtg:Antausia a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Antausia" .
+# Arcavios is a mtg:Plane
+mtg:Arcavios a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Arcavios" .
+# Arkhos is a mtg:Plane
+mtg:Arkhos a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Arkhos" .
+# Azgol is a mtg:Plane
+mtg:Azgol a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Azgol" .
+# Belenon is a mtg:Plane
+mtg:Belenon a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Belenon" .
+# Bolas’s Meditation Realm is a mtg:Plane
+mtg:BolassMeditationRealm a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Bolas’s Meditation Realm" .
+# Capenna is a mtg:Plane
+mtg:Capenna a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Capenna" .
+# Cridhe is a mtg:Plane
+mtg:Cridhe a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Cridhe" .
+# Dominaria is a mtg:Plane
+mtg:Dominaria a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Dominaria" .
+# Echoir is a mtg:Plane
+mtg:Echoir a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Echoir" .
+# Eldraine is a mtg:Plane
+mtg:Eldraine a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Eldraine" .
+# Equilor is a mtg:Plane
+mtg:Equilor a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Equilor" .
+# Ergamon is a mtg:Plane
+mtg:Ergamon a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Ergamon" .
+# Fabacin is a mtg:Plane
+mtg:Fabacin a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Fabacin" .
+# Fiora is a mtg:Plane
+mtg:Fiora a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Fiora" .
+# Gargantikar is a mtg:Plane
+mtg:Gargantikar a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Gargantikar" .
+# Gobakhan is a mtg:Plane
+mtg:Gobakhan a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Gobakhan" .
+# Ikoria is a mtg:Plane
+mtg:Ikoria a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Ikoria" .
+# Innistrad is a mtg:Plane
+mtg:Innistrad a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Innistrad" .
+# Iquatana is a mtg:Plane
+mtg:Iquatana a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Iquatana" .
+# Ir is a mtg:Plane
+mtg:Ir a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Ir" .
+# Ixalan is a mtg:Plane
+mtg:Ixalan a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Ixalan" .
+# Kaladesh is a mtg:Plane
+mtg:Kaladesh a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Kaladesh" .
+# Kaldheim is a mtg:Plane
+mtg:Kaldheim a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Kaldheim" .
+# Kamigawa is a mtg:Plane
+mtg:Kamigawa a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Kamigawa" .
+# Karsus is a mtg:Plane
+mtg:Karsus a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Karsus" .
+# Kephalai is a mtg:Plane
+mtg:Kephalai a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Kephalai" .
+# Kinshala is a mtg:Plane
+mtg:Kinshala a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Kinshala" .
+# Kolbahan is a mtg:Plane
+mtg:Kolbahan a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Kolbahan" .
+# Kylem is a mtg:Plane
+mtg:Kylem a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Kylem" .
+# Kyneth is a mtg:Plane
+mtg:Kyneth a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Kyneth" .
+# Lorwyn is a mtg:Plane
+mtg:Lorwyn a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Lorwyn" .
+# Luvion is a mtg:Plane
+mtg:Luvion a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Luvion" .
+# Mercadia is a mtg:Plane
+mtg:Mercadia a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Mercadia" .
+# Mirrodin is a mtg:Plane
+mtg:Mirrodin a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Mirrodin" .
+# Moag is a mtg:Plane
+mtg:Moag a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Moag" .
+# Mongseng is a mtg:Plane
+mtg:Mongseng a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Mongseng" .
+# Muraganda is a mtg:Plane
+mtg:Muraganda a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Muraganda" .
+# New Phyrexia is a mtg:Plane
+mtg:NewPhyrexia a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "New Phyrexia" .
+# Phyrexia is a mtg:Plane
+mtg:Phyrexia a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Phyrexia" .
+# Pyrulea is a mtg:Plane
+mtg:Pyrulea a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Pyrulea" .
+# Rabiah is a mtg:Plane
+mtg:Rabiah a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Rabiah" .
+# Rath is a mtg:Plane
+mtg:Rath a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Rath" .
+# Ravnica is a mtg:Plane
+mtg:Ravnica a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Ravnica" .
+# Regatha is a mtg:Plane
+mtg:Regatha a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Regatha" .
+# Segovia is a mtg:Plane
+mtg:Segovia a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Segovia" .
+# Serra’s Realm is a mtg:Plane
+mtg:SerrasRealm a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Serra’s Realm" .
+# Shadowmoor is a mtg:Plane
+mtg:Shadowmoor a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Shadowmoor" .
+# Shandalar is a mtg:Plane
+mtg:Shandalar a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Shandalar" .
+# Shenmeng is a mtg:Plane
+mtg:Shenmeng a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Shenmeng" .
+# Tarkir is a mtg:Plane
+mtg:Tarkir a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Tarkir" .
+# Theros is a mtg:Plane
+mtg:Theros a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Theros" .
+# Ulgrotha is a mtg:Plane
+mtg:Ulgrotha a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Ulgrotha" .
+# Valla is a mtg:Plane
+mtg:Valla a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Valla" .
+# Vryn is a mtg:Plane
+mtg:Vryn a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Vryn" .
+# Wildfire is a mtg:Plane
+mtg:Wildfire a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Wildfire" .
+# Xerex is a mtg:Plane
+mtg:Xerex a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Xerex" .
+# Zendikar is a mtg:Plane
+mtg:Zendikar a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Zendikar" .
+# Zhalfir is a mtg:Plane
+mtg:Zhalfir a owl:NamedIndividual, mtg:Plane ;
+   rdfs:label "Zhalfir" .
+
+# Parts of a card
+# :mtg.rules/ColorIndicator
+mtg:colorIndicator a owl:ObjectProperty ;
+  db:valueType db.type:ref ;
+  db:cardinality db.cardinality:many ;
+  prov:wasDerivedFrom mtg.rules:ColorIndicator ;
+  rdfs:label "color indicator" ;
+  rdfs:domain mtg:Card ;
+  rdfs:range mtg:Color .
+# :mtg.rules/Defense
+mtg:defense a owl:DatatypeProperty ;
+  db:valueType db.type:long ;
+  db:cardinality db.cardinality:one ;
+  rdfs:label "defense" ;
+  rdfs:domain mtg:Card ;
+  rdfs:range xsd:integer .
+# mtg:ExpansionSymbol a owl:Class ;
+#   rdfs:label "expansion symbol" .
+#  :mtg.rules/ExpansionSymbol
+mtg:set a owl:DatatypeProperty ;
+  db:valueType db.type:string ;
+  db:cardinality db.cardinality:one ;
+  prov:wasDerivedFrom mtg.rules:ExpansionSymbol ;
+  rdfs:label "set code" ;
+  rdfs:domain mtg:Card ;
+  rdfs:range xsd:string .
+#  :mtg.rules/HandModifier
+# mtg:handModifier a owl:DatatypeProperty ;
+#   db:valueType db.type:long ;
+#   db:cardinality db.cardinality:one ;
+#   rdfs:label "hand modifier" ;
+#   rdfs:domain mtg:Card ;
+#   rdfs:range xsd:integer .
+#  :mtg.rules/Illustration
+# mtg:illustration a owl:ObjectProperty ;
+#   db:valueType db.type:ref ;
+#   db:cardinality db.cardinality:one ;
+#   rdfs:label "illustration" ;
+#   rdfs:domain mtg:Card ;
+#   rdfs:range schema:ImageObject .
+#  :mtg.rules/InformationBelowTheTextBox
+# mtg:informationBelowTheTextBox a owl:DatatypeProperty ;
+#   db:valueType db.type:string ;
+#   db:cardinality db.cardinality:one ;
+#   rdfs:label "information below the text box" ;
+#   rdfs:domain mtg:Card ;
+#   rdfs:range xsd:string .
+#  :mtg.rules/LifeModifier
+# mtg:lifeModifier a owl:DatatypeProperty ;
+#   db:valueType db.type:long ;
+#   db:cardinality db.cardinality:one ;
+#   rdfs:label "life modifier" ;
+#   rdfs:domain mtg:Card ;
+#   rdfs:range xsd:integer .
+#  :mtg.rules/Loyalty ["0" "*" "X" "1d4+1" "2" "3" "4" "5" "6" "7" "20"]
+mtg:Loyalty a owl:Class ;
+  rdfs:label "loyalty" .
+mtg:LoyaltyStar a owl:NamedIndividual, mtg:Loyalty ;
+  rdfs:label "*" .
+mtg:LoyaltyX a owl:NamedIndividual, mtg:Loyalty ;
+  rdfs:label "X" .
+mtg:Loyalty1d4Plus1 a owl:NamedIndividual, mtg:Loyalty ;
+  rdfs:label "1d4+1" .
+mtg:Loyalty0 a owl:NamedIndividual, mtg:Loyalty ;
+  rdf:value 0 ;
+  rdfs:label "0" .
+mtg:Loyalty1 a owl:NamedIndividual, mtg:Loyalty ;
+  rdf:value 1 ;
+  rdfs:label "1" .
+mtg:Loyalty2 a owl:NamedIndividual, mtg:Loyalty ;
+  rdf:value 2 ;
+  rdfs:label "2" .
+mtg:Loyalty3 a owl:NamedIndividual, mtg:Loyalty ;
+  rdf:value 3 ;
+  rdfs:label "3" .
+mtg:Loyalty4 a owl:NamedIndividual, mtg:Loyalty ;
+  rdf:value 4 ;
+  rdfs:label "4" .
+mtg:Loyalty5 a owl:NamedIndividual, mtg:Loyalty ;
+  rdf:value 5 ;
+  rdfs:label "5" .
+mtg:Loyalty6 a owl:NamedIndividual, mtg:Loyalty ;
+  rdf:value 6 ;
+  rdfs:label "6" .
+mtg:Loyalty7 a owl:NamedIndividual, mtg:Loyalty ;
+  rdf:value 7 ;
+  rdfs:label "7" .
+mtg:Loyalty20 a owl:NamedIndividual, mtg:Loyalty ;
+  rdf:value 20 ;
+  rdfs:label "20" .
+mtg:loyalty a owl:ObjectProperty ;
+  db:valueType db.type:string ;
+  db:cardinality db.cardinality:one ;
+  rdfs:label "loyalty" ;
+  rdfs:domain mtg:Card ;
+  rdfs:range mtg:Loyalty .
+#  :mtg.rules/ManaCostAndColor
+mtg:manaCost a owl:ObjectProperty ;
+  db:valueType db.type:ref ;
+  db:cardinality db.cardinality:many ;
+  rdfs:label "mana cost" ;
+  rdfs:domain mtg:Card ;
+  rdfs:range rdf:List .
+mtg:color a owl:ObjectProperty ;
+  db:valueType db.type:ref ;
+  db:cardinality db.cardinality:many ;
+  rdfs:label "color" ;
+  rdfs:domain mtg:Card ;
+  rdfs:range mtg:Color .
+#  :mtg.rules/Name
+mtg:name a owl:DatatypeProperty ;
+  db:valueType db.type:string ;
+  db:cardinality db.cardinality:one ;
+  rdfs:label "name" ;
+  rdfs:domain mtg:Card ;
+  rdfs:range xsd:string .
+#  :mtg.rules/PowerToughness
+mtg:Power a owl:Class ;
+  rdfs:label "power" .
+# "-1,?,0,∞,*,+0,*²,.5,+1,1+*,1,1.5,+2,2,2+*,2.5,3,+3,3.5,4,+4,5,6,7,8,9,10,11,12,13,15,16,18,20,99"
+mtg:PowerMinus1 a owl:NamedIndividual, mtg:Power ;
+  rdf:value -1 ;
+  rdfs:label "-1" .
+mtg:PowerQuestionMark a owl:NamedIndividual, mtg:Power ;
+  rdfs:label "?" .
+mtg:Power0 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 0 ;
+  rdfs:label "0" .
+mtg:PowerInfinity a owl:NamedIndividual, mtg:Power ;
+  rdfs:label "∞" .
+mtg:PowerStar a owl:NamedIndividual, mtg:Power ;
+  rdfs:label "*" .
+mtg:PowerPlus0 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 0 ;
+  rdfs:label "+0" .
+mtg:PowerStar2 a owl:NamedIndividual, mtg:Power ;
+  rdfs:label "*²" .
+mtg:PowerHalf a owl:NamedIndividual, mtg:Power ;
+  rdf:value 0.5 ;
+  rdfs:label ".5" .
+mtg:PowerPlus1 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 1 ;
+  rdfs:label "+1" .
+mtg:Power1PlusStar a owl:NamedIndividual, mtg:Power ;
+  rdf:value 1 ;
+  rdfs:label "1+*" .
+mtg:Power1 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 1 ;
+  rdfs:label "1" .
+mtg:Power1Half a owl:NamedIndividual, mtg:Power ;
+  rdf:value 1.5 ;
+  rdfs:label "1.5" .
+mtg:PowerPlus2 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 2 ;
+  rdfs:label "+2" .
+mtg:Power2 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 2 ;
+  rdfs:label "2" .
+mtg:Power2PlusStar a owl:NamedIndividual, mtg:Power ;
+  rdf:value 2 ;
+  rdfs:label "2+*" .
+mtg:Power2Half a owl:NamedIndividual, mtg:Power ;
+  rdf:value 2.5 ;
+  rdfs:label "2.5" .
+mtg:Power3 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 3 ;
+  rdfs:label "3" .
+mtg:PowerPlus3 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 3 ;
+  rdfs:label "+3" .
+mtg:Power3Half a owl:NamedIndividual, mtg:Power ;
+  rdf:value 3.5 ;
+  rdfs:label "3.5" .
+mtg:Power4 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 4 ;
+  rdfs:label "4" .
+mtg:PowerPlus4 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 4 ;
+  rdfs:label "+4" .
+mtg:Power5 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 5 ;
+  rdfs:label "5" .
+mtg:Power6 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 6 ;
+  rdfs:label "6" .
+mtg:Power7 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 7 ;
+  rdfs:label "7" .
+mtg:Power8 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 8 ;
+  rdfs:label "8" .
+mtg:Power9 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 9 ;
+  rdfs:label "9" .
+mtg:Power10 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 10 ;
+  rdfs:label "10" .
+mtg:Power11 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 11 ;
+  rdfs:label "11" .
+mtg:Power12 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 12 ;
+  rdfs:label "12" .
+mtg:Power13 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 13 ;
+  rdfs:label "13" .
+mtg:Power15 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 15 ;
+  rdfs:label "15" .
+mtg:Power16 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 16 ;
+  rdfs:label "16" .
+mtg:Power18 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 18 ;
+  rdfs:label "18" .
+mtg:Power20 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 20 ;
+  rdfs:label "20" .
+mtg:Power99 a owl:NamedIndividual, mtg:Power ;
+  rdf:value 99 ;
+  rdfs:label "99" .
+mtg:power a owl:ObjectProperty ;
+  db:valueType db.type:string ;
+  db:cardinality db.cardinality:one ;
+  rdfs:label "power" ;
+  rdfs:domain mtg:Card ;
+  rdfs:range mtg:Power .
+mtg:Toughness a owl:Class ;
+  rdfs:label "toughness" .
+# "-1,+0,*²,-0,?,0,*+1,*,.5,+1,1+*,1,1.5,2+*,+2,2,2.5,+3,3,3.5,4,+4,5,6,7-*,7,8,9,10,11,12,13,14,15,16,17,20,99"
+mtg:ToughnessMinus1 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value -1 ;
+  rdfs:label "-1" .
+mtg:ToughnessPlus0 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 0 ;
+  rdfs:label "+0" .
+mtg:ToughnessStar2 a owl:NamedIndividual, mtg:Toughness ;
+  rdfs:label "*²" .
+mtg:ToughnessMinus0 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 0 ;
+  rdfs:label "-0" .
+mtg:ToughnessQuestionMark a owl:NamedIndividual, mtg:Toughness ;
+  rdfs:label "?" .
+mtg:Toughness0 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 0 ;
+  rdfs:label "0" .
+mtg:ToughnessStarPlus1 a owl:NamedIndividual, mtg:Toughness ;
+  rdfs:label "*+1" .
+mtg:ToughnessStar a owl:NamedIndividual, mtg:Toughness ;
+  rdfs:label "*" .
+mtg:ToughnessHalf a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 0.5 ;
+  rdfs:label ".5" .
+mtg:ToughnessPlus1 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 1 ;
+  rdfs:label "+1" .
+mtg:Toughness1PlusStar a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 1 ;
+  rdfs:label "1+*" .
+mtg:Toughness1 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 1 ;
+  rdfs:label "1" .
+mtg:Toughness1Half a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 1.5 ;
+  rdfs:label "1.5" .
+mtg:ToughnessPlus2 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 2 ;
+  rdfs:label "+2" .
+mtg:Toughness2 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 2 ;
+  rdfs:label "2" .
+mtg:Toughness2PlusStar a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 2 ;
+  rdfs:label "2+*" .
+mtg:Toughness2Half a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 2.5 ;
+  rdfs:label "2.5" .
+mtg:Toughness3 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 3 ;
+  rdfs:label "3" .
+mtg:ToughnessPlus3 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 3 ;
+  rdfs:label "+3" .
+mtg:Toughness3Half a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 3.5 ;
+  rdfs:label "3.5" .
+mtg:Toughness4 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 4 ;
+  rdfs:label "4" .
+mtg:ToughnessPlus4 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 4 ;
+  rdfs:label "+4" .
+mtg:Toughness5 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 5 ;
+  rdfs:label "5" .
+mtg:Toughness6 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 6 ;
+  rdfs:label "6" .
+mtg:Toughness7MinusStar a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 7 ;
+  rdfs:label "7-*" .
+mtg:Toughness7 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 7 ;
+  rdfs:label "7" .
+mtg:Toughness8 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 8 ;
+  rdfs:label "8" .
+mtg:Toughness9 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 9 ;
+  rdfs:label "9" .
+mtg:Toughness10 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 10 ;
+  rdfs:label "10" .
+mtg:Toughness11 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 11 ;
+  rdfs:label "11" .
+mtg:Toughness12 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 12 ;
+  rdfs:label "12" .
+mtg:Toughness13 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 13 ;
+  rdfs:label "13" .
+mtg:Toughness14 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 14 ;
+  rdfs:label "14" .
+mtg:Toughness15 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 15 ;
+  rdfs:label "15" .
+mtg:Toughness16 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 16 ;
+  rdfs:label "16" .
+mtg:Toughness17 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 17 ;
+  rdfs:label "17" .
+mtg:Toughness20 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 20 ;
+  rdfs:label "20" .
+mtg:Toughness99 a owl:NamedIndividual, mtg:Toughness ;
+  rdf:value 99 ;
+  rdfs:label "99" .
+mtg:toughness a owl:ObjectProperty ;
+  db:valueType db.type:string ;
+  db:cardinality db.cardinality:one ;
+  rdfs:label "toughness" ;
+  rdfs:domain mtg:Card ;
+  rdfs:range mtg:Toughness .
+#  :mtg.rules/TextBox
+mtg:oracleText a owl:DatatypeProperty ;
+  db:valueType db.type:string ;
+  db:cardinality db.cardinality:one ;
+  rdfs:label "oracleText" ;
+  rdfs:domain mtg:Card ;
+  rdfs:range xsd:string .
+# mtg:reminderText a owl:DatatypeProperty ;
+#   db:valueType db.type:string ;
+#   db:cardinality db.cardinality:one ;
+#   rdfs:label "reminderText" ;
+#   rdfs:domain mtg:Card ;
+#   rdfs:range xsd:string .
+mtg:flavorText a owl:DatatypeProperty ;
+  db:valueType db.type:string ;
+  db:cardinality db.cardinality:one ;
+  rdfs:label "flavorText" ;
+  rdfs:domain mtg:Card ;
+  rdfs:range xsd:string .
+# mtg:abilityWord a owl:ObjectProperty ;
+#   db:valueType db.type:string ;
+#   db:cardinality db.cardinality:one ;
+#   rdfs:label "abilityWord" ;
+#   rdfs:domain mtg:Card ;
+#   rdfs:range mtg:AbilityWord .
+mtg:keywordAbility a owl:ObjectProperty ;
+  db:valueType db.type:string ;
+  db:cardinality db.cardinality:many ;
+  rdfs:label "keyword ability" ;
+  rdfs:domain mtg:Card ;
+  rdfs:range mtg:KeywordAbility .
+mtg:keywordAction a owl:ObjectProperty ;
+  db:valueType db.type:string ;
+  db:cardinality db.cardinality:many ;
+  rdfs:label "keyword action" ;
+  rdfs:domain mtg:Card ;
+  rdfs:range mtg:KeywordAction .
+#  :mtg.rules/TypeLine
+mtg:supertype a owl:ObjectProperty ;
+  db:valueType db.type:ref ;
+  db:cardinality db.cardinality:many ;
+  rdfs:label "supertype" ;
+  rdfs:domain mtg:Card ;
+  rdfs:range mtg:Supertype .
+mtg:type a owl:ObjectProperty ;
+  db:valueType db.type:ref ;
+  db:cardinality db.cardinality:many ;
+  rdfs:label "type" ;
+  rdfs:domain mtg:Card ;
+  rdfs:range mtg:CardType .
+mtg:subtype a owl:ObjectProperty ;
+  db:valueType db.type:ref ;
+  db:cardinality db.cardinality:many ;
+  rdfs:label "subtype" ;
+  rdfs:domain mtg:Card ;
+  rdfs:range owl:Thing .
