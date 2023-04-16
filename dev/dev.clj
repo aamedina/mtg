@@ -6,6 +6,7 @@
   `com.stuartsierra.component.repl/system`.
   See also https://github.com/stuartsierra/component.repl"
   (:require
+   [arachne.aristotle :as a]
    [camel-snake-kebab.core :as csk]
    [clj-http.client :as http]
    [clojure.data.json :as json]

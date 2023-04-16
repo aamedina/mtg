@@ -2,18 +2,14 @@
  {enlive/enlive
   {:mvn/version "1.1.6"}  
   io.github.aamedina/rdf
-  {:git/sha "958f8436d94bd852ac069303567870fc558017d8"}
+  {:git/sha "a751023249f20771ee66f5e1364b094b6c957465"}
   org.clojure/clojure
   {:mvn/version "1.12.0-alpha2"}}
  :paths ["src" "classes" "resources"]
  :aliases
  {:dev
   {:extra-deps
-   {org.lwjgl/lwjgl$natives-windows
-    {:mvn/version "3.3.1"}
-    org.lwjgl/lwjgl-lmdb$natives-windows
-    {:mvn/version "3.3.1"}
-    com.walmartlabs/schematic
+   {com.walmartlabs/schematic
     {:mvn/version "1.3.0"}
     com.stuartsierra/component.repl
     {:mvn/version "0.2.0"}
