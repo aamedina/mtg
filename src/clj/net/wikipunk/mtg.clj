@@ -11,6 +11,7 @@
    [net.wikipunk.rdf.as]
    [net.wikipunk.rdf.dc11]
    [net.wikipunk.rdf.dcterms]
+   [net.wikipunk.rdf.event]
    [net.wikipunk.rdf.foaf]
    [net.wikipunk.rdf.greg]
    [net.wikipunk.rdf.oa]

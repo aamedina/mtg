@@ -1,8 +1,8 @@
 {:vocab  {:sc/create-fn net.wikipunk.rdf/map->UniversalTranslator
           :sc/refs      [:mtg :openai :qdrant]
           :boot         [net.wikipunk.mtg.boot]
-          :config       {:xtdb.lucene/lucene-store
-                         {:db-dir ".vocab/lucene"}}}
+          :config       {:xtdb.lucene/lucene-store {}
+                         #_{:db-dir ".vocab/lucene"}}}
  :openai {:sc/create-fn net.wikipunk.openai/map->Client}
  :qdrant {:sc/create-fn net.wikipunk.qdrant/map->Client
           :sc/refs      [:openai]}

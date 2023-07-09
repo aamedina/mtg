@@ -1,7 +1,7 @@
 (ns net.wikipunk.rdf.scryfall
   "Ontology for Scryfall data"
   {:dcat/downloadURL    "resources/scryfall.ttl",
-   :prov/wasDerivedFrom "https://scryfall.com/docs/api",
+   :prov/wasDerivedFrom {:rdfa/uri "https://scryfall.com/docs/api"},
    :rdf/ns-prefix-map   {"db" "https://wikipunk.net/db/",
                          "db.cardinality"
                          "https://wikipunk.net/db/cardinality/",
@@ -32,75 +32,6 @@
    "A card object represents a Magic card in Scryfall’s database.",
    :rdfs/label "Card"})
 
-(def JsonSchema
-  {:db/ident :scryfall/JsonSchema,
-   :jsonschema/properties
-   [{:jsonschema/items {:jsonschema/propertyType :scryfall/keyword,
-                        :rdf/type :jsonschema/ObjectSchema},
-     :jsonschema/propertyName "keywords",
-     :jsonschema/required false,
-     :rdf/type :jsonschema/ArraySchema}
-    {:jsonschema/propertyName "cmc",
-     :jsonschema/propertyType :scryfall/cmc,
-     :jsonschema/required false,
-     :rdf/type :jsonschema/ObjectSchema}
-    {:jsonschema/propertyName "rarity",
-     :jsonschema/propertyType :scryfall/rarity,
-     :jsonschema/required false,
-     :rdf/type :jsonschema/ObjectSchema}
-    {:jsonschema/propertyName "type_line",
-     :jsonschema/propertyType :scryfall/typeLine,
-     :jsonschema/required true,
-     :rdf/type :jsonschema/ObjectSchema}
-    {:jsonschema/propertyName "toughness",
-     :jsonschema/propertyType :scryfall/toughness,
-     :jsonschema/required false,
-     :rdf/type :jsonschema/ObjectSchema}
-    {:jsonschema/propertyName "power",
-     :jsonschema/propertyType :scryfall/power,
-     :jsonschema/required false,
-     :rdf/type :jsonschema/ObjectSchema}
-    {:jsonschema/items    {:jsonschema/propertyType :scryfall/color,
-                           :rdf/type :jsonschema/ObjectSchema},
-     :jsonschema/maxItems 5,
-     :jsonschema/minItems 0,
-     :jsonschema/propertyName "colors",
-     :jsonschema/required false,
-     :rdf/type            :jsonschema/ArraySchema}
-    {:jsonschema/propertyName "layout",
-     :jsonschema/propertyType :scryfall/layout,
-     :jsonschema/required false,
-     :rdf/type :jsonschema/ObjectSchema}
-    {:jsonschema/propertyName "mana_cost",
-     :jsonschema/propertyType :scryfall/manaCost,
-     :jsonschema/required false,
-     :rdf/type :jsonschema/ObjectSchema}
-    {:jsonschema/propertyName "released_at",
-     :jsonschema/propertyType :scryfall/releaseDate,
-     :jsonschema/required false,
-     :rdf/type :jsonschema/ObjectSchema}
-    {:jsonschema/propertyName "flavor_text",
-     :jsonschema/propertyType :scryfall/flavorText,
-     :jsonschema/required false,
-     :rdf/type :jsonschema/ObjectSchema}
-    {:jsonschema/propertyName "set",
-     :jsonschema/propertyType :scryfall/set,
-     :jsonschema/required true,
-     :rdf/type :jsonschema/ObjectSchema}
-    {:jsonschema/propertyName "oracle_text",
-     :jsonschema/propertyType :scryfall/oracleText,
-     :jsonschema/required true,
-     :rdf/type :jsonschema/ObjectSchema}
-    {:jsonschema/propertyName "oracle_id",
-     :jsonschema/propertyType :scryfall/oracleID,
-     :jsonschema/required true,
-     :rdf/type :jsonschema/ObjectSchema}
-    {:jsonschema/propertyName "uri",
-     :jsonschema/propertyType :scryfall/uri,
-     :jsonschema/required true,
-     :rdf/type :jsonschema/ObjectSchema}],
-   :rdf/type :jsonschema/ObjectSchema})
-
 (def cmc
   "CMC"
   {:db/cardinality :db.cardinality/one,
@@ -115,7 +46,7 @@
   "Color"
   {:db/cardinality :db.cardinality/many,
    :db/ident       :scryfall/color,
-   :db/valueType   :db.type/string,
+   :db/valueType   :db.type/ref,
    :rdf/type       :owl/DatatypeProperty,
    :rdfs/domain    :scryfall/Card,
    :rdfs/label     "Color",
@@ -169,6 +100,16 @@
    :rdf/type       :owl/DatatypeProperty,
    :rdfs/domain    :scryfall/Card,
    :rdfs/label     "Layout",
+   :rdfs/range     :xsd/string})
+
+(def loyalty
+  "Loyalty"
+  {:db/cardinality :db.cardinality/one,
+   :db/ident       :scryfall/loyalty,
+   :db/valueType   :db.type/ref,
+   :rdf/type       :owl/DatatypeProperty,
+   :rdfs/domain    :scryfall/Card,
+   :rdfs/label     "Loyalty",
    :rdfs/range     :xsd/string})
 
 (def manaCost

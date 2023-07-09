@@ -35,7 +35,8 @@
    [net.wikipunk.mtg :as mtg]
    [xtdb.api :as xt]
    [net.wikipunk.punk.db :as db]
-   [net.wikipunk.mtg.boot :as boot])
+   [net.wikipunk.mtg.boot :as boot]
+   [datomic.client.api :as d])
   (:refer-clojure :exclude [isa? descendants parents ancestors]))
 
 (set-init
@@ -128,6 +129,27 @@
   [name]
   (keyword "oracle" (str/replace (csk/->PascalCase name) #"['\s\(\)!,@\"\\~`^;/]" "")))
 
+(def powers
+  (delay
+    (update-vals (group-by #(:rdfs/label (datafy %)) (descendants :mtg/Power)) first)))
+
+(def loyalties
+  (delay
+    (update-vals (group-by #(:rdfs/label (datafy %)) (descendants :mtg/Loyalty)) first)))
+
+(def toughnesses
+  (delay
+    (update-vals (group-by #(:rdfs/label (datafy %)) (descendants :mtg/Toughness)) first)))
+
+(def mtg-colors
+  (delay
+    (merge (update-vals (group-by #(:rdfs/label (datafy %)) (descendants :mtg/Color)) first)
+           {"W" :mtg/White "B" :mtg/Black "R" :mtg/Red "G" :mtg/Green "U" :mtg/Blue})))
+
+(def types
+  (delay
+    (update-vals (group-by #(:rdfs/label (datafy %)) (descendants :mtg/CardType)) first)))
+
 (defn parse-card
   [{:strs [uri set rarity layout colors keywords type_line mana_cost cmc
            oracle_text flavor_text released_at
@@ -138,13 +160,15 @@
   (into {}
         (filter (comp some? val))
         (cond-> (-> {:db/ident (oracle-ident name)
-                     :rdf/type :scryfall/Card}
+                     :rdf/type (into [:scryfall/Card]
+                                     (keep (fn [typename] (get @types typename)))
+                                     (str/split type_line #" — "))}
                     (assoc :scryfall/name name)
                     (assoc :scryfall/uri scryfall_uri)
                     (assoc :scryfall/set set)
                     (assoc :scryfall/rarity rarity)
                     (assoc :scryfall/layout layout)
-                    (assoc :scryfall/color colors)
+                    (assoc :scryfall/color (mapv @mtg-colors colors))
                     (assoc :scryfall/keyword keywords)
                     (assoc :scryfall/typeLine type_line)
                     (assoc :scryfall/oracleID oracle_id)                    
@@ -168,16 +192,13 @@
           (assoc :rdfs/seeAlso (conj (vec (vals related_uris)) uri))
 
           power
-          (assoc :scryfall/power (try (Long/parseLong power)
-                                      (catch Throwable _ power)))
+          (assoc :scryfall/power (get @powers power))
 
           toughness
-          (assoc :scryfall/toughness (try (Long/parseLong toughness)
-                                          (catch Throwable _ toughness)))
+          (assoc :scryfall/toughness (get @toughnesses toughness))
 
           loyalty
-          (assoc :scryfall/loyalty (try (Long/parseLong loyalty)
-                                        (catch Throwable _ loyalty)))
+          (assoc :scryfall/loyalty (get @loyalties loyalty))
 
           card_faces
           (assoc :scryfall/face (into []
@@ -188,6 +209,15 @@
           component
           (assoc :scryfall/component component)
 
+          (empty? keywords)
+          (dissoc :scryfall/keyword)
+
+          (empty? colors)
+          (dissoc :scryfall/color)
+
+          (empty? related_uris)
+          (dissoc :scryfall/related)
+
           (seq all_parts)
           (assoc :scryfall/related (into [] (comp (map parse-card)
                                                   (remove #(identical? (:db/ident %) (oracle-ident name)))
@@ -196,38 +226,39 @@
 
 (defn parse-cards
   "Given a file containing cards from the Scryfall API describing a card, parse the data into a Clojure map representing a :scryfall/Card."
-  ([] (parse-cards "https://data.scryfall.io/oracle-cards/oracle-cards-20230416090233.json"))
+  ([] (parse-cards "https://data.scryfall.io/oracle-cards/oracle-cards-20230709090306.json"))
   ([file]
    (with-open [r (io/reader file)]
      (let [cards (json/read r)]
        (for [card  cards
              :when (get card "name")
-             :when (= (get-in card ["legalities" "standard"]) "legal")]
+             :when (= (get-in card ["legalities" "modern"]) "legal")]
          (parse-card card))))))
 
 (def oracle-cards
-  (parse-cards))
+  (delay (parse-cards)))
 
 (defn oracle-doc
-  [{:scryfall/keys [name manaCost power toughness loyalty defense oracleText typeLine flavorText face] :as card}]
+  [{:scryfall/keys [name manaCost power toughness loyalty oracleText typeLine flavorText face] :as card}]
   (str/trim
-    (str/join "\n\n  "
+    (str/join "\n "
               (filter some?
                       (into [name
                              
                              (when manaCost
                                (str manaCost
                                     (when (or power toughness)
-                                      (str " — " power "/" toughness))
+                                      (str " — "
+                                           (:rdfs/label (datafy power))
+                                           "/"
+                                           (:rdfs/label (datafy toughness))))
                                     (when loyalty
-                                      (str " — " loyalty))
-                                    (when defense
-                                      (str " — " defense))))
+                                      (str " — " (:rdfs/label (datafy loyalty))))))
                              
                              typeLine
 
                              (when oracleText
-                               (str/replace oracleText #"\n" "\n  "))
+                               (str/replace oracleText #"\n" "\n "))
                              (when flavorText
                                (str \u201c (str/replace flavorText #"\n" "") \u201d))]
                             (comp (map oracle-doc)
@@ -236,19 +267,19 @@
 
 (comment
   (run! (fn [card]
-          (zprint/zprint (list 'def (symbol (str/replace (name (:db/ident card)) #"['\s\(\)!,@\"\\~`^;/]" ""))
-                               (oracle-doc card)
-                               card)
-                         {:map    {:justify?      true
-                                   :nl-separator? false
-                                   :hang?         true
-                                   :indent        0
-                                   :sort-in-code? true
-                                   :force-nl?     true}
-                          :vector {:wrap? false}})
-          (newline))
-        (sort-by :db/ident oracle-cards)))
+          (spit "src/cljc/net/wikipunk/rdf/oracle.cljc"
+                (with-out-str
+                  (zprint/zprint (list 'def (rdf/unmunge (:db/ident card))
+                                       (oracle-doc card)
+                                       (assoc card :rdfs/comment (oracle-doc card)))
+                                 {:map    {:justify?      true
+                                           :nl-separator? false
+                                           :hang?         true
+                                           :indent        0
+                                           :sort-in-code? true
+                                           :force-nl?     true}
+                                  :vector {:wrap? false}})
+                  (newline))
+                :append true))
+        (sort-by :db/ident @oracle-cards)))
 
-(defmethod db/infer-datomic-type :prov/wasDerivedFrom [_] :db.type/string)
-(prefer-method db/infer-datomic-type :prov/wasDerivedFrom :owl/AnnotationProperty)
-(defmethod db/infer-datomic-type :scryfall/power [_] :db.type/long)

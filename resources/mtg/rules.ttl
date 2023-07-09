@@ -932,16 +932,16 @@ mtg.rules:100_2c a mtg.rules:Rule ;
   skos:definition "Commander decks are subject to additional deckbuilding restrictions and requirements. See rule 903, “Commander,” for details." ;
   skos:notation "100.2c" ;
   skos:broader mtg.rules:100_2 ;
-  skos:related mtg.rules:903 .
+  skos:related mtg.rules:Commander  .
 # 100.2d Some formats and casual play variants allow players to use a supplementary deck of nontraditional Magic cards (see rule 108.2a). These supplementary decks have their own deck construction rules. See rule 717, “Attraction Cards;” rule 901, “Planechase;” and rule 904, “Archenemy.”
 mtg.rules:100_2d a mtg.rules:Rule ;
   skos:definition "Some formats and casual play variants allow players to use a supplementary deck of nontraditional Magic cards (see rule 108.2a). These supplementary decks have their own deck construction rules. See rule 717, “Attraction Cards;” rule 901, “Planechase;” and rule 904, “Archenemy.”" ;
   skos:notation "100.2d" ;
   skos:broader mtg.rules:100_2 ;
   skos:related mtg.rules:108_2a,
-    mtg.rules:717,
-    mtg.rules:901,
-    mtg.rules:904 .
+    mtg.rules:AttractionCards,
+    mtg.rules:Planechase,
+    mtg.rules:Archenemy .
 # 100.3. Some cards require coins or traditional dice. Some casual variants require additional items, such as specially designated cards, nontraditional Magic cards, and specialized dice.
 mtg.rules:100_3 a mtg.rules:Rule ;
   skos:definition "Some cards require coins or traditional dice. Some casual variants require additional items, such as specially designated cards, nontraditional Magic cards, and specialized dice." ;
@@ -1100,7 +1100,7 @@ mtg.rules:103_2 a mtg.rules:Rule ;
 mtg.rules:103_2a a mtg.rules:Rule ;
   skos:definition "If any players are using sideboards (see rule 100.4) or cards being represented by substitute cards (see rule 713), those cards are set aside. After this happens, each player’s deck is considered their starting deck." ;
   skos:notation "103.2a" ;
-  skos:relative mtg.rules:100_4, mtg.rules:713 ;
+  skos:relative mtg.rules:100_4, mtg.rules:SubstituteCards ;
   skos:broader mtg.rules:103_2 .
 # 103.2b If any players wish to reveal a card with a companion ability that they own from outside the game, they may do so. A player may reveal no more than one card this way, and they may do so only if their deck fulfills the condition of that card’s companion ability. The revealed card remains outside the game. (See rule 702.139, “Companion.”)
 mtg.rules:103_2b a mtg.rules:Rule ;
@@ -2277,7 +2277,7 @@ mtg.rules:113_1b a mtg.rules:Rule ;
 mtg.rules:113_1c a mtg.rules:Rule ;
   skos:definition "An ability can be an activated or triggered ability on the stack. This kind of ability is an object. (See section 6, “Spells, Abilities, and Effects.”)" ;
   skos:notation "113.1c" ;
-  skos:related mtg.rules:SpellsAbilitiesAndEffects ;
+  skos:related mtg.rules:SpellsAbilitiesEffects ;
   skos:broader mtg.rules:113_1 .
 # 113.2. Abilities can affect the objects they’re on. They can also affect other objects and/or players.
 mtg.rules:113_2 a mtg.rules:Rule ;
@@ -2433,7 +2433,7 @@ mtg.rules:113_7 a mtg.rules:Rule ;
   skos:definition "The source of an ability is the object that generated it. The source of an activated ability on the stack is the object whose ability was activated. The source of a triggered ability (other than a delayed triggered ability) on the stack, or one that has triggered and is waiting to be put on the stack, is the object whose ability triggered. To determine the source of a delayed triggered ability, see rules 603.7d–f." ;
   skos:notation "113.7" ;
   skos:related mtg.rules:603_7d, mtg.rules:603_7e, mtg.rules:603_7f ;
-  skos:broader mtg.rules:113 .
+  skos:broader mtg.rules:Abilities .
 # 113.7a Once activated or triggered, an ability exists on the stack independently of its source. Destruction or removal of the source after that time won’t affect the ability. Note that some abilities cause a source to do something (for example, “Prodigal Pyromancer deals 1 damage to any target”) rather than the ability doing anything directly. In these cases, any activated or triggered ability that references information about the source for use while announcing an activated ability or putting a triggered ability on the stack checks that information when the ability is put onto the stack. Otherwise, it will check that information when it resolves. In both instances, if the source is no longer in the zone it’s expected to be in at that time, its last known information is used. The source can still perform the action even though it no longer exists.
 mtg.rules:113_7a a mtg.rules:Rule ;
   skos:definition "Once activated or triggered, an ability exists on the stack independently of its source. Destruction or removal of the source after that time won’t affect the ability. Note that some abilities cause a source to do something (for example, “Prodigal Pyromancer deals 1 damage to any target”) rather than the ability doing anything directly. In these cases, any activated or triggered ability that references information about the source for use while announcing an activated ability or putting a triggered ability on the stack checks that information when the ability is put onto the stack. Otherwise, it will check that information when it resolves. In both instances, if the source is no longer in the zone it’s expected to be in at that time, its last known information is used. The source can still perform the action even though it no longer exists." ;
@@ -4181,13 +4181,13 @@ mtg.rules:208_4 a mtg.rules:Rule ;
 mtg.rules:208_4a a mtg.rules:Rule ;
   skos:definition "Effects that set a creature’s power and/or toughness to specific values may refer to base power and/or toughness. Other continuous effects may further modify the creature’s power and toughness. See rule 613, “Interaction of Continuous Effects.”" ;
   skos:notation "208.4a" ;
-  skos:related mtg.rules:InteractionofContinuousEffects ;
+  skos:related mtg.rules:InteractionOfContinuousEffects ;
   skos:broader mtg.rules:208_4 .
 # 208.4b Some effects check a creature’s base power and/or toughness. These effects see that creature’s characteristics after applying any characteristic-defining abilities and abilities that set power and/or toughness, ignoring any effects and counters that modify power and/or toughness without setting them. See rule 613, “Interaction of Continuous Effects.”
 mtg.rules:208_4b a mtg.rules:Rule ;
   skos:definition "Some effects check a creature’s base power and/or toughness. These effects see that creature’s characteristics after applying any characteristic-defining abilities and abilities that set power and/or toughness, ignoring any effects and counters that modify power and/or toughness without setting them. See rule 613, “Interaction of Continuous Effects.”" ;
   skos:notation "208.4b" ;
-  skos:related mtg.rules:InteractionofContinuousEffects ;  
+  skos:related mtg.rules:InteractionOfContinuousEffects ;  
   skos:broader mtg.rules:208_4 .
 # 208.5. If a creature somehow has no value for its power, its power is 0. The same is true for toughness.
 mtg.rules:208_5 a mtg.rules:Rule ;
@@ -5072,7 +5072,7 @@ mtg.rules:314_6 a mtg.rules:Rule ;
 mtg.rules:315_1 a mtg.rules:Rule ;
   skos:definition "Conspiracy cards are used only in limited play, particularly in the Conspiracy Draft variant (see rule 905). Conspiracy cards aren’t used in constructed play." ;
   skos:notation "315.1" ;
-  skos:related mtg.rules:Conspiracy, mtg.rules:Conspiracy_Draft ;
+  skos:related mtg.rules:Conspiracy, mtg.rules:ConspiracyDraft ;
   skos:broader mtg.rules:Conspiracies .
 # 315.2. At the start of a game, before decks are shuffled, each player may put any number of conspiracy cards from their sideboard into the command zone. Conspiracy cards with hidden agenda are put into the command zone face down. (See rule 702.106, “Hidden Agenda.”)
 mtg.rules:315_2 a mtg.rules:Rule ;
@@ -5653,6 +5653,13 @@ mtg.rules:504_2 a mtg.rules:Rule ;
   skos:notation "504.2" ;
   skos:related mtg.rules:TimingAndPriority ;
   skos:broader mtg.rules:TurnStructure .
+# 505. Main Phase
+# 505.1. There are two main phases in a turn. In each turn, the first main phase (also known as the precombat main phase) and the second main phase (also known as the postcombat main phase) are separated by the combat phase (see rule 506, “Combat Phase”). The precombat and postcombat main phases are individually and collectively known as the main phase.
+mtg.rules:505_1 a mtg.rules:Rule ;
+  skos:definition "There are two main phases in a turn. In each turn, the first main phase (also known as the precombat main phase) and the second main phase (also known as the postcombat main phase) are separated by the combat phase (see rule 506, “Combat Phase”). The precombat and postcombat main phases are individually and collectively known as the main phase." ;
+  skos:notation "505.1" ;
+  skos:related mtg.rules:CombatPhase ;
+  skos:broader mtg.rules:MainPhase .
 # 505.1a Only the first main phase of the turn is a precombat main phase. All other main phases are postcombat main phases. This includes the second main phase of a turn in which the combat phase has been skipped. It is also true of a turn in which an effect has caused an additional combat phase and an additional main phase to be created.
 mtg.rules:505_1a a mtg.rules:Rule ;
   skos:definition "Only the first main phase of the turn is a precombat main phase. All other main phases are postcombat main phases. This includes the second main phase of a turn in which the combat phase has been skipped. It is also true of a turn in which an effect has caused an additional combat phase and an additional main phase to be created." ;
@@ -5663,31 +5670,31 @@ mtg.rules:505_2 a mtg.rules:Rule ;
   skos:definition "The main phase has no steps, so a main phase ends when all players pass in succession while the stack is empty. (See rule 500.2.)" ;
   skos:notation "505.2" ;
   skos:related mtg.rules:500_2 ;
-  skos:broader mtg.rules:TurnStructure .
+  skos:broader mtg.rules:MainPhase .
 # 505.3. First, but only if the players are playing an Archenemy game (see rule 904), the active player is the archenemy, and it’s the active player’s precombat main phase, the active player sets the top card of their scheme deck in motion (see rule 701.25). This turn-based action doesn’t use the stack.
 mtg.rules:505_3 a mtg.rules:Rule ;
   skos:definition "First, but only if the players are playing an Archenemy game (see rule 904), the active player is the archenemy, and it’s the active player’s precombat main phase, the active player sets the top card of their scheme deck in motion (see rule 701.25). This turn-based action doesn’t use the stack." ;
   skos:notation "505.3" ;
   skos:related mtg.rules:Archenemy, mtg.rules:701_25 ;
-  skos:broader mtg.rules:TurnStructure .
+  skos:broader mtg.rules:MainPhase .
 # 505.4. Second, if the active player controls one or more Saga enchantments and it’s the active player’s precombat main phase, the active player puts a lore counter on each Saga they control. (See rule 714, “Saga Cards.”) This turn-based action doesn’t use the stack.
 mtg.rules:505_4 a mtg.rules:Rule ;
   skos:definition "Second, if the active player controls one or more Saga enchantments and it’s the active player’s precombat main phase, the active player puts a lore counter on each Saga they control. (See rule 714, “Saga Cards.”) This turn-based action doesn’t use the stack." ;
   skos:notation "505.4" ;
   skos:related mtg.rules:SagaCards ;
-  skos:broader mtg.rules:TurnStructure .
+  skos:broader mtg.rules:MainPhase .
 # 505.5. Third, if the active player controls one or more Attractions and it’s the active player’s precombat main phase, the active player rolls to visit their Attractions. (See rule 701.49, “Roll to Visit Your Attractions.”) This turn-based action doesn’t use the stack.
 mtg.rules:505_5 a mtg.rules:Rule ;
   skos:definition "Third, if the active player controls one or more Attractions and it’s the active player’s precombat main phase, the active player rolls to visit their Attractions. (See rule 701.49, “Roll to Visit Your Attractions.”) This turn-based action doesn’t use the stack." ;
   skos:notation "505.5" ;
   skos:related mtg.rules:701_49 ;
-  skos:broader mtg.rules:TurnStructure .
+  skos:broader mtg.rules:MainPhase .
 # 505.6. Fourth, the active player gets priority. (See rule 117, “Timing and Priority.”)
 mtg.rules:505_6 a mtg.rules:Rule ;
   skos:definition "Fourth, the active player gets priority. (See rule 117, “Timing and Priority.”)" ;
   skos:notation "505.6" ;
   skos:related mtg.rules:TimingAndPriority ;
-  skos:broader mtg.rules:TurnStructure .
+  skos:broader mtg.rules:MainPhase .
 # 505.6a The main phase is the only phase in which a player can normally cast artifact, creature, enchantment, planeswalker, and sorcery spells. The active player may cast these spells.
 mtg.rules:505_6a a mtg.rules:Rule ;
   skos:definition "The main phase is the only phase in which a player can normally cast artifact, creature, enchantment, planeswalker, and sorcery spells. The active player may cast these spells." ;
@@ -5857,7 +5864,7 @@ mtg.rules:507_2 a mtg.rules:Rule ;
   skos:definition "Second, the active player gets priority. (See rule 117, “Timing and Priority.”)" ;
   skos:notation "507.2" ;
   skos:related mtg.rules:TimingAndPriority ;
-  skos:broader mtg.rules:507 .
+  skos:broader mtg.rules:BeginningOfCombatStep .
 # 508.1. First, the active player declares attackers. This turn-based action doesn’t use the stack. To declare attackers, the active player follows the steps below, in order. If at any point during the declaration of attackers, the active player is unable to comply with any of the steps listed below, the declaration is illegal; the game returns to the moment before the declaration (see rule 728, “Handling Illegal Actions”).
 mtg.rules:508_1 a mtg.rules:Rule ;
   skos:definition "First, the active player declares attackers. This turn-based action doesn’t use the stack. To declare attackers, the active player follows the steps below, in order. If at any point during the declaration of attackers, the active player is unable to comply with any of the steps listed below, the declaration is illegal; the game returns to the moment before the declaration (see rule 728, “Handling Illegal Actions”)." ;
@@ -8300,7 +8307,7 @@ mtg.rules:701_2 a mtg.rules:Rule ;
 mtg.rules:701_2a a mtg.rules:Rule ;
   skos:definition "To activate an activated ability is to put it onto the stack and pay its costs, so that it will eventually resolve and have its effect. Only an object’s controller (or its owner, if it doesn’t have a controller) can activate its activated ability unless the object specifically says otherwise. A player may activate an ability if they have priority. See rule 602, “Activating Activated Abilities.”" ;
   skos:notation "701.2a" ;
-  skos:related mtg.rules:ActivingActivatedAbilities ;
+  skos:related mtg.rules:ActivatingActivatedAbilities ;
   skos:broader mtg.rules:701_2 .
 # 701.3. Attach
 mtg.rules:701_3 a mtg.rules:Rule ;
@@ -10287,7 +10294,7 @@ mtg.rules:702_28a a mtg.rules:Rule ;
 mtg.rules:702_28b a mtg.rules:Rule ;
   skos:definition "A creature with shadow can’t be blocked by creatures without shadow, and a creature without shadow can’t be blocked by creatures with shadow. (See rule 509, “Declare Blockers Step.”)" ;
   skos:notation "702.28b" ;
-  skos:related mtg.rules:509 ;
+  skos:related mtg.rules:DeclareBlockersStep ;
   skos:broader mtg.rules:702_28 .
 # 702.28c Multiple instances of shadow on the same creature are redundant.
 mtg.rules:702_28c a mtg.rules:Rule ;
@@ -10469,7 +10476,7 @@ mtg.rules:702_36a a mtg.rules:Rule ;
 mtg.rules:702_36b a mtg.rules:Rule ;
   skos:definition "A creature with fear can’t be blocked except by artifact creatures and/or black creatures. (See rule 509, “Declare Blockers Step.”)" ;
   skos:notation "702.36b" ;
-  skos:related mtg.rules:509 ;
+  skos:related mtg.rules:DeclareBlockersStep ;
   skos:broader mtg.rules:702_36 .
 # 702.36c Multiple instances of fear on the same creature are redundant.
 mtg.rules:702_36c a mtg.rules:Rule ;
@@ -10485,7 +10492,7 @@ mtg.rules:702_37 a mtg.rules:Rule ;
 mtg.rules:702_37a a mtg.rules:Rule ;
   skos:definition "Morph is a static ability that functions in any zone from which you could play the card it’s on, and the morph effect works any time the card is face down. “Morph [cost]” means “You may cast this card as a 2/2 face-down creature with no text, no name, no subtypes, and no mana cost by paying {3} rather than paying its mana cost.” (See rule 708, “Face-Down Spells and Permanents.”)" ;
   skos:notation "702.37a" ;
-  skos:related mtg.rules:708 ;
+  skos:related mtg.rules:FaceDownSpellsAndPermanents ;
   skos:broader mtg.rules:702_37 .
 # 702.37b Megamorph is a variant of the morph ability. “Megamorph [cost]” means “You may cast this card as a 2/2 face-down creature with no text, no name, no subtypes, and no mana cost by paying {3} rather than paying its mana cost” and “As this permanent is turned face up, put a +1/+1 counter on it if its megamorph cost was paid to turn it face up.” A megamorph cost is a morph cost.
 mtg.rules:702_37b a mtg.rules:Rule ;
@@ -12712,7 +12719,7 @@ mtg.rules:702_158e a mtg.rules:Rule ;
 mtg.rules:702_159 a mtg.rules:Rule ;
   skos:definition "Visit is a keyword ability found on Attraction cards (see rule 717). “Visit — [Effect]” means “Whenever you roll to visit your Attractions, if the result is equal to a number that is lit up on this Attraction, [effect].” See rule 701.49, “Roll to Visit Your Attractions.”" ;
   skos:notation "702.159" ;
-  skos:related mtg.rules:701_49, mtg.rules:717 ;
+  skos:related mtg.rules:701_49, mtg.rules:AttractionCards ;
   skos:broader mtg.rules:KeywordAbilities .
 # 702.159a Visit is a keyword ability found on Attraction cards (see rule 717). “Visit — [Effect]” means “Whenever you roll to visit your Attractions, if the result is equal to a number that is lit up on this Attraction, [effect].” See rule 701.49, “Roll to Visit Your Attractions.”
 mtg.rules:702_159a a mtg.rules:Rule ;
@@ -12954,7 +12961,7 @@ mtg.rules:704_1 a mtg.rules:Rule ;
 mtg.rules:704_1a a mtg.rules:Rule ;
   skos:definition "Abilities that watch for a specified game state are triggered abilities, not state-based actions. (See rule 603, “Handling Triggered Abilities.”)" ;
   skos:notation "704.1a" ;
-  skos:related mtg.rules:603 ;
+  skos:related mtg.rules:HandlingTriggeredAbilities ;
   skos:broader mtg.rules:704_1 .
 # 704.2. State-based actions are checked throughout the game and are not controlled by any player.
 mtg.rules:704_2 a mtg.rules:Rule ;
@@ -15819,141 +15826,671 @@ mtg.rules:811_5 a mtg.rules:Rule ;
   skos:broader mtg.rules:AlternatingTeamsVariant .
 # 900. General
 # 900.1. This section contains additional optional rules that can be used for certain casual game variants. It is by no means comprehensive.
+mtg.rules:900_1 a mtg.rules:Rule ;
+  skos:definition "This section contains additional optional rules that can be used for certain casual game variants. It is by no means comprehensive." ;
+  skos:notation "900.1" ;
+  skos:broader mtg.rules:CasualVariants .
 # 900.2. The casual variants detailed here use supplemental zones, rules, cards, and other game implements not used in traditional Magic games.
+mtg.rules:900_2 a mtg.rules:Rule ;
+  skos:definition "The casual variants detailed here use supplemental zones, rules, cards, and other game implements not used in traditional Magic games." ;
+  skos:notation "900.2" ;
+  skos:broader mtg.rules:CasualVariants .
 # 901. Planechase
 # 901.1. In the Planechase variant, plane cards and phenomenon cards add additional abilities and randomness to the game. The Planechase variant uses all the normal rules for a Magic game, with the following additions.
+mtg.rules:901_1 a mtg.rules:Rule ;
+  skos:definition "In the Planechase variant, plane cards and phenomenon cards add additional abilities and randomness to the game. The Planechase variant uses all the normal rules for a Magic game, with the following additions." ;
+  skos:notation "901.1" ;
+  skos:broader mtg.rules:Planechase .
 # 901.2. A Planechase game may be a two-player game or a multiplayer game. The default multiplayer setup is the Free-for-All variant with the attack multiple players option and without the limited range of influence option. See rule 806, “Free-for-All Variant.”
+mtg.rules:901_2 a mtg.rules:Rule ;
+  skos:definition "A Planechase game may be a two-player game or a multiplayer game. The default multiplayer setup is the Free-for-All variant with the attack multiple players option and without the limited range of influence option. See rule 806, “Free-for-All Variant.”" ;
+  skos:notation "901.2" ;
+  skos:related mtg.rules:AttackMultiplePlayersOption, mtg.rules:FreeForAllVariant, mtg.rules:LimitedRangeOfInfluenceOption ;
+  skos:broader mtg.rules:Planechase .
 # 901.3. In addition to the normal game materials, each player needs a supplementary planar deck of at least ten plane and/or phenomenon cards and the game needs one planar die. No more than two cards in a planar deck can be phenomenon cards. Each card in a planar deck must have a different English name. (See rule 311, “Planes,” and rule 312, “Phenomena.”)
+mtg.rules:901_3 a mtg.rules:Rule ;
+  skos:definition "In addition to the normal game materials, each player needs a supplementary planar deck of at least ten plane and/or phenomenon cards and the game needs one planar die. No more than two cards in a planar deck can be phenomenon cards. Each card in a planar deck must have a different English name. (See rule 311, “Planes,” and rule 312, “Phenomena.”)" ;
+  skos:notation "901.3" ;
+  skos:related mtg.rules:Phenomena, mtg.rules:Planes ;
+  skos:broader mtg.rules:Planechase .
 # 901.3a A planar die is a six-sided die. One face has the Planeswalker symbol. One face has the chaos symbol. The other faces are blank.
-# 901.4.All plane and phenomenon cards remain in the command zone throughout the game, both while they’re part of a planar deck and while they’re face up.
+mtg.rules:901_3a a mtg.rules:Rule ;
+  skos:definition "A planar die is a six-sided die. One face has the Planeswalker symbol. One face has the chaos symbol. The other faces are blank." ;
+  skos:notation "901.3a" ;
+  skos:broader mtg.rules:Planechase .
+# 901.4. All plane and phenomenon cards remain in the command zone throughout the game, both while they’re part of a planar deck and while they’re face up.
+mtg.rules:901_4 a mtg.rules:Rule ;
+  skos:definition "All plane and phenomenon cards remain in the command zone throughout the game, both while they’re part of a planar deck and while they’re face up." ;
+  skos:notation "901.4" ;
+  skos:broader mtg.rules:Planechase .
 # 901.5. Once all players have kept their opening hands and used the abilities of cards that allow them to take an action with those cards from their opening hands, the starting player moves the top card of their planar deck off that planar deck and turns it face up. If it’s a phenomenon card, the player puts that card on the bottom of their planar deck and repeats this process until a plane card is turned face up. (See rule 103.7.) No abilities of any card turned face up this way trigger during this process. The face-up plane card becomes the starting plane.
+mtg.rules:901_5 a mtg.rules:Rule ;
+  skos:definition "Once all players have kept their opening hands and used the abilities of cards that allow them to take an action with those cards from their opening hands, the starting player moves the top card of their planar deck off that planar deck and turns it face up. If it’s a phenomenon card, the player puts that card on the bottom of their planar deck and repeats this process until a plane card is turned face up. (See rule 103.7.) No abilities of any card turned face up this way trigger during this process. The face-up plane card becomes the starting plane." ;
+  skos:notation "901.5" ;
+  skos:related mtg.rules:Phenomena, mtg.rules:Planes ;
+  skos:broader mtg.rules:Planechase .
 # 901.6. The owner of a plane or phenomenon card is the player who started the game with it in their planar deck. The controller of a face-up plane or phenomenon card is the player designated as the planar controller. Normally, the planar controller is whoever the active player is. However, if the current planar controller would leave the game, instead the next player in turn order that wouldn’t leave the game becomes the planar controller, then the old planar controller leaves the game. The new planar controller retains that designation until they leave the game or a different player becomes the active player, whichever comes first.
+mtg.rules:901_6 a mtg.rules:Rule ;
+  skos:definition "The owner of a plane or phenomenon card is the player who started the game with it in their planar deck. The controller of a face-up plane or phenomenon card is the player designated as the planar controller. Normally, the planar controller is whoever the active player is. However, if the current planar controller would leave the game, instead the next player in turn order that wouldn’t leave the game becomes the planar controller, then the old planar controller leaves the game. The new planar controller retains that designation until they leave the game or a different player becomes the active player, whichever comes first." ;
+  skos:notation "901.6" ;
+  skos:broader mtg.rules:Planechase .
 # 901.7. Any abilities of a face-up plane card or phenomenon card in the command zone function from that zone. The card’s static abilities affect the game, its triggered abilities may trigger, and its activated abilities may be activated.
+mtg.rules:901_7 a mtg.rules:Rule ;
+  skos:definition "Any abilities of a face-up plane card or phenomenon card in the command zone function from that zone. The card’s static abilities affect the game, its triggered abilities may trigger, and its activated abilities may be activated." ;
+  skos:notation "901.7" ;
+  skos:broader mtg.rules:Planechase .
 # 901.7a A face-up plane card or phenomenon card that’s turned face down becomes a new object.
+mtg.rules:901_7a a mtg.rules:Rule ;
+  skos:definition "A face-up plane card or phenomenon card that’s turned face down becomes a new object." ;
+  skos:notation "901.7a" ;
+  skos:broader mtg.rules:901_7 .
 # 901.8. Planechase games have an inherent triggered ability known as the “planeswalking ability.” The full text of this ability is “Whenever you roll the Planeswalker symbol on the planar die, planeswalk.” (See rule 701.24, “Planeswalk.”) This ability has no source and is controlled by the player whose planar die roll caused it to trigger. This is an exception to rule 113.8.
+mtg.rules:901_8 a mtg.rules:Rule ;
+  skos:definition "Planechase games have an inherent triggered ability known as the “planeswalking ability.” The full text of this ability is “Whenever you roll the Planeswalker symbol on the planar die, planeswalk.” (See rule 701.24, “Planeswalk.”) This ability has no source and is controlled by the player whose planar die roll caused it to trigger. This is an exception to rule 113.8." ;
+  skos:notation "901.8" ;
+  skos:related mtg.rules:113_8, mtg.rules:701_24 ;
+  skos:broader mtg.rules:Planechase .
 # 901.9. Any time the active player has priority and the stack is empty, but only during a main phase of their turn, that player may roll the planar die. Taking this action costs a player an amount of mana equal to the number of times they have previously taken this action on that turn. This is a special action and doesn’t use the stack. Note that this number won’t be equal to the number of times the player has rolled the planar die that turn if an effect has caused the player to roll the planar die that turn. (See rule 116.2i.)
+mtg.rules:901_9 a mtg.rules:Rule ;
+  skos:definition "Any time the active player has priority and the stack is empty, but only during a main phase of their turn, that player may roll the planar die. Taking this action costs a player an amount of mana equal to the number of times they have previously taken this action on that turn. This is a special action and doesn’t use the stack. Note that this number won’t be equal to the number of times the player has rolled the planar die that turn if an effect has caused the player to roll the planar die that turn. (See rule 116.2i.)" ;
+  skos:notation "901.9" ;
+  skos:related mtg.rules:116_2i ;
+  skos:broader mtg.rules:Planechase .
 # 901.9a If the die roll is a blank face, nothing happens. The active player gets priority.
+mtg.rules:901_9a a mtg.rules:Rule ;
+  skos:definition "If the die roll is a blank face, nothing happens. The active player gets priority." ;
+  skos:notation "901.9a" ;
+  skos:broader mtg.rules:901_9 .
 # 901.9b If the die roll is the chaos symbol, chaos ensues (see rule 311.7). The active player gets priority.
+mtg.rules:901_9b a mtg.rules:Rule ;
+  skos:definition "If the die roll is the chaos symbol, chaos ensues (see rule 311.7). The active player gets priority." ;
+  skos:notation "901.9b" ;
+  skos:related mtg.rules:311_7 ;
+  skos:broader mtg.rules:901_9 .
 # 901.9c If the die roll is the Planeswalker symbol, the “planeswalking ability” triggers and is put on the stack. The active player gets priority. (See rule 901.8.)
+mtg.rules:901_9c a mtg.rules:Rule ;
+  skos:definition "If the die roll is the Planeswalker symbol, the “planeswalking ability” triggers and is put on the stack. The active player gets priority. (See rule 901.8.)" ;
+  skos:notation "901.9c" ;
+  skos:related mtg.rules:901_8 ;
+  skos:broader mtg.rules:901_9 .
 # 901.9d Rolling the planar die will cause any ability that triggers whenever a player rolls one or more dice to trigger. However, any effect that refers to a numerical result of a die roll, including ones that compare the results of that roll to other rolls or to a given number, ignores the rolling of the planar die. See 706, “Rolling a Die.”
+mtg.rules:901_9d a mtg.rules:Rule ;
+  skos:definition "Rolling the planar die will cause any ability that triggers whenever a player rolls one or more dice to trigger. However, any effect that refers to a numerical result of a die roll, including ones that compare the results of that roll to other rolls or to a given number, ignores the rolling of the planar die. See 706, “Rolling a Die.”" ;
+  skos:notation "901.9d" ;
+  skos:related mtg.rules:RollingADie ;
+  skos:broader mtg.rules:901_9 .
 # 901.10. When a player leaves the game, all objects owned by that player except abilities from phenomena leave the game. (See rule 800.4a.) If that includes a face-up plane card or phenomenon card, the planar controller turns the top card of their planar deck face up. This is not a state-based action. It happens as soon as the player leaves the game.
+mtg.rules:901_10 a mtg.rules:Rule ;
+  skos:definition "When a player leaves the game, all objects owned by that player except abilities from phenomena leave the game. (See rule 800.4a.) If that includes a face-up plane card or phenomenon card, the planar controller turns the top card of their planar deck face up. This is not a state-based action. It happens as soon as the player leaves the game." ;
+  skos:notation "901.10" ;
+  skos:related mtg.rules:800_4a ;
+  skos:broader mtg.rules:Planechase .
 # 901.10a If a plane leaves the game while a “planeswalking ability” is on the stack, that ability ceases to exist.
+mtg.rules:901_10a a mtg.rules:Rule ;
+  skos:definition "If a plane leaves the game while a “planeswalking ability” is on the stack, that ability ceases to exist." ;
+  skos:notation "901.10a" ;
+  skos:broader mtg.rules:901_10 .
 # 901.10b Abilities from phenomena owned by a player who left the game remain on the stack controlled by the new planar controller.
+mtg.rules:901_10b a mtg.rules:Rule ;
+  skos:definition "Abilities from phenomena owned by a player who left the game remain on the stack controlled by the new planar controller." ;
+  skos:notation "901.10b" ;
+  skos:broader mtg.rules:901_10 .
 # 901.11. After the game has started, if a player moves the top card of their planar deck off that planar deck and turns it face up, that player has “planeswalked.” Continuous effects with durations that last until a player planeswalks end. Abilities that trigger when a player planeswalks trigger. See rule 701.24.
+mtg.rules:901_11 a mtg.rules:Rule ;
+  skos:definition "After the game has started, if a player moves the top card of their planar deck off that planar deck and turns it face up, that player has “planeswalked.” Continuous effects with durations that last until a player planeswalks end. Abilities that trigger when a player planeswalks trigger. See rule 701.24." ;
+  skos:notation "901.11" ;
+  skos:related mtg.rules:701_24 ;
+  skos:broader mtg.rules:Planechase .
 # 901.11a A player may planeswalk as the result of the “planeswalking ability” (see rule 901.8), because the owner of a face-up plane card or phenomenon card leaves the game (see rule 901.10), or because a phenomenon’s triggered ability leaves the stack (see rule 704.6f). Abilities may also instruct a player to planeswalk.
+mtg.rules:901_11a a mtg.rules:Rule ;
+  skos:definition "A player may planeswalk as the result of the “planeswalking ability” (see rule 901.8), because the owner of a face-up plane card or phenomenon card leaves the game (see rule 901.10), or because a phenomenon’s triggered ability leaves the stack (see rule 704.6f). Abilities may also instruct a player to planeswalk." ;
+  skos:notation "901.11a" ;
+  skos:related mtg.rules:901_8, mtg.rules:901_10, mtg.rules:704_6f ;
+  skos:broader mtg.rules:901_11 .
 # 901.11b The plane card that’s turned face up is the plane the player planeswalks to. The plane card or phenomenon card that’s turned face down, or that leaves the game, is the plane or phenomenon the player planeswalks away from.
+mtg.rules:901_11b a mtg.rules:Rule ;
+  skos:definition "The plane card that’s turned face up is the plane the player planeswalks to. The plane card or phenomenon card that’s turned face down, or that leaves the game, is the plane or phenomenon the player planeswalks away from." ;
+  skos:notation "901.11b" ;
+  skos:broader mtg.rules:901_11 .
 # 901.11c If a player planeswalks when there is more than one face-up plane card, that player planeswalks away from all such planes.
+mtg.rules:901_11c a mtg.rules:Rule ;
+  skos:definition "If a player planeswalks when there is more than one face-up plane card, that player planeswalks away from all such planes." ;
+  skos:notation "901.11c" ;
+  skos:broader mtg.rules:901_11 .
 # 901.12. A Two-Headed Giant Planechase game uses all the rules for the Two-Headed Giant multiplayer variant and all the rules for the Planechase casual variant, with the following additions.
+mtg.rules:901_12 a mtg.rules:Rule ;
+  skos:definition "A Two-Headed Giant Planechase game uses all the rules for the Two-Headed Giant multiplayer variant and all the rules for the Planechase casual variant, with the following additions." ;
+  skos:notation "901.12" ;
+  skos:related mtg.rules:TwoHeadedGiantVariant, mtg.rules:Planechase ;
+  skos:broader mtg.rules:CasualVariants .
 # 901.12a Each player has their own planar deck.
+mtg.rules:901_12a a mtg.rules:Rule ;
+  skos:definition "Each player has their own planar deck." ;
+  skos:notation "901.12a" ;
+  skos:broader mtg.rules:901_12 .
 # 901.12b The planar controller is normally the primary player of the active team. However, if the current planar controller’s team would leave the game, instead the primary player of the next team in turn order that wouldn’t leave the game becomes the planar controller, then the old planar controller’s team leaves the game. The new planar controller retains that designation until they leave the game or a different team becomes the active team, whichever comes first.
+mtg.rules:901_12b a mtg.rules:Rule ;
+  skos:definition "The planar controller is normally the primary player of the active team. However, if the current planar controller’s team would leave the game, instead the primary player of the next team in turn order that wouldn’t leave the game becomes the planar controller, then the old planar controller’s team leaves the game. The new planar controller retains that designation until they leave the game or a different team becomes the active team, whichever comes first." ;
+  skos:notation "901.12b" ;
+  skos:broader mtg.rules:901_12 .
 # 901.12c Even though the face-up plane or phenomenon is controlled by just one player, any ability of that plane or phenomenon that refers to “you” applies to both members of the planar controller’s team.
+mtg.rules:901_12c a mtg.rules:Rule ;
+  skos:definition "Even though the face-up plane or phenomenon is controlled by just one player, any ability of that plane or phenomenon that refers to “you” applies to both members of the planar controller’s team." ;
+  skos:notation "901.12c" ;
+  skos:broader mtg.rules:901_12 .
 # 901.12d Since each member of the active team is an active player, each of them may roll the planar die. Each player’s cost to roll the planar die is based on the number of times that particular player has already rolled the planar die that turn.
+mtg.rules:901_12d a mtg.rules:Rule ;
+  skos:definition "Since each member of the active team is an active player, each of them may roll the planar die. Each player’s cost to roll the planar die is based on the number of times that particular player has already rolled the planar die that turn." ;
+  skos:notation "901.12d" ;
+  skos:broader mtg.rules:901_12 .
 # 901.13. In multiplayer formats other than Grand Melee, plane cards and phenomenon cards are exempt from the limited range of influence option. Their abilities, and the effects of those abilities, affect all applicable objects and players in the game. (See rule 801, “Limited Range of Influence Option.”)
+mtg.rules:901_13 a mtg.rules:Rule ;
+  skos:definition "In multiplayer formats other than Grand Melee, plane cards and phenomenon cards are exempt from the limited range of influence option. Their abilities, and the effects of those abilities, affect all applicable objects and players in the game. (See rule 801, “Limited Range of Influence Option.”)" ;
+  skos:notation "901.13" ;
+  skos:related mtg.rules:LimitedRangeOfInfluenceOption ;
+  skos:broader mtg.rules:Planechase .
 # 901.14. In Grand Melee Planechase games, multiple plane cards or phenomenon cards may be face up at the same time.
+mtg.rules:901_14 a mtg.rules:Rule ;
+  skos:definition "In Grand Melee Planechase games, multiple plane cards or phenomenon cards may be face up at the same time." ;
+  skos:notation "901.14" ;
+  skos:related mtg.rules:GrandMeleeVariant ;
+  skos:broader mtg.rules:Planechase .
 # 901.14a Before the first turn of the game of the game, each player who will start the game with a turn marker sets a starting plane (see rule 901.5). Each of them is a planar controller.
+mtg.rules:901_14a a mtg.rules:Rule ;
+  skos:definition "Before the first turn of the game of the game, each player who will start the game with a turn marker sets a starting plane (see rule 901.5). Each of them is a planar controller." ;
+  skos:notation "901.14a" ;
+  skos:broader mtg.rules:901_14 .
 # 901.14b If a player would leave the game and that player leaving the game would reduce the number of turn markers in the game, that player first ceases to be a planar controller (but no other player becomes a planar controller), then that player leaves the game. Each face-up plane card or phenomenon card that player controlled is put on the bottom of its owner’s planar deck. No player is considered to have planeswalked.
+mtg.rules:901_14b a mtg.rules:Rule ;
+  skos:definition "If a player would leave the game and that player leaving the game would reduce the number of turn markers in the game, that player first ceases to be a planar controller (but no other player becomes a planar controller), then that player leaves the game. Each face-up plane card or phenomenon card that player controlled is put on the bottom of its owner’s planar deck. No player is considered to have planeswalked." ;
+  skos:notation "901.14b" ;
+  skos:broader mtg.rules:901_14 .
 # 901.15. Single Planar Deck Option
+mtg.rules:901_15 a mtg.rules:Rule ;
+  skos:definition "Single Planar Deck Option" ;
+  skos:notation "901.15" ;
+  skos:broader mtg.rules:Planechase .
 # 901.15a As an alternative option, a Planechase game may be played with just a single communal planar deck. In that case, the number of cards in the planar deck must be at least forty or at least ten times the number of players in the game, whichever is smaller. The planar deck can’t contain more phenomenon cards than twice the number of players in the game. Each card in the planar deck must have a different English name.
+mtg.rules:901_15a a mtg.rules:Rule ;
+  skos:definition "As an alternative option, a Planechase game may be played with just a single communal planar deck. In that case, the number of cards in the planar deck must be at least forty or at least ten times the number of players in the game, whichever is smaller. The planar deck can’t contain more phenomenon cards than twice the number of players in the game. Each card in the planar deck must have a different English name." ;
+  skos:notation "901.15a" ;
+  skos:broader mtg.rules:901_15 .
 # 901.15b In a Planechase game using the single planar deck option, the planar controller is considered to be the owner of all cards in the planar deck.
+mtg.rules:901_15b a mtg.rules:Rule ;
+  skos:definition "In a Planechase game using the single planar deck option, the planar controller is considered to be the owner of all cards in the planar deck." ;
+  skos:notation "901.15b" ;
+  skos:broader mtg.rules:901_15 .
 # 901.15c If any rule or ability refers to a player’s planar deck, the communal planar deck is used.
+mtg.rules:901_15c a mtg.rules:Rule ;
+  skos:definition "If any rule or ability refers to a player’s planar deck, the communal planar deck is used." ;
+  skos:notation "901.15c" ;
+  skos:broader mtg.rules:901_15 .
 # 902. Vanguard
 # 902.1. In the Vanguard variant, a vanguard card allows each player to play the role of a famous character. Each player will have one face-up vanguard card whose abilities and other characteristics affect the game. The Vanguard variant uses all the normal rules for a Magic game, with the following additions.
+mtg.rules:902_1 a mtg.rules:Rule ;
+  skos:definition "In the Vanguard variant, a vanguard card allows each player to play the role of a famous character. Each player will have one face-up vanguard card whose abilities and other characteristics affect the game. The Vanguard variant uses all the normal rules for a Magic game, with the following additions." ;
+  skos:notation "902.1" ;
+  skos:broader mtg.rules:Vanguard .
 # 902.2. A Vanguard game may be a two-player game or a multiplayer game.
+mtg.rules:902_2 a mtg.rules:Rule ;
+  skos:definition "A Vanguard game may be a two-player game or a multiplayer game." ;
+  skos:notation "902.2" ;
+  skos:broader mtg.rules:902_1 .
 # 902.3. In addition to the normal game materials, each player needs a vanguard card. Each vanguard card is placed face up next to its owner’s library before the game begins. All vanguard cards remain in the command zone throughout the game.
+mtg.rules:902_3 a mtg.rules:Rule ;
+  skos:definition "In addition to the normal game materials, each player needs a vanguard card. Each vanguard card is placed face up next to its owner’s library before the game begins. All vanguard cards remain in the command zone throughout the game." ;
+  skos:notation "902.3" ;
+  skos:broader mtg.rules:902_1 .
 # 902.4. Each player’s starting life total is 20 plus or minus the life modifier of their vanguard card.
 # Example: The life modifier of a player’s vanguard card is -3. That player’s starting life total is 17.
+mtg.rules:902_4 a mtg.rules:Rule ;
+  skos:definition "Each player’s starting life total is 20 plus or minus the life modifier of their vanguard card." ; 
+  skos:notation "902.4" ;
+  skos:example "The life modifier of a player’s vanguard card is -3. That player’s starting life total is 17." ;
+  skos:broader mtg.rules:902_1 .
 # 902.5. Each player’s starting hand size is seven cards, as modified by the hand modifier of their vanguard card.
+mtg.rules:902_5 a mtg.rules:Rule ;
+  skos:definition "Each player’s starting hand size is seven cards, as modified by the hand modifier of their vanguard card." ;
+  skos:notation "902.5" ;
+  skos:broader mtg.rules:902_1 .
 # 902.5a If a player takes a mulligan in a Vanguard game, just like in a normal game, that player shuffles their hand back into their library, then draws a new hand equal to their starting hand size. (In a multiplayer game, a player’s first mulligan is for the same number of cards as they had before.) See rule 103.5.
 # Example: The hand modifier of a player’s vanguard card is +2. That player starts the game with a hand of 9 cards. If the player takes a mulligan three times before keeping, they draw a new hand of nine cards and put three of those on the bottom of their library.
+mtg.rules:902_5a a mtg.rules:Rule ;
+  skos:definition "If a player takes a mulligan in a Vanguard game, just like in a normal game, that player shuffles their hand back into their library, then draws a new hand equal to their starting hand size. (In a multiplayer game, a player’s first mulligan is for the same number of cards as they had before.) See rule 103.5." ;
+  skos:notation "902.5a" ;
+  skos:example "The hand modifier of a player’s vanguard card is +2. That player starts the game with a hand of 9 cards. If the player takes a mulligan three times before keeping, they draw a new hand of nine cards and put three of those on the bottom of their library." ;
+  skos:related mtg.rules:103_5 ;
+  skos:broader mtg.rules:902_5 .
 # 902.5b A player’s maximum hand size is seven, as modified by the hand modifier of their vanguard card.
 # Example: The hand modifier of a player’s vanguard card is -1. That player’s maximum hand size is six. If that player has more than six cards in their hand as their cleanup step begins, they will discard all but six of them.
+mtg.rules:902_5b a mtg.rules:Rule ;
+  skos:definition "A player’s maximum hand size is seven, as modified by the hand modifier of their vanguard card." ;
+  skos:notation "902.5b" ;
+  skos:example "The hand modifier of a player’s vanguard card is -1. That player’s maximum hand size is six. If that player has more than six cards in their hand as their cleanup step begins, they will discard all but six of them." ;
+  skos:broader mtg.rules:902_5 .
 # 902.6. The owner of a vanguard card is the player who started the game with it in the command zone. The controller of a face-up vanguard card is its owner.
+mtg.rules:902_6 a mtg.rules:Rule ;
+  skos:definition "The owner of a vanguard card is the player who started the game with it in the command zone. The controller of a face-up vanguard card is its owner." ;
+  skos:notation "902.6" ;
+  skos:broader mtg.rules:Vanguard .
 # 902.7. Any abilities of a face-up vanguard card in the command zone function from that zone. The card’s static abilities affect the game, its triggered abilities may trigger, and its activated abilities may be activated.
+mtg.rules:902_7 a mtg.rules:Rule ;
+  skos:definition "Any abilities of a face-up vanguard card in the command zone function from that zone. The card’s static abilities affect the game, its triggered abilities may trigger, and its activated abilities may be activated." ;
+  skos:notation "902.7" ;
+  skos:broader mtg.rules:Vanguard .
 # 903. Commander
 # 903.1. In the Commander variant, each deck is led by a legendary creature designated as that deck’s commander. The Commander variant was created and popularized by fans; an independent rules committee maintains additional resources at MTGCommander.net. The Commander variant uses all the normal rules for a Magic game, with the following additions.
+mtg.rules:903_1 a mtg.rules:Rule ;
+  skos:definition "In the Commander variant, each deck is led by a legendary creature designated as that deck’s commander. The Commander variant was created and popularized by fans; an independent rules committee maintains additional resources at MTGCommander.net. The Commander variant uses all the normal rules for a Magic game, with the following additions." ;
+  skos:notation "903.1" ;
+  skos:broader mtg.rules:Commander .
 # 903.2. A Commander game may be a two-player game or a multiplayer game. The default multiplayer setup is the Free-for-All variant with the attack multiple players option and without the limited range of influence option. See rule 806, “Free-for-All Variant.”
+mtg.rules:903_2 a mtg.rules:Rule ;
+  skos:definition "A Commander game may be a two-player game or a multiplayer game. The default multiplayer setup is the Free-for-All variant with the attack multiple players option and without the limited range of influence option. See rule 806, “Free-for-All Variant.”" ;
+  skos:notation "903.2" ;
+  skos:related mtg.rules:FreeForAllVariant ;
+  skos:broader mtg.rules:Commander .
 # 903.3. Each deck has a legendary creature card designated as its commander. This designation is not a characteristic of the object represented by the card; rather, it is an attribute of the card itself. The card retains this designation even when it changes zones.
 # Example: A commander that’s been turned face down (due to Ixidron’s effect, for example) is still a commander. A commander that’s copying another card (due to Cytoshape’s effect, for example) is still a commander. A permanent that’s copying a commander (such as a Body Double, for example, copying a commander in a player’s graveyard) is not a commander.
+mtg.rules:903_3 a mtg.rules:Rule ;
+  skos:definition "Each deck has a legendary creature card designated as its commander. This designation is not a characteristic of the object represented by the card; rather, it is an attribute of the card itself. The card retains this designation even when it changes zones." ;
+  skos:notation "903.3" ;
+  skos:example "A commander that’s been turned face down (due to Ixidron’s effect, for example) is still a commander. A commander that’s copying another card (due to Cytoshape’s effect, for example) is still a commander. A permanent that’s copying a commander (such as a Body Double, for example, copying a commander in a player’s graveyard) is not a commander." ;
+  skos:broader mtg.rules:Commander .
 # 903.3a Some cards have an ability that states the card can be your commander. This ability modifies the rules for deck construction, and it functions before the game begins. See also rule 113.6n.
+mtg.rules:903_3a a mtg.rules:Rule ;
+  skos:definition "Some cards have an ability that states the card can be your commander. This ability modifies the rules for deck construction, and it functions before the game begins. See also rule 113.6n." ;
+  skos:notation "903.3a" ;
+  skos:related mtg.rules:113_6n ;
+  skos:broader mtg.rules:903_3 .
 # 903.3b If a player’s commander is a meld card and it’s melded with the other member of its meld pair, the resulting melded permanent is that player’s commander.
+mtg.rules:903_3b a mtg.rules:Rule ;
+  skos:definition "If a player’s commander is a meld card and it’s melded with the other member of its meld pair, the resulting melded permanent is that player’s commander." ;
+  skos:notation "903.3b" ;
+  skos:broader mtg.rules:903_3 .
 # 903.3c If a player’s commander is a component of a merged permanent, the resulting merged permanent is that player’s commander.
+mtg.rules:903_3c a mtg.rules:Rule ;
+  skos:definition "If a player’s commander is a component of a merged permanent, the resulting merged permanent is that player’s commander." ;
+  skos:notation "903.3c" ;
+  skos:broader mtg.rules:903_3 .
 # 903.3d If an effect refers to controlling a commander, it refers to a permanent on the battlefield that is a commander. If an effect refers to casting a commander, it refers to a spell that is a commander. If an effect refers to a commander in a specific zone, it refers to a card in that zone that is a commander.
+mtg.rules:903_3d a mtg.rules:Rule ;
+  skos:definition "If an effect refers to controlling a commander, it refers to a permanent on the battlefield that is a commander. If an effect refers to casting a commander, it refers to a spell that is a commander. If an effect refers to a commander in a specific zone, it refers to a card in that zone that is a commander." ;
+  skos:notation "903.3d" ;
+  skos:broader mtg.rules:903_3 .
 # 903.3e If an effect refers to a characteristic of “your commander,” it can find the appropriate player’s commander and see its current characteristics, as modified by continuous effects and other rules, in all zones, including that player’s library and hand.
+mtg.rules:903_3e a mtg.rules:Rule ;
+  skos:definition "If an effect refers to a characteristic of “your commander,” it can find the appropriate player’s commander and see its current characteristics, as modified by continuous effects and other rules, in all zones, including that player’s library and hand." ;
+  skos:notation "903.3e" ;
+  skos:broader mtg.rules:903_3 .
 # 903.4. The Commander variant uses color identity to determine what cards can be in a deck with a certain commander. The color identity of a card is the color or colors of any mana symbols in that card’s mana cost or rules text, plus any colors defined by its characteristic-defining abilities (see rule 604.3) or color indicator (see rule 204).
 # Example: Bosh, Iron Golem is a legendary artifact creature with mana cost {8} and the ability “{3}{R}, Sacrifice an artifact: Bosh, Iron Golem deals damage equal to the sacrificed artifact’s mana value to any target.” Bosh’s color identity is red.
+mtg.rules:903_4 a mtg.rules:Rule ;
+  skos:definition "The Commander variant uses color identity to determine what cards can be in a deck with a certain commander. The color identity of a card is the color or colors of any mana symbols in that card’s mana cost or rules text, plus any colors defined by its characteristic-defining abilities (see rule 604.3) or color indicator (see rule 204)." ;
+  skos:notation "903.4" ;
+  skos:example "Bosh, Iron Golem is a legendary artifact creature with mana cost {8} and the ability “{3}{R}, Sacrifice an artifact: Bosh, Iron Golem deals damage equal to the sacrificed artifact’s mana value to any target.” Bosh’s color identity is red." ;
+  skos:broader mtg.rules:Commander .
 # 903.4a Color identity is established before the game begins.
+mtg.rules:903_4a a mtg.rules:Rule ;
+  skos:definition "Color identity is established before the game begins." ;
+  skos:notation "903.4a" ;
+  skos:broader mtg.rules:903_4 .
 # 903.4b If a commander has a static ability that causes a player to choose its color before the game begins, that choice applies during deck construction and throughout the game, even as the commander changes zones. That choice affects the commander’s color identity. The player reveals that choice as they put their commander into the command zone before the game begins. See rules 103.2c and 607.2p.
+mtg.rules:903_4b a mtg.rules:Rule ;
+  skos:definition "If a commander has a static ability that causes a player to choose its color before the game begins, that choice applies during deck construction and throughout the game, even as the commander changes zones. That choice affects the commander’s color identity. The player reveals that choice as they put their commander into the command zone before the game begins. See rules 103.2c and 607.2p." ;
+  skos:notation "903.4b" ;
+  skos:broader mtg.rules:903_4 .
 # 903.4c Reminder text is ignored when determining a card’s color identity. See rule 207.2.
+mtg.rules:903_4c a mtg.rules:Rule ;
+  skos:definition "Reminder text is ignored when determining a card’s color identity. See rule 207.2." ;
+  skos:notation "903.4c" ;
+  skos:related mtg.rules:207_2 ;
+  skos:broader mtg.rules:903_4 .
 # 903.4d The back face of a double-faced card (see rule 712) is included when determining a card’s color identity. This is an exception to rule 712.8a.
 # Example: Civilized Scholar is the front face of a double-faced card with mana cost {2}{U}. Homicidal Brute is the back face of that double-faced card and has a red color indicator. The card’s color identity is blue and red.
+mtg.rules:903_4d a mtg.rules:Rule ;
+  skos:definition "The back face of a double-faced card (see rule 712) is included when determining a card’s color identity. This is an exception to rule 712.8a." ;
+  skos:example "Civilized Scholar is the front face of a double-faced card with mana cost {2}{U}. Homicidal Brute is the back face of that double-faced card and has a red color indicator. The card’s color identity is blue and red." ;
+  skos:notation "903.4d" ;
+  skos:related mtg.rules:712_8a ;
+  skos:broader mtg.rules:903_4 .
 # 903.4e If an ability refers to the colors or number of colors in a commander’s color identity, that quality is undefined if that player doesn’t have a commander. That part of the ability won’t do anything. Costs that refer to that quality are unpayable.
+mtg.rules:903_4e a mtg.rules:Rule ;
+  skos:definition "If an ability refers to the colors or number of colors in a commander’s color identity, that quality is undefined if that player doesn’t have a commander. That part of the ability won’t do anything. Costs that refer to that quality are unpayable." ;
+  skos:notation "903.4e" ;
+  skos:broader mtg.rules:903_4 .
 # 903.5. Each Commander deck is subject to the following deck construction rules.
+mtg.rules:903_5 a mtg.rules:Rule ;
+  skos:definition "Each Commander deck is subject to the following deck construction rules." ;
+  skos:notation "903.5" ;
+  skos:broader mtg.rules:Commander .
 # 903.5a Each deck must contain exactly 100 cards, including its commander. In other words, the minimum deck size and the maximum deck size are both 100.
+mtg.rules:903_5a a mtg.rules:Rule ;
+  skos:definition "Each deck must contain exactly 100 cards, including its commander. In other words, the minimum deck size and the maximum deck size are both 100." ;
+  skos:notation "903.5a" ;
+  skos:broader mtg.rules:903_5 .
 # 903.5b Other than basic lands, each card in a Commander deck must have a different English name. For the purposes of deck construction, cards with interchangeable names have the same English name (see rule 201.3).
+mtg.rules:903_5b a mtg.rules:Rule ;
+  skos:definition "Other than basic lands, each card in a Commander deck must have a different English name. For the purposes of deck construction, cards with interchangeable names have the same English name (see rule 201.3)." ;
+  skos:notation "903.5b" ;
+  skos:related mtg.rules:201_3 ;
+  skos:broader mtg.rules:903_5 .
 # 903.5c A card can be included in a Commander deck only if every color in its color identity is also found in the color identity of the deck’s commander.
 # Example: Wort, the Raidmother is a legendary creature with mana cost {4}{R/G}{R/G}. Wort’s color identity is red and green. Each card in a Wort Commander deck must be only red, only green, both red and green, or have no color. Each mana symbol in the mana cost or rules text of a card in this deck must be only red, only green, both red and green, or have no color.
+mtg.rules:903_5c a mtg.rules:Rule ;
+  skos:definition "A card can be included in a Commander deck only if every color in its color identity is also found in the color identity of the deck’s commander." ;
+  skos:example "Wort, the Raidmother is a legendary creature with mana cost {4}{R/G}{R/G}. Wort’s color identity is red and green. Each card in a Wort Commander deck must be only red, only green, both red and green, or have no color. Each mana symbol in the mana cost or rules text of a card in this deck must be only red, only green, both red and green, or have no color." ;
+  skos:notation "903.5c" ;
+  skos:broader mtg.rules:903_5 .
 # 903.5d A card with a basic land type may be included in a Commander deck only if each color of mana it could produce is included in the commander’s color identity.
 # Example: Wort, the Raidmother’s color identity is red and green. A Wort Commander deck may include land cards with the basic land types Mountain and/or Forest. It can’t include any land cards with the basic land types Plains, Island, or Swamp.
+mtg.rules:903_5d a mtg.rules:Rule ;
+  skos:definition "A card with a basic land type may be included in a Commander deck only if each color of mana it could produce is included in the commander’s color identity." ;
+  skos:example "Wort, the Raidmother’s color identity is red and green. A Wort Commander deck may include land cards with the basic land types Mountain and/or Forest. It can’t include any land cards with the basic land types Plains, Island, or Swamp." ;
+  skos:notation "903.5d" ;
+  skos:broader mtg.rules:903_5 .
 # 903.6. At the start of the game, each player puts their commander from their deck face up into the command zone. Then each player shuffles the remaining cards of their deck so that the cards are in a random order. Those cards become the player’s library.
+mtg.rules:903_6 a mtg.rules:Rule ;
+  skos:definition "At the start of the game, each player puts their commander from their deck face up into the command zone. Then each player shuffles the remaining cards of their deck so that the cards are in a random order. Those cards become the player’s library." ;
+  skos:notation "903.6" ;
+  skos:broader mtg.rules:Commander .
 # 903.7. Once the starting player has been determined, each player sets their life total to 40 and draws a hand of seven cards.
+mtg.rules:903_7 a mtg.rules:Rule ;
+  skos:definition "Once the starting player has been determined, each player sets their life total to 40 and draws a hand of seven cards." ;
+  skos:notation "903.7" ;
+  skos:broader mtg.rules:Commander .
 # 903.8. A player may cast a commander they own from the command zone. A commander cast from the command zone costs an additional {2} for each previous time the player casting it has cast it from the command zone that game. This additional cost is informally known as the “commander tax.”
+mtg.rules:903_8 a mtg.rules:Rule ;
+  skos:definition "A player may cast a commander they own from the command zone. A commander cast from the command zone costs an additional {2} for each previous time the player casting it has cast it from the command zone that game. This additional cost is informally known as the “commander tax.”" ;
+  skos:notation "903.8" ;
+  skos:broader mtg.rules:Commander .
 # 903.9. A commander may return to the command zone during a Commander game.
+mtg.rules:903_9 a mtg.rules:Rule ;
+  skos:definition "A commander may return to the command zone during a Commander game." ;
+  skos:notation "903.9" ;
+  skos:broader mtg.rules:Commander .
 # 903.9a If a commander is in a graveyard or in exile and that object was put into that zone since the last time state-based actions were checked, its owner may put it into the command zone. This is a state-based action. See rule 704.
+mtg.rules:903_9a a mtg.rules:Rule ;
+  skos:definition "If a commander is in a graveyard or in exile and that object was put into that zone since the last time state-based actions were checked, its owner may put it into the command zone. This is a state-based action. See rule 704." ;
+  skos:notation "903.9a" ;
+  skos:broader mtg.rules:903_9 .
 # 903.9b If a commander would be put into its owner’s hand or library from anywhere, its owner may put it into the command zone instead. This replacement effect may apply more than once to the same event. This is an exception to rule 614.5.
+mtg.rules:903_9b a mtg.rules:Rule ;
+  skos:definition "If a commander would be put into its owner’s hand or library from anywhere, its owner may put it into the command zone instead. This replacement effect may apply more than once to the same event. This is an exception to rule 614.5." ;
+  skos:notation "903.9b" ;
+  skos:related mtg.rules:614_5 ;
+  skos:broader mtg.rules:903_9 .
 # 903.9c If a commander is a melded permanent or a merged permanent and its owner chooses to put it into the command zone using the replacement effect described in rule 903.9b, that permanent and each component representing it that isn’t a commander are put into the appropriate zone, and the card that represents it and is a commander is put into the command zone.
+mtg.rules:903_9c a mtg.rules:Rule ;
+  skos:definition "If a commander is a melded permanent or a merged permanent and its owner chooses to put it into the command zone using the replacement effect described in rule 903.9b, that permanent and each component representing it that isn’t a commander are put into the appropriate zone, and the card that represents it and is a commander is put into the command zone." ;
+  skos:notation "903.9c" ;
+  skos:broader mtg.rules:903_9 .
 # 903.10. The Commander variant includes the following specification for winning and losing the game. All other rules for ending the game also apply. (See rule 104.)
+mtg.rules:903_10 a mtg.rules:Rule ;
+  skos:definition "The Commander variant includes the following specification for winning and losing the game. All other rules for ending the game also apply. (See rule 104.)" ;
+  skos:notation "903.10" ;
+  skos:related mtg.rules:EndingTheGame ;
+  skos:broader mtg.rules:Commander .
 # 903.10a A player who’s been dealt 21 or more combat damage by the same commander over the course of the game loses the game. (This is a state-based action. See rule 704.)
+mtg.rules:903_10a a mtg.rules:Rule ;
+  skos:definition "A player who’s been dealt 21 or more combat damage by the same commander over the course of the game loses the game. (This is a state-based action. See rule 704.)" ;
+  skos:notation "903.10a" ;
+  skos:related mtg.rules:StateBasedActions ;
+  skos:broader mtg.rules:903_10 .
 # 903.11. If a player is allowed to bring a card from outside the game into a Commander game, that player can’t bring a card into the game this way if it has the same name as a card that player had in their starting deck, if it has the same name as a card that the player owns in the current game, or if any color in its color identity isn’t in the color identity of the player’s commander.
+mtg.rules:903_11 a mtg.rules:Rule ;
+  skos:definition "If a player is allowed to bring a card from outside the game into a Commander game, that player can’t bring a card into the game this way if it has the same name as a card that player had in their starting deck, if it has the same name as a card that the player owns in the current game, or if any color in its color identity isn’t in the color identity of the player’s commander." ;
+  skos:notation "903.11" ;
+  skos:broader mtg.rules:Commander .
 # 903.12. Brawl Option
+mtg.rules:903_12 a mtg.rules:Rule ;
+  skos:definition "Brawl Option" ;
+  skos:notation "903.12" ;
+  skos:broader mtg.rules:Commander .
 # 903.12a Brawl is an option for a different style of Commander game. Brawl games use the normal rules for the Commander variant with the following modifications.
+mtg.rules:903_12a a mtg.rules:Rule ;
+  skos:definition "Brawl is an option for a different style of Commander game. Brawl games use the normal rules for the Commander variant with the following modifications." ;
+  skos:notation "903.12a" ;
+  skos:broader mtg.rules:903_12 .
 # 903.12b Brawl decks are usually constructed using cards from the Standard format.
+mtg.rules:903_12b a mtg.rules:Rule ;
+  skos:definition "Brawl decks are usually constructed using cards from the Standard format." ;
+  skos:notation "903.12b" ;
+  skos:broader mtg.rules:903_12 .
 # 903.12c A player designates either a legendary planeswalker or a legendary creature as their commander.
+mtg.rules:903_12c a mtg.rules:Rule ;
+  skos:definition "A player designates either a legendary planeswalker or a legendary creature as their commander." ;
+  skos:notation "903.12c" ;
+  skos:broader mtg.rules:903_12 .
 # 903.12d A player’s deck must contain exactly 60 cards, including its commander. In other words, the minimum deck size and the maximum deck size are both 60.
+mtg.rules:903_12d a mtg.rules:Rule ;
+  skos:definition "A player’s deck must contain exactly 60 cards, including its commander. In other words, the minimum deck size and the maximum deck size are both 60." ;
+  skos:notation "903.12d" ;
+  skos:broader mtg.rules:903_12 .
 # 903.12e If a player’s commander has no colors in its color identity, that player’s deck may contain any number of basic lands of one basic land type of their choice. This is an exception to rule 903.5d.
+mtg.rules:903_12e a mtg.rules:Rule ;
+  skos:definition "If a player’s commander has no colors in its color identity, that player’s deck may contain any number of basic lands of one basic land type of their choice. This is an exception to rule 903.5d." ;
+  skos:notation "903.12e" ;
+  skos:related mtg.rules:903_5d ;
+  skos:broader mtg.rules:903_12 .
 # 903.12f In a two-player Brawl game, each player’s starting life total is 25. In a multiplayer Brawl game, each player’s starting life total is 30.
+mtg.rules:903_12f a mtg.rules:Rule ;
+  skos:definition "In a two-player Brawl game, each player’s starting life total is 25. In a multiplayer Brawl game, each player’s starting life total is 30." ;
+  skos:notation "903.12f" ;
+  skos:broader mtg.rules:903_12 .
 # 903.12g In any Brawl game, the first mulligan a player takes doesn’t count toward the number of cards that player will put on the bottom of their library or the number of mulligans that player may take. Subsequent mulligans are counted toward these numbers as normal.
+mtg.rules:903_12g a mtg.rules:Rule ;
+  skos:definition "In any Brawl game, the first mulligan a player takes doesn’t count toward the number of cards that player will put on the bottom of their library or the number of mulligans that player may take. Subsequent mulligans are counted toward these numbers as normal." ;
+  skos:notation "903.12g" ;
+  skos:broader mtg.rules:903_12 .
 # 903.12h Brawl games do not use the state-based action described in rule 704.6c, which causes a player to lose the game if they’ve been dealt 21 or more combat damage by a commander.
+mtg.rules:903_12h a mtg.rules:Rule ;
+  skos:definition "Brawl games do not use the state-based action described in rule 704.6c, which causes a player to lose the game if they’ve been dealt 21 or more combat damage by a commander." ;
+  skos:notation "903.12h" ;
+  skos:related mtg.rules:704_6c ;
+  skos:broader mtg.rules:903_12 .
 # 903.13. Commander Draft
+mtg.rules:903_13 a mtg.rules:Rule ;
+  skos:definition "Commander Draft" ;
+  skos:notation "903.13" ;
+  skos:broader mtg.rules:Commander .
 # 903.13a Commander Draft is an option for a different style of Commander game. It consists of a draft (a style of limited play where players choose cards from sealed booster packs to build their decks) followed by a multiplayer game. The Commander Draft option uses Commander Legends booster packs by default.
+mtg.rules:903_13a a mtg.rules:Rule ;
+  skos:definition "Commander Draft is an option for a different style of Commander game. It consists of a draft (a style of limited play where players choose cards from sealed booster packs to build their decks) followed by a multiplayer game. The Commander Draft option uses Commander Legends booster packs by default." ;
+  skos:notation "903.13a" ;
+  skos:broader mtg.rules:903_13 .
 # 903.13b A draft typically consists of three draft rounds. In each draft round, each player opens a booster pack, drafts two cards by placing them in a face-down pile in front of them, then passes the remaining cards to the next player. Each player then drafts two cards from the booster pack passed to them and passes the remaining cards. This procedure continues until all cards in that draft round have been drafted.
+mtg.rules:903_13b a mtg.rules:Rule ;
+  skos:definition "A draft typically consists of three draft rounds. In each draft round, each player opens a booster pack, drafts two cards by placing them in a face-down pile in front of them, then passes the remaining cards to the next player. Each player then drafts two cards from the booster pack passed to them and passes the remaining cards. This procedure continues until all cards in that draft round have been drafted." ;
+  skos:notation "903.13b" ;
+  skos:broader mtg.rules:903_13 .
 # 903.13c In the first and third draft rounds, booster packs are passed to each player’s left. In the second draft round, booster packs are passed to each player’s right.
+mtg.rules:903_13c a mtg.rules:Rule ;
+  skos:definition "In the first and third draft rounds, booster packs are passed to each player’s left. In the second draft round, booster packs are passed to each player’s right." ;
+  skos:notation "903.13c" ;
+  skos:broader mtg.rules:903_13 .
 # 903.13d During the draft, a player can look only at cards in the booster pack they are currently drafting from and cards they have already drafted. A player may not reveal drafted cards to other players unless an ability instructs them to.
+mtg.rules:903_13d a mtg.rules:Rule ;
+  skos:definition "During the draft, a player can look only at cards in the booster pack they are currently drafting from and cards they have already drafted. A player may not reveal drafted cards to other players unless an ability instructs them to." ;
+  skos:notation "903.13d" ;
+  skos:broader mtg.rules:903_13 .
 # 903.13e After the draft is complete, the cards a player drafted become that player’s card pool. If the draft contained draft boosters from Commander Legends, each player may add up to two cards named The Prismatic Piper to their card pool, but only if those cards are used as the player’s commander(s). If the draft contained draft boosters from Commander Legends: Battle for Baldur’s Gate®, each player may add up to two cards named Faceless One to their card pool, but only if those cards are used as the player’s commander(s).
+mtg.rules:903_13e a mtg.rules:Rule ;
+  skos:definition "After the draft is complete, the cards a player drafted become that player’s card pool. If the draft contained draft boosters from Commander Legends, each player may add up to two cards named The Prismatic Piper to their card pool, but only if those cards are used as the player’s commander(s). If the draft contained draft boosters from Commander Legends: Battle for Baldur’s Gate®, each player may add up to two cards named Faceless One to their card pool, but only if those cards are used as the player’s commander(s)." ;
+  skos:notation "903.13e" ;
+  skos:broader mtg.rules:903_13 .
 # 903.13f Commander Draft deck construction follows the same rules as Commander deck construction (see rule 903.5) with two exceptions: (1) A player’s deck must contain at least 60 cards. There is no maximum deck size. (2) A player’s deck may include any number of cards from that player’s card pool with the same name.
+mtg.rules:903_13f a mtg.rules:Rule ;
+  skos:definition "Commander Draft deck construction follows the same rules as Commander deck construction (see rule 903.5) with two exceptions: (1) A player’s deck must contain at least 60 cards. There is no maximum deck size. (2) A player’s deck may include any number of cards from that player’s card pool with the same name." ;
+  skos:notation "903.13f" ;
+  skos:broader mtg.rules:903_13 .
 # 903.13g Commander Draft games follow the same rules as Commander games. See rules 903.6–903.11.
+mtg.rules:903_13g a mtg.rules:Rule ;
+  skos:definition "Commander Draft games follow the same rules as Commander games. See rules 903.6–903.11." ;
+  skos:notation "903.13g" ;
+  skos:broader mtg.rules:903_13 .
 # 904. Archenemy
 # 904.1. In the Archenemy variant, a team of players faces off against a single opponent strengthened with powerful scheme cards. The Archenemy variant uses all the normal rules for a Magic game, with the following additions.
+mtg.rules:904_1 a mtg.rules:Rule ;
+  skos:definition "In the Archenemy variant, a team of players faces off against a single opponent strengthened with powerful scheme cards. The Archenemy variant uses all the normal rules for a Magic game, with the following additions." ;
+  skos:notation "904.1" ;
+  skos:broader mtg.rules:Archenemy .
 # 904.2. The default setup for an Archenemy game is the Team vs. Team multiplayer variant (see rule 808) involving exactly two teams. The attack multiple players option (see rule 802) and the shared team turns option (see rule 805) are used; no other multiplayer options are used.
+mtg.rules:904_2 a mtg.rules:Rule ;
+  skos:definition "The default setup for an Archenemy game is the Team vs. Team multiplayer variant (see rule 808) involving exactly two teams. The attack multiple players option (see rule 802) and the shared team turns option (see rule 805) are used; no other multiplayer options are used." ;
+  skos:notation "904.2" ;
+  skos:broader mtg.rules:Archenemy .
 # 904.2a One of the teams consists of exactly one player, who is designated the archenemy.
+mtg.rules:904_2a a mtg.rules:Rule ;
+  skos:definition "One of the teams consists of exactly one player, who is designated the archenemy." ;
+  skos:notation "904.2a" ;
+  skos:broader mtg.rules:904_2 .
 # 904.2b The other team consists of any number of players.
+mtg.rules:904_2b a mtg.rules:Rule ;
+  skos:definition "The other team consists of any number of players." ;
+  skos:notation "904.2b" ;
+  skos:broader mtg.rules:904_2 .
 # 904.3. In addition to the normal game materials, the archenemy needs a supplementary scheme deck of at least twenty scheme cards. A scheme deck may contain no more than two of any card with a particular English name. (See rule 314, “Schemes.”)
+mtg.rules:904_3 a mtg.rules:Rule ;
+  skos:definition "In addition to the normal game materials, the archenemy needs a supplementary scheme deck of at least twenty scheme cards. A scheme deck may contain no more than two of any card with a particular English name. (See rule 314, “Schemes.”)" ;
+  skos:notation "904.3" ;
+  skos:broader mtg.rules:Archenemy .
 # 904.4. All scheme cards remain in the command zone throughout the game, both while they’re part of a scheme deck and while they’re face up.
+mtg.rules:904_4 a mtg.rules:Rule ;
+  skos:definition "All scheme cards remain in the command zone throughout the game, both while they’re part of a scheme deck and while they’re face up." ;
+  skos:notation "904.4" ;
+  skos:broader mtg.rules:Archenemy .
 # 904.5. The archenemy’s starting life total is 40. Each other player’s starting life total is 20.
+mtg.rules:904_5 a mtg.rules:Rule ;
+  skos:definition "The archenemy’s starting life total is 40. Each other player’s starting life total is 20." ;
+  skos:notation "904.5" ;
+  skos:broader mtg.rules:Archenemy .
 # 904.6. Rather than a randomly determined player, the archenemy takes the first turn of the game.
+mtg.rules:904_6 a mtg.rules:Rule ;
+  skos:definition "Rather than a randomly determined player, the archenemy takes the first turn of the game." ;
+  skos:notation "904.6" ;
+  skos:broader mtg.rules:Archenemy .
 # 904.7. The owner of a scheme card is the player who started the game with it in the command zone. The controller of a face-up scheme card is its owner.
+mtg.rules:904_7 a mtg.rules:Rule ;
+  skos:definition "The owner of a scheme card is the player who started the game with it in the command zone. The controller of a face-up scheme card is its owner." ;
+  skos:notation "904.7" ;
+  skos:broader mtg.rules:Archenemy .
 # 904.8. Any abilities of a face-up scheme card in the command zone function from that zone. The card’s static abilities affect the game, its triggered abilities may trigger, and its activated abilities may be activated.
+mtg.rules:904_8 a mtg.rules:Rule ;
+  skos:definition "Any abilities of a face-up scheme card in the command zone function from that zone. The card’s static abilities affect the game, its triggered abilities may trigger, and its activated abilities may be activated." ;
+  skos:notation "904.8" ;
+  skos:broader mtg.rules:Archenemy .
 # 904.9. Immediately after the archenemy’s precombat main phase begins during each of their turns, that player moves the top card of their scheme deck off that scheme deck and turns it face up. This is called “setting that scheme in motion.” (See rule 701.25.) This turn-based action doesn’t use the stack. Abilities of that scheme card that trigger “When you set this scheme in motion” trigger.
+mtg.rules:904_9 a mtg.rules:Rule ;
+  skos:definition "Immediately after the archenemy’s precombat main phase begins during each of their turns, that player moves the top card of their scheme deck off that scheme deck and turns it face up. This is called “setting that scheme in motion.” (See rule 701.25.) This turn-based action doesn’t use the stack. Abilities of that scheme card that trigger “When you set this scheme in motion” trigger." ;
+  skos:notation "904.9" ;
+  skos:broader mtg.rules:Archenemy .
 # 904.10. If a non-ongoing scheme card is face up in the command zone, and no triggered abilities of any scheme are on the stack or waiting to be put on the stack, that scheme card is turned face down and put on the bottom of its owner’s scheme deck the next time a player would receive priority. (This is a state-based action. See rule 704.)
+mtg.rules:904_10 a mtg.rules:Rule ;
+  skos:definition "If a non-ongoing scheme card is face up in the command zone, and no triggered abilities of any scheme are on the stack or waiting to be put on the stack, that scheme card is turned face down and put on the bottom of its owner’s scheme deck the next time a player would receive priority. (This is a state-based action. See rule 704.)" ;
+  skos:notation "904.10" ;
+  skos:broader mtg.rules:Archenemy .
 # 904.11. Once an ongoing scheme card is set in motion, it remains face up in the command zone until an ability causes it to be abandoned (see rule 701.26).
+mtg.rules:904_11 a mtg.rules:Rule ;
+  skos:definition "Once an ongoing scheme card is set in motion, it remains face up in the command zone until an ability causes it to be abandoned (see rule 701.26)." ;
+  skos:notation "904.11" ;
+  skos:broader mtg.rules:Archenemy .
 # 904.12. Supervillain Rumble Option
+mtg.rules:904_12 a mtg.rules:Rule ;
+  skos:definition "Supervillain Rumble Option" ;
+  skos:notation "904.12" ;
+  skos:broader mtg.rules:Archenemy .
 # 904.12a As an alternative option, players may play a Free-for-All game in which each player has their own scheme deck. The attack multiple players option (see rule 802) is used; no other multiplayer options are used.
+mtg.rules:904_12a a mtg.rules:Rule ;
+  skos:definition "As an alternative option, players may play a Free-for-All game in which each player has their own scheme deck. The attack multiple players option (see rule 802) is used; no other multiplayer options are used." ;
+  skos:notation "904.12a" ;
+  skos:related mtg.rules:AttackMultiplePlayersOption ;
+  skos:broader mtg.rules:Archenemy .
 # 904.12b Each player in this game is an archenemy.
+mtg.rules:904_12b a mtg.rules:Rule ;
+  skos:definition "Each player in this game is an archenemy." ;
+  skos:notation "904.12b" ;
+  skos:broader mtg.rules:Archenemy .
 # 904.12c As in a normal Free-for-All game, the starting player is randomly determined. All other rules that apply to the archenemy in an Archenemy game apply to each player in a Supervillain Rumble game.
+mtg.rules:904_12c a mtg.rules:Rule ;
+  skos:definition "As in a normal Free-for-All game, the starting player is randomly determined. All other rules that apply to the archenemy in an Archenemy game apply to each player in a Supervillain Rumble game." ;
+  skos:notation "904.12c" ;
+  skos:broader mtg.rules:Archenemy .
 # 905. Conspiracy Draft
 # 905.1. The Conspiracy Draft variant consists of a draft (a style of limited play where players choose cards from sealed booster packs to build their decks) followed by a multiplayer game. The Conspiracy Draft variant uses Magic: The Gathering—Conspiracy® and/or Conspiracy: Take the Crown booster packs by default.
+mtg.rules:905_1 a mtg.rules:Rule ;
+  skos:definition "The Conspiracy Draft variant consists of a draft (a style of limited play where players choose cards from sealed booster packs to build their decks) followed by a multiplayer game. The Conspiracy Draft variant uses Magic: The Gathering—Conspiracy® and/or Conspiracy: Take the Crown booster packs by default." ;
+  skos:notation "905.1" ;
+  skos:broader mtg.rules:ConspiracyDraft .
 # 905.1a A draft typically consists of three draft rounds. In each draft round, each player opens a booster pack, drafts one card by placing that card in a face-down pile in front of the player, then passes the remaining cards to the next player. Each player then drafts a card from the booster pack passed to them and passes the remaining cards. This procedure continues until all cards in that draft round have been drafted.
+mtg.rules:905_1a a mtg.rules:Rule ;
+  skos:definition "A draft typically consists of three draft rounds. In each draft round, each player opens a booster pack, drafts one card by placing that card in a face-down pile in front of the player, then passes the remaining cards to the next player. Each player then drafts a card from the booster pack passed to them and passes the remaining cards. This procedure continues until all cards in that draft round have been drafted." ;
+  skos:notation "905.1a" ;
+  skos:broader mtg.rules:905_1 .
 # 905.1b In the first and third draft rounds, booster packs are passed to each player’s left. In the second draft round, booster packs are passed to each player’s right.
+mtg.rules:905_1b a mtg.rules:Rule ;
+  skos:definition "In the first and third draft rounds, booster packs are passed to each player’s left. In the second draft round, booster packs are passed to each player’s right." ;
+  skos:notation "905.1b" ;
+  skos:broader mtg.rules:905_1 .
 # 905.1c During the draft, a player can look only at cards in the booster pack they are currently drafting from, cards they have already drafted, cards that are currently revealed as described in rule 905.2b, and cards that have been drafted face up as described in rule 905.2c. A player may not reveal drafted cards to other players unless an ability instructs them to.
+mtg.rules:905_1c a mtg.rules:Rule ;
+  skos:definition "During the draft, a player can look only at cards in the booster pack they are currently drafting from, cards they have already drafted, cards that are currently revealed as described in rule 905.2b, and cards that have been drafted face up as described in rule 905.2c. A player may not reveal drafted cards to other players unless an ability instructs them to." ;
+  skos:notation "905.1c" ;
+  skos:related mtg.rules:905_2b ;
+  skos:broader mtg.rules:905_1 .
 # 905.1d After the draft and all actions that may be taken during or after the draft, all the cards a player has drafted become that player’s card pool. The player builds their deck from only these cards and any number of basic land cards. See rules 100.2b and 100.4b.
+mtg.rules:905_1d a mtg.rules:Rule ;
+  skos:definition "After the draft and all actions that may be taken during or after the draft, all the cards a player has drafted become that player’s card pool. The player builds their deck from only these cards and any number of basic land cards. See rules 100.2b and 100.4b." ;
+  skos:notation "905.1d" ;
+  skos:related mtg.rules:100_2b, mtg.rules:100_4b ;
+  skos:broader mtg.rules:905_1 .
 # 905.2. Some cards have abilities that function during the draft.
+mtg.rules:905_2 a mtg.rules:Rule ;
+  skos:definition "Some cards have abilities that function during the draft." ;
+  skos:notation "905.2" ;
+  skos:broader mtg.rules:ConspiracyDraft .
 # 905.2a During a draft, there is no active player or system of priority. If multiple players wish to take an action at the same time during the draft and can’t agree on an order, those actions are taken in a random order.
+mtg.rules:905_2a a mtg.rules:Rule ;
+  skos:definition "During a draft, there is no active player or system of priority. If multiple players wish to take an action at the same time during the draft and can’t agree on an order, those actions are taken in a random order." ;
+  skos:notation "905.2a" ;
+  skos:broader mtg.rules:905_2 .
 # 905.2b Some cards instruct players to reveal them as they’re drafted and then note some information, such as a number or color. This information can be referred to by other abilities during the game. Any player can look at this information at any time during the draft or game. After the information is noted, the drafted card is turned face down and added to the player’s drafted cards pile.
+mtg.rules:905_2b a mtg.rules:Rule ;
+  skos:definition "Some cards instruct players to reveal them as they’re drafted and then note some information, such as a number or color. This information can be referred to by other abilities during the game. Any player can look at this information at any time during the draft or game. After the information is noted, the drafted card is turned face down and added to the player’s drafted cards pile." ;
+  skos:notation "905.2b" ;
+  skos:broader mtg.rules:905_2 .
 # 905.2c Some cards instruct players to draft them face up. Each such card remains face up until the draft is complete, an effect instructs the person who drafted it to turn it face down, or the card leaves that player’s drafted cards pile. While the card is face up, all players may look at it.
+mtg.rules:905_2c a mtg.rules:Rule ;
+  skos:definition "Some cards instruct players to draft them face up. Each such card remains face up until the draft is complete, an effect instructs the person who drafted it to turn it face down, or the card leaves that player’s drafted cards pile. While the card is face up, all players may look at it." ;
+  skos:notation "905.2c" ;
+  skos:broader mtg.rules:905_2 .
 # 905.3. A Conspiracy Draft game is a multiplayer game. The default multiplayer setup is the Free-for-All variant with the attack multiple players option and without the limited range of influence option. See rule 806, “Free-for-All Variant.”
+mtg.rules:905_3 a mtg.rules:Rule ;
+  skos:definition "A Conspiracy Draft game is a multiplayer game. The default multiplayer setup is the Free-for-All variant with the attack multiple players option and without the limited range of influence option. See rule 806, “Free-for-All Variant.”" ;
+  skos:notation "905.3" ;
+  skos:related mtg.rules:FreeForAllVariant ;
+  skos:broader mtg.rules:ConspiracyDraft .
 # 905.4. At the start of the game, before decks are shuffled, each player may put any number of conspiracy cards from their sideboard into the command zone.
+mtg.rules:905_4 a mtg.rules:Rule ;
+  skos:definition "At the start of the game, before decks are shuffled, each player may put any number of conspiracy cards from their sideboard into the command zone." ;
+  skos:notation "905.4" ;
+  skos:broader mtg.rules:ConspiracyDraft .
 # 905.4a Conspiracy cards with hidden agenda are put into the command zone face down. Any time a player has priority, they may turn a face-down conspiracy card they control face up. See rule 702.106, “Hidden Agenda.”
+mtg.rules:905_4a a mtg.rules:Rule ;
+  skos:definition "Conspiracy cards with hidden agenda are put into the command zone face down. Any time a player has priority, they may turn a face-down conspiracy card they control face up. See rule 702.106, “Hidden Agenda.”" ;
+  skos:notation "905.4a" ;
+  skos:related mtg.rules:702_106 ;
+  skos:broader mtg.rules:905_4 .
 # 905.5. The owner of a conspiracy card is the player who put it into the command zone at the start of the game. The controller of a conspiracy card is its owner.
+mtg.rules:905_5 a mtg.rules:Rule ;
+  skos:definition "The owner of a conspiracy card is the player who put it into the command zone at the start of the game. The controller of a conspiracy card is its owner." ;
+  skos:notation "905.5" ;
+  skos:broader mtg.rules:ConspiracyDraft .
 # 905.6. Once the starting player has been determined, each player sets their life total to 20 and draws a hand of seven cards.
+mtg.rules:905_6 a mtg.rules:Rule ;
+  skos:definition "Once the starting player has been determined, each player sets their life total to 20 and draws a hand of seven cards." ;
+  skos:notation "905.6" ;
+  skos:broader mtg.rules:ConspiracyDraft .
 # APNAP Order: See Active Player, Nonactive Player Order.
 mtg.rules:APNAPOrder a mtg.rules:Rule ;
   skos:note "See Active Player, Nonactive Player Order." ;
@@ -16160,7 +16697,7 @@ mtg.rules:AttackAlone a mtg.rules:Rule ;
 mtg.rules:AttackLeftOption a mtg.rules:Rule ;
   skos:definition "An option that may be used in certain multiplayer variants. See rule 803, “Attack Left and Attack Right Options.”" ;
   skos:prefLabel "Attack Left Option" ;
-  skos:related mtg.rules:AttackLeftAttackRightOptions .
+  skos:related mtg.rules:AttackLeftAndAttackRightOptions .
 # Attack Multiple Players Option: An option that may be used in certain multiplayer variants. See rule 802, “Attack Multiple Players Option.”
 mtg.rules:AttackMultiplePlayersOption a mtg.rules:Rule ;
   skos:definition "An option that may be used in certain multiplayer variants. See rule 802, “Attack Multiple Players Option.”" ;
@@ -16170,7 +16707,7 @@ mtg.rules:AttackMultiplePlayersOption a mtg.rules:Rule ;
 mtg.rules:AttackRightOption a mtg.rules:Rule ;
   skos:definition "An option that may be used in certain multiplayer variants. See rule 803, “Attack Left and Attack Right Options.”" ;
   skos:prefLabel "Attack Right Option" ;
-  skos:related mtg.rules:AttackLeftAttackRightOptions .
+  skos:related mtg.rules:AttackLeftAndAttackRightOptions .
 # Attacking Creature: A creature that has either been declared as part of a legal attack during the combat phase (once all costs to attack, if any, have been paid), or a creature that has been put onto the battlefield attacking. It remains an attacking creature until it’s removed from combat or the combat phase ends, whichever comes first. See rule 508, “Declare Attackers Step.”
 mtg.rules:AttackingCreature a mtg.rules:Rule ;
   skos:definition "A creature that has either been declared as part of a legal attack during the combat phase (once all costs to attack, if any, have been paid), or a creature that has been put onto the battlefield attacking. It remains an attacking creature until it’s removed from combat or the combat phase ends, whichever comes first. See rule 508, “Declare Attackers Step.”" ;
@@ -16216,7 +16753,7 @@ mtg.rules:Awaken a mtg.rules:Rule ;
 mtg.rules:Background a mtg.rules:Rule ;
   skos:definition "An enchantment type that, in combination with the “choose a Background” ability, may allow a legendary enchantment to be your commander. See rule 702.124, “Partner,” and rule 903, “Commander.”" ;
   skos:prefLabel "Background" ;
-  skos:related mtg.rules:702_124, mtg.rules:903 .
+  skos:related mtg.rules:702_124, mtg.rules:Commander .
 # Backup: A keyword ability that lets a creature give +1/+1 counters to itself or another when it enters the battlefield. If a different creature is chosen, that creature also temporarily gains one or more abilities. See rule 702.165, “Backup.”
 mtg.rules:Backup a mtg.rules:Rule ;
   skos:definition "A keyword ability that lets a creature give +1/+1 counters to itself or another when it enters the battlefield. If a different creature is chosen, that creature also temporarily gains one or more abilities. See rule 702.165, “Backup.”" ;
@@ -16929,7 +17466,7 @@ mtg.rules:EndingPhase a mtg.rules:Rule ;
 mtg.rules:EnergySymbol a mtg.rules:Rule ;
   skos:definition "The energy symbol {E} represents one energy counter. To pay {E}, a player removes one energy counter from themselves." ;
   skos:prefLabel "Energy Symbol" ;
-  skos:related mtg.rules:EnergyCounter .
+  skos:related mtg.rules:Counters .
 # Enlist: A keyword ability that allows a creature that could have attacked to support another creature. See rule 702.154, “Enlist.”
 mtg.rules:Enlist a mtg.rules:Rule ;
   skos:definition "A keyword ability that allows a creature that could have attacked to support another creature. See rule 702.154, “Enlist.”" ;
@@ -17598,8 +18135,7 @@ mtg.rules:MainGame a mtg.rules:Rule ;
 # Main Phase: Part of the turn. The first, or precombat, main phase is the second phase of the turn. The second, or postcombat, main phase is the fourth phase of the turn. See rule 505, “Main Phase.”
 mtg.rules:MainPhase a mtg.rules:Rule ;
   skos:definition "Part of the turn. The first, or precombat, main phase is the second phase of the turn. The second, or postcombat, main phase is the fourth phase of the turn. See rule 505, “Main Phase.”" ;
-  skos:prefLabel "Main Phase" ;
-  skos:related mtg.rules:MainPhases .
+  skos:prefLabel "Main Phase" .
 # Mana: The primary resource in the game. It is spent to pay costs, usually when casting spells and activating abilities. See rule 106, “Mana,” rule 107.4, and rule 202, “Mana Cost and Color.”
 mtg.rules:Mana a mtg.rules:Rule ;
   skos:definition "The primary resource in the game. It is spent to pay costs, usually when casting spells and activating abilities. See rule 106, “Mana,” rule 107.4, and rule 202, “Mana Cost and Color.”" ;
@@ -17636,7 +18172,7 @@ mtg.rules:ManaValue a mtg.rules:Rule ;
 # Manifest: A keyword action that puts a card onto the battlefield face down as a 2/2 creature. See rule 701.34, “Manifest,” and rule 708, “Face-Down Spells and Permanents.”
 mtg.rules:Manifest a mtg.rules:Rule ;
   skos:definition "A keyword action that puts a card onto the battlefield face down as a 2/2 creature. See rule 701.34, “Manifest,” and rule 708, “Face-Down Spells and Permanents.”" ;
-  skos:related mtg.rules:701_34, mtg.rules:708 .
+  skos:related mtg.rules:701_34, mtg.rules:FaceDownSpellsAndPermanents .
 # Match: A multiplayer game or a two-player series of games (usually best-two-of-three) played in a tournament. See rule 100.6.
 mtg.rules:Match a mtg.rules:Rule ;
   skos:definition "A multiplayer game or a two-player series of games (usually best-two-of-three) played in a tournament. See rule 100.6." ;
@@ -17845,7 +18381,7 @@ mtg.rules:Offering a mtg.rules:Rule ;
 mtg.rules:OneShotEffect a mtg.rules:Rule ;
   skos:definition "An effect that does something just once and doesn’t have a duration. See rule 610, “One-Shot Effects.” See also Continuous Effects." ;
   skos:prefLabel "One-Shot Effect" ;
-  skos:related mtg.rules:610, mtg.rules:ContinuousEffects .
+  skos:related mtg.rules:OneShotEffects, mtg.rules:ContinuousEffects .
 # Ongoing: A supertype that appears only on scheme cards. See rule 205.4, “Supertypes.”
 mtg.rules:Ongoing a mtg.rules:Rule ;
   skos:definition "A supertype that appears only on scheme cards. See rule 205.4, “Supertypes.”" ;
@@ -17905,7 +18441,7 @@ mtg.rules:ParisMulligan a mtg.rules:Rule ;
 mtg.rules:Partner a mtg.rules:Rule ;
   skos:definition "A keyword ability that lets two legendary creatures or planeswalkers be your commander in the Commander variant rather than one. “Partner with [name]” is a specialized version of the ability that works even outside of the Commander variant to help two cards reach the battlefield together. See rule 702.124, “Partner,” and rule 903, “Commander.”" ;
   skos:prefLabel "Partner, “Partner with [name]”" ;
-  skos:related mtg.rules:702_124, mtg.rules:903 .
+  skos:related mtg.rules:702_124, mtg.rules:Commander .
 # Party: Some cards refer to the number of creatures in your party. A player’s party includes up to one each of Cleric, Rogue, Warrior, and Wizard. See rule 700.8.
 mtg.rules:Party a mtg.rules:Rule ;
   skos:definition "Some cards refer to the number of creatures in your party. A player’s party includes up to one each of Cleric, Rogue, Warrior, and Wizard. See rule 700.8." ;
@@ -18508,12 +19044,12 @@ mtg.rules:Spell a mtg.rules:Rule ;
 mtg.rules:SpellAbility a mtg.rules:Rule ;
   skos:definition "A kind of ability. Spell abilities are abilities that are followed as instructions while an instant or sorcery spell is resolving. See rule 113.3a." ;
   skos:prefLabel "Spell Ability" ;
-  skos:related mtg.rules:SpellAbilities .
+  skos:related mtg.rules:113_3a .
 # Spell Type: A subtype that’s correlated to the instant card type and the sorcery card type. See rule 304, “Instants,” and rule 307, “Sorceries.” See rule 205.3k for the list of spell types.
 mtg.rules:SpellType a mtg.rules:Rule ;
   skos:definition "A subtype that’s correlated to the instant card type and the sorcery card type. See rule 304, “Instants,” and rule 307, “Sorceries.” See rule 205.3k for the list of spell types." ;
   skos:prefLabel "Spell Type" ;
-  skos:related mtg.rules:SpellTypes .
+  skos:related mtg.rules:Instants, mtg.rules:Sorceries .
 # Splice: A keyword ability that lets a player add a card’s rules text onto another spell. See rule 702.47, “Splice.”
 mtg.rules:Splice a mtg.rules:Rule ;
   skos:definition "A keyword ability that lets a player add a card’s rules text onto another spell. See rule 702.47, “Splice.”" ;
@@ -18705,8 +19241,7 @@ mtg.rules:Team a mtg.rules:Rule ;
 # Team vs. Team Variant: A multiplayer variant played among two or more teams, each of which sits together. See rule 808, “Team vs. Team Variant.”
 mtg.rules:TeamVsTeamVariant a mtg.rules:Rule ;
   skos:definition "A multiplayer variant played among two or more teams, each of which sits together. See rule 808, “Team vs. Team Variant.”" ;
-  skos:prefLabel "Team vs. Team Variant" ;
-  skos:related mtg.rules:TeamsVsTeamsVariant .
+  skos:prefLabel "Team vs. Team Variant" .
 # Teammate: In a multiplayer game between teams, a player’s teammates are the other players on their team. See rule 102.3.
 mtg.rules:Teammate a mtg.rules:Rule ;
   skos:definition "In a multiplayer game between teams, a player’s teammates are the other players on their team. See rule 102.3." ;
@@ -18858,7 +19393,8 @@ mtg.rules:TurnMarkers a mtg.rules:Rule ;
   skos:related mtg.rules:807_4 .
 # Turn-Based Actions: Game actions that happen automatically when certain steps or phases begin, or when each step or phase ends. See rule 703, “Turn-Based Actions.”
 mtg.rules:TurnBasedActions a mtg.rules:Rule ;
-  skos:definition "Game actions that happen automatically when certain steps or phases begin, or when each step or phase ends. See rule 703, “Turn-Based Actions.”" .
+  skos:definition "Game actions that happen automatically when certain steps or phases begin, or when each step or phase ends. See rule 703, “Turn-Based Actions.”" ;
+  skos:prefLabel "Turn-Based Actions" .
 # Two-Headed Giant Variant: A multiplayer variant played among two-player teams that each have a shared life total and take a simultaneous turn. See rule 810, “Two-Headed Giant Variant.”
 mtg.rules:TwoHeadedGiantVariant a mtg.rules:Rule ;
   skos:definition "A multiplayer variant played among two-player teams that each have a shared life total and take a simultaneous turn. See rule 810, “Two-Headed Giant Variant.”" .

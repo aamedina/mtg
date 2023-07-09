@@ -1973,6 +1973,9 @@ mtg:Escalate a owl:NamedIndividual, mtg:KeywordAbility ;
 # Flying is a mtg:KeywordAbility
 mtg:Flying a owl:NamedIndividual, mtg:KeywordAbility ;
    rdfs:label "Flying" .
+# Shadow is a mtg:KeywordAbility
+mtg:Shadow a owl:NamedIndividual, mtg:KeywordAbility ;
+   rdfs:label "Shadow" .
 # Haste is a mtg:KeywordAbility
 mtg:Haste a owl:NamedIndividual, mtg:KeywordAbility ;
    rdfs:label "Haste" .
@@ -2321,6 +2324,9 @@ mtg:OpenAnAttraction a owl:NamedIndividual, mtg:KeywordAction ;
 # Roll to Visit Your Attractions is a mtg:KeywordAction
 mtg:RollToVisitYourAttractions a owl:NamedIndividual, mtg:KeywordAction ;
    rdfs:label "Roll to Visit Your Attractions" . 
+# The Ring Tempts You is a mtg:KeywordAction
+mtg:TheRingTemptsYou a owl:NamedIndividual, mtg:KeywordAction ;
+   rdfs:label "The Ring Tempts You" .
 
 # Ability Words
 mtg:AbilityWord a owl:Class ;
@@ -2480,6 +2486,9 @@ mtg:Alliance a owl:NamedIndividual, mtg:AbilityWord ;
 # Corrupted is a mtg:AbilityWord
 mtg:Corrupted a owl:NamedIndividual, mtg:AbilityWord ;
    rdfs:label "Corrupted" .
+# Secret Council is a mtg:AbilityWord
+mtg:SecretCouncil a owl:NamedIndividual, mtg:AbilityWord ;
+   rdfs:label "Secret Council" . 
 
 # Planes
 
