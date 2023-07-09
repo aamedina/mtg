@@ -18826,7 +18826,7 @@ mtg.rules:TheRing a mtg.rules:Rule ;
   skos:related mtg.rules:701_52 .
 # The Ring Tempts You
 # A keyword action that causes a player to choose a creature they control to be their legendary Ring-bearer and may cause them to create an emblem called The Ring. See rule 701.52, “The Ring Tempts You.”
-mtg.rules:TheRingTemptYou a mtg.rules:Rule ;
+mtg.rules:TheRingTemptsYou a mtg.rules:Rule ;
   skos:definition "A keyword action that causes a player to choose a creature they control to be their legendary Ring-bearer and may cause them to create an emblem called The Ring. See rule 701.52, “The Ring Tempts You.”" ;
   skos:prefLabel "The Ring Tempts You" ;
   skos:related mtg.rules:701_52 .
