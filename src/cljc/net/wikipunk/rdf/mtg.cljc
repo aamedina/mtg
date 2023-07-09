@@ -2,7 +2,8 @@
   "Magic: The Gathering Ontology"
   {:dcat/downloadURL "resources/mtg.ttl",
    :prov/wasDerivedFrom
-   "https://media.wizards.com/2023/downloads/MagicCompRules%2020230616.txt",
+   {:rdfa/uri
+    "https://media.wizards.com/2023/downloads/MagicCompRules%2020230616.txt"},
    :rdf/ns-prefix-map {"db" "https://wikipunk.net/db/",
                        "db.cardinality" "https://wikipunk.net/db/cardinality/",
                        "db.type" "https://wikipunk.net/db/type/",
@@ -21,7 +22,8 @@
    :rdfa/uri "https://wikipunk.net/mtg/",
    :rdfs/label "Magic: The Gathering Ontology",
    :rdfs/seeAlso
-   ["https://magic.wizards.com/en/game-info/gameplay/rules-and-formats/rules"]}
+   {:rdfa/uri
+    "https://magic.wizards.com/en/game-info/gameplay/rules-and-formats/rules"}}
   (:refer-clojure :exclude [name set type]))
 
 (def Abandon
@@ -4377,6 +4379,12 @@
    :rdf/type   [:mtg/Creature :owl/NamedIndividual :mtg/CardType],
    :rdfs/label "Sculpture"})
 
+(def SecretCouncil
+  "Secret Council"
+  {:db/ident   :mtg/SecretCouncil,
+   :rdf/type   [:mtg/AbilityWord :owl/NamedIndividual],
+   :rdfs/label "Secret Council"})
+
 (def Seek
   "Seek"
   {:db/ident   :mtg/Seek,
@@ -4936,6 +4944,12 @@
   {:db/ident   :mtg/TheAbyss,
    :rdf/type   [:mtg/Plane :owl/NamedIndividual :mtg/CardType],
    :rdfs/label "The Abyss"})
+
+(def TheRingTemptsYou
+  "The Ring Tempts You"
+  {:db/ident   :mtg/TheRingTemptsYou,
+   :rdf/type   [:mtg/KeywordAction :owl/NamedIndividual],
+   :rdfs/label "The Ring Tempts You"})
 
 (def Theros
   "Theros"
