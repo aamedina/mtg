@@ -6,7 +6,7 @@ Unofficial Magic: The Gathering RDF vocabulary
 ## :rdfs/seeAlso
 * [Scryfall](https://scryfall.com/docs/api)
 * [Comprehensive
-  Rules](https://media.wizards.com/2023/downloads/MagicCompRules%2020230414.txt)
+  Rules](https://magic.wizards.com/en/rules)
 * [Wizards of the Coast's Fan Content Policy](https://company.wizards.com/en/legal/fancontentpolicy)
 
 ## :dev
