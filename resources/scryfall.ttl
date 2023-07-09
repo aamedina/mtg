@@ -81,7 +81,7 @@ scryfall:oracleText a owl:DatatypeProperty ;
   rdfs:label "Oracle Text" .
 
 scryfall:power a owl:DatatypeProperty ;
-  db:valueType db.type:string ;
+  db:valueType db.type:ref ;
   db:cardinality db.cardinality:one ;
   rdfs:domain scryfall:Card ;
   rdfs:range xsd:string ;
@@ -123,7 +123,7 @@ scryfall:set a owl:DatatypeProperty ;
   rdfs:label "Set" .
 
 scryfall:toughness a owl:DatatypeProperty ;
-  db:valueType db.type:string ;
+  db:valueType db.type:ref ;
   db:cardinality db.cardinality:one ;
   rdfs:domain scryfall:Card ;
   rdfs:range xsd:string ;
@@ -165,7 +165,7 @@ scryfall:related a owl:ObjectProperty ;
   rdfs:label "Related card, token, meld part, etc." .
 
 scryfall:component a owl:ObjectProperty ;
-  db:valueType db.type:ref ;
+  db:valueType db.type:string ;
   db:cardinality db.cardinality:one ;
   rdfs:domain scryfall:Card ;
   rdfs:range xsd:string ;

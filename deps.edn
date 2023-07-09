@@ -1,15 +1,22 @@
 {:deps
  {enlive/enlive
-  {:mvn/version "1.1.6"}  
+  {:mvn/version "1.1.6"}
   io.github.aamedina/rdf
-  {:git/sha "0fb382ce817c2bf8167f7669c5a7a1aed9340bd3"}
-  org.clojure/clojure
-  {:mvn/version "1.12.0-alpha2"}}
- :paths ["src" "classes" "resources"]
+  {:git/sha "f49d38094d2bfa7ed3fe0b77f7e36f93c51c670d"}
+  io.github.aamedina/openai  
+  {:sha     "c34907a2a9b84ad3ce0d7243bbbda2dc06607793"
+   :git/url "https://github.com/aamedina/openai.git"}
+  io.github.aamedina/qdrant
+  {:sha     "3cc1a75342f71e8f8ddb37972ad0551e1f235d98"
+   :git/url "https://github.com/aamedina/qdrant.git"}}
+ :paths ["src/clj" "src/cljc" "classes" "resources"]
  :aliases
  {:dev
   {:extra-deps
-   {com.walmartlabs/schematic
+   {io.github.aamedina/punk.db
+    {:sha     "092d385306828cdfec0f6a6187f466c974338227"
+     :git/url "https://github.com/aamedina/punk.db.git"}
+    com.walmartlabs/schematic
     {:mvn/version "1.3.0"}
     com.stuartsierra/component.repl
     {:mvn/version "0.2.0"}

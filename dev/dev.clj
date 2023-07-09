@@ -27,14 +27,15 @@
    [net.cgrand.enlive-html :as html]
    [net.wikipunk.boot]
    [net.wikipunk.ext]
-   [net.wikipunk.chat :as chat]
    [net.wikipunk.mop :as mop :refer [isa? descendants parents ancestors]]
    [net.wikipunk.openai :as openai]
    [net.wikipunk.rdf :as rdf :refer [doc]]
-   [net.wikipunk.temple :as temple]
+   [net.wikipunk.qdrant :as qdrant]
    [zprint.core :as zprint]
    [net.wikipunk.mtg :as mtg]
-   [xtdb.api :as xt])
+   [xtdb.api :as xt]
+   [net.wikipunk.punk.db :as db]
+   [net.wikipunk.mtg.boot :as boot])
   (:refer-clojure :exclude [isa? descendants parents ancestors]))
 
 (set-init
@@ -247,3 +248,7 @@
                           :vector {:wrap? false}})
           (newline))
         (sort-by :db/ident oracle-cards)))
+
+(defmethod db/infer-datomic-type :prov/wasDerivedFrom [_] :db.type/string)
+(prefer-method db/infer-datomic-type :prov/wasDerivedFrom :owl/AnnotationProperty)
+(defmethod db/infer-datomic-type :scryfall/power [_] :db.type/long)

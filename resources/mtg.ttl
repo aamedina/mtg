@@ -14,7 +14,7 @@
 
 mtg: a owl:Ontology ;
   rdfs:label "Magic: The Gathering Ontology" ;
-  prov:wasDerivedFrom <https://media.wizards.com/2023/downloads/MagicCompRules%2020230414.txt> ;
+  prov:wasDerivedFrom <https://media.wizards.com/2023/downloads/MagicCompRules%2020230616.txt> ;
   rdfs:seeAlso <https://magic.wizards.com/en/game-info/gameplay/rules-and-formats/rules> .
 
 # Classes
@@ -92,6 +92,11 @@ mtg:Enchantment a owl:Class ;
   prov:wasDerivedFrom mtg.rules:Enchantments ;
   rdfs:subClassOf mtg:CardType ;
   rdfs:label "Enchantment" .
+
+mtg:Spell a owl:Class ;
+  prov:wasDerivedFrom mtg.rules:Spells ;
+  rdfs:subClassOf mtg:CardType ;
+  rdfs:label "Spell" .
 
 mtg:Instant a owl:Class ;
   prov:wasDerivedFrom mtg.rules:Instants ;

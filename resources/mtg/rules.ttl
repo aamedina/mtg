@@ -12,10 +12,10 @@
 @prefix mtg.rules: <https://wikipunk.net/mtg/rules/> .
 
 mtg.rules: a owl:Ontology ;
-  owl:versionInfo "2023-04-14" ;
+  owl:versionInfo "2023-06-16" ;
   rdfs:label "Magic: The Gathering Comprehensive Rules" ;
   rdfs:comment "This document is the ultimate authority for Magic: The Gathering® competitive game play. It consists of a series of numbered rules followed by a glossary. Many of the numbered rules are divided into subrules, and each separate rule and subrule of the game has its own number." ;
-  prov:wasDerivedFrom <https://media.wizards.com/2023/downloads/MagicCompRules%2020230414.txt> ;
+  prov:wasDerivedFrom <https://media.wizards.com/2023/downloads/MagicCompRules%2020230616.txt> ;
   rdfs:seeAlso <https://magic.wizards.com/en/game-info/gameplay/rules-and-formats/rules> .
 
 mtg.rules:Rules a skos:ConceptScheme ;
@@ -9278,7 +9278,7 @@ mtg.rules:701_47a a mtg.rules:Rule ;
   skos:notation "701.47a" ;
   skos:broader mtg.rules:701_47 .
 # 701.47b A permanent “connives” after the process described in rule 701.47a is complete, even if some or all of those actions were impossible.
-mtg.rules:701_47b a skos:concept ;
+mtg.rules:701_47b a skos:Concept ;
   skos:definition "A permanent “connives” after the process described in rule 701.47a is complete, even if some or all of those actions were impossible." ;
   skos:notation "701.47b" ;
   skos:broader mtg.rules:701_47 .
