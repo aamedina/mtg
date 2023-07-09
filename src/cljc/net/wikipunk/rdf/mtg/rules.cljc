@@ -4945,6 +4945,15 @@
    :skos/prefLabel "Reveal",
    :skos/related :mtg.rules/|701_16|})
 
+(def RingBearer
+  "A designation that a creature can be given as the Ring tempts you. See rule 701.52, “The Ring Tempts You.”"
+  {:db/ident :mtg.rules/RingBearer,
+   :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
+   :skos/definition
+   "A designation that a creature can be given as the Ring tempts you. See rule 701.52, “The Ring Tempts You.”",
+   :skos/prefLabel "Ring-bearer",
+   :skos/related :mtg.rules/|701_52|})
+
 (def Riot
   "A keyword ability that lets a player choose whether certain creatures enter the battlefield with haste or with a +1/+1 counter. See rule 702.136, “Riot.”"
   {:db/ident :mtg.rules/Riot,
@@ -5882,6 +5891,24 @@
    :skos/notation  "721",
    :skos/prefLabel "The Monarch"})
 
+(def TheRing
+  "An emblem that may be created at the time the Ring tempts you. See rule 701.52, “The Ring Tempts You.”"
+  {:db/ident :mtg.rules/TheRing,
+   :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
+   :skos/definition
+   "An emblem that may be created at the time the Ring tempts you. See rule 701.52, “The Ring Tempts You.”",
+   :skos/prefLabel "The Ring",
+   :skos/related :mtg.rules/|701_52|})
+
+(def TheRingTemptYou
+  "A keyword action that causes a player to choose a creature they control to be their legendary Ring-bearer and may cause them to create an emblem called The Ring. See rule 701.52, “The Ring Tempts You.”"
+  {:db/ident :mtg.rules/TheRingTemptYou,
+   :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
+   :skos/definition
+   "A keyword action that causes a player to choose a creature they control to be their legendary Ring-bearer and may cause them to create an emblem called The Ring. See rule 701.52, “The Ring Tempts You.”",
+   :skos/prefLabel "The Ring Tempts You",
+   :skos/related :mtg.rules/|701_52|})
+
 (def Threshold
   "“Threshold” used to be a keyword ability. It is now an ability word and has no rules meaning. All cards printed with the threshold keyword have received errata in the Oracle card reference."
   {:db/ident :mtg.rules/Threshold,
@@ -6654,7 +6681,8 @@
    :skos/broader :mtg.rules/|100_2|,
    :skos/definition
    "Commander decks are subject to additional deckbuilding restrictions and requirements. See rule 903, “Commander,” for details.",
-   :skos/notation "100.2c"})
+   :skos/notation "100.2c",
+   :skos/related :mtg.rules/|903|})
 
 (def |100_2d|
   "Some formats and casual play variants allow players to use a supplementary deck of nontraditional Magic cards (see rule 108.2a). These supplementary decks have their own deck construction rules. See rule 717, “Attraction Cards;” rule 901, “Planechase;” and rule 904, “Archenemy.”"
@@ -6969,7 +6997,8 @@
    :skos/broader :mtg.rules/|103_2|,
    :skos/definition
    "In a Commander game, each player puts their commander from their deck face up into the command zone. See rule 903.6.",
-   :skos/notation "103.2c"})
+   :skos/notation "103.2c",
+   :skos/related :mtg.rules/|903_6|})
 
 (def |103_2e|
   "In a Conspiracy Draft game, each player puts any number of conspiracy cards from their sideboard into the command zone. See rule 905.4."
@@ -7232,7 +7261,8 @@
    :skos/broader :mtg.rules/|104_2|,
    :skos/definition
    "In an Emperor game, a team wins the game if its emperor wins the game. (See rule 809.5.)",
-   :skos/notation "104.2d"})
+   :skos/notation "104.2d",
+   :skos/related :mtg.rules/|809_5|})
 
 (def |104_2|
   "There are several ways to win the game."
@@ -7324,7 +7354,8 @@
    :skos/broader :mtg.rules/|104_3|,
    :skos/definition
    "In an Emperor game, a team loses the game if its emperor loses the game. (See rule 809.5.)",
-   :skos/notation "104.3i"})
+   :skos/notation "104.3i",
+   :skos/related :mtg.rules/|809_5|})
 
 (def |104_3j|
   "In a Commander game, a player who’s been dealt 21 or more combat damage by the same commander over the course of the game loses the game. (This is a state-based action. See rule 704. See also rule 903.10.)"
@@ -7334,7 +7365,7 @@
    :skos/definition
    "In a Commander game, a player who’s been dealt 21 or more combat damage by the same commander over the course of the game loses the game. (This is a state-based action. See rule 704. See also rule 903.10.)",
    :skos/notation "104.3j",
-   :skos/related :mtg.rules/StateBasedActions})
+   :skos/related [:mtg.rules/|903_10| :mtg.rules/StateBasedActions]})
 
 (def |104_3k|
   "In a tournament, a player may lose the game as a result of a penalty given by a judge. See rule 100.6."
@@ -7425,7 +7456,8 @@
    :skos/broader :mtg.rules/|104_4|,
    :skos/definition
    "In the Emperor variant, the game is a draw for a team if the game is a draw for its emperor. (See rule 809.5.)",
-   :skos/notation "104.4h"})
+   :skos/notation "104.4h",
+   :skos/related :mtg.rules/|809_5|})
 
 (def |104_4i|
   "In a tournament, all players in the game may agree to an intentional draw. See rule 100.6."
@@ -7727,12 +7759,12 @@
    :skos/notation "106.9"})
 
 (def |107_10|
-  "A type icon appears in the upper left corner of each card from the Future Sight® set printed with an alternate “timeshifted” frame. If the card has a single card type, this icon indicates what it is: claw marks for creature, a flame for sorcery, a lightning bolt for instant, a sunrise for enchantment, a chalice for artifact, and a pair of mountain peaks for land. If the card has multiple card types, that’s indicated by a black and white cross. This icon has no effect on game play."
+  "A type icon appears in the upper left corner of each card from the Future Sight™ set printed with an alternate “timeshifted” frame. If the card has a single card type, this icon indicates what it is: claw marks for creature, a flame for sorcery, a lightning bolt for instant, a sunrise for enchantment, a chalice for artifact, and a pair of mountain peaks for land. If the card has multiple card types, that’s indicated by a black and white cross. This icon has no effect on game play."
   {:db/ident :mtg.rules/|107_10|,
    :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
    :skos/broader :mtg.rules/NumbersAndSymbols,
    :skos/definition
-   "A type icon appears in the upper left corner of each card from the Future Sight® set printed with an alternate “timeshifted” frame. If the card has a single card type, this icon indicates what it is: claw marks for creature, a flame for sorcery, a lightning bolt for instant, a sunrise for enchantment, a chalice for artifact, and a pair of mountain peaks for land. If the card has multiple card types, that’s indicated by a black and white cross. This icon has no effect on game play.",
+   "A type icon appears in the upper left corner of each card from the Future Sight™ set printed with an alternate “timeshifted” frame. If the card has a single card type, this icon indicates what it is: claw marks for creature, a flame for sorcery, a lightning bolt for instant, a sunrise for enchantment, a chalice for artifact, and a pair of mountain peaks for land. If the card has multiple card types, that’s indicated by a black and white cross. This icon has no effect on game play.",
    :skos/notation "107.10"})
 
 (def |107_11|
@@ -9108,12 +9140,12 @@
    :skos/notation "113.6f"})
 
 (def |113_6g|
-  "An object’s ability that states it can’t be countered functions on the stack."
+  "An object’s ability that states it can’t be countered or can’t be copied functions on the stack."
   {:db/ident :mtg.rules/|113_6g|,
    :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
    :skos/broader :mtg.rules/|113_6|,
    :skos/definition
-   "An object’s ability that states it can’t be countered functions on the stack.",
+   "An object’s ability that states it can’t be countered or can’t be copied functions on the stack.",
    :skos/notation "113.6g"})
 
 (def |113_6h|
@@ -9255,12 +9287,12 @@
    :skos/notation "114.2"})
 
 (def |114_3|
-  "An emblem has no characteristics other than the abilities defined by the effect that created it. In particular, an emblem has no name, no types, no mana cost, and no color."
+  "An emblem has no characteristics other than the abilities defined by the effect that created it. In particular, an emblem has no types, no mana cost, and no color. Most emblems also have no name."
   {:db/ident :mtg.rules/|114_3|,
    :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
    :skos/broader :mtg.rules/Emblems,
    :skos/definition
-   "An emblem has no characteristics other than the abilities defined by the effect that created it. In particular, an emblem has no name, no types, no mana cost, and no color.",
+   "An emblem has no characteristics other than the abilities defined by the effect that created it. In particular, an emblem has no types, no mana cost, and no color. Most emblems also have no name.",
    :skos/notation "114.3"})
 
 (def |114_4|
@@ -9929,6 +9961,16 @@
    "Some costs contain mana symbols that can be paid in multiple ways. These include hybrid mana symbols and Phyrexian mana symbols.",
    :skos/notation "118.13"})
 
+(def |118_14|
+  "Some effects say that “mana of any type can be spent” to pay a cost. This means that players may spend mana as though it were colorless mana or mana of any color to pay that cost. If that effect also gives a player permission to cast spells, this applies only to mana that player spends to cast spells that way. See rule 609.4b."
+  {:db/ident :mtg.rules/|118_14|,
+   :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
+   :skos/broader :mtg.rules/Costs,
+   :skos/definition
+   "Some effects say that “mana of any type can be spent” to pay a cost. This means that players may spend mana as though it were colorless mana or mana of any color to pay that cost. If that effect also gives a player permission to cast spells, this applies only to mana that player spends to cast spells that way. See rule 609.4b.",
+   :skos/notation "118.14",
+   :skos/related :mtg.rules/|609_4b|})
+
 (def |118_1|
   "A cost is an action or payment necessary to take another action or to stop another action from taking place. To pay a cost, a player carries out the instructions specified by the spell, ability, or effect that contains that cost."
   {:db/ident :mtg.rules/|118_1|,
@@ -10246,7 +10288,8 @@
    :skos/broader :mtg.rules/|119_1|,
    :skos/definition
    "In a two-player Brawl game, each player’s starting life total is 25. In a multiplayer Brawl game, each player’s starting life total is 30. See rule 903.12, “Brawl Option.”",
-   :skos/notation "119.1d"})
+   :skos/notation "119.1d",
+   :skos/related :mtg.rules/|903_12|})
 
 (def |119_1e|
   "In an Archenemy game, the archenemy’s starting life total is 40. See rule 904, “Archenemy.”"
@@ -10759,12 +10802,12 @@
    :skos/related :mtg.rules/|613_4c|})
 
 (def |122_1b|
-  "A keyword counter on a permanent or on a card in a zone other than the battlefield causes that object to gain that keyword. The keywords that a keyword counter can be are flying, first strike, double strike, deathtouch, haste, hexproof, indestructible, lifelink, menace, reach, trample, and vigilance, as well as any variants of those keywords. See rule 613.1f."
+  "A keyword counter on a permanent or on a card in a zone other than the battlefield causes that object to gain that keyword. The keywords that a keyword counter can be are flying, first strike, double strike, deathtouch, haste, hexproof, indestructible, lifelink, menace, reach, shadow, trample, and vigilance, as well as any variants of those keywords. See rule 613.1f."
   {:db/ident :mtg.rules/|122_1b|,
    :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
    :skos/broader :mtg.rules/|122_1|,
    :skos/definition
-   "A keyword counter on a permanent or on a card in a zone other than the battlefield causes that object to gain that keyword. The keywords that a keyword counter can be are flying, first strike, double strike, deathtouch, haste, hexproof, indestructible, lifelink, menace, reach, trample, and vigilance, as well as any variants of those keywords. See rule 613.1f.",
+   "A keyword counter on a permanent or on a card in a zone other than the battlefield causes that object to gain that keyword. The keywords that a keyword counter can be are flying, first strike, double strike, deathtouch, haste, hexproof, indestructible, lifelink, menace, reach, shadow, trample, and vigilance, as well as any variants of those keywords. See rule 613.1f.",
    :skos/notation "122.1b",
    :skos/related :mtg.rules/|613_1f|})
 
@@ -11936,12 +11979,12 @@
    :skos/notation "206.1"})
 
 (def |206_2|
-  "The color of the expansion symbol indicates the rarity of the card within its set. A red-orange symbol indicates the card is mythic rare. A gold symbol indicates the card is rare. A silver symbol indicates the card is uncommon. A black or white symbol indicates the card is common or is a basic land. A purple symbol signifies a special rarity; to date, only the Time Spiral® “timeshifted” cards, which were rarer than that set’s rare cards, have had purple expansion symbols. (Prior to the Exodus™ set, all expansion symbols were black, regardless of rarity. Also, prior to the Sixth Edition core set, with the exception of the Simplified Chinese Fifth Edition core set, Magic core sets didn’t have expansion symbols at all.)"
+  "The color of the expansion symbol indicates the rarity of the card within its set. A red-orange symbol indicates the card is mythic rare. A gold symbol indicates the card is rare. A silver symbol indicates the card is uncommon. A black or white symbol indicates the card is common or is a basic land. A purple symbol signifies a special rarity; to date, only the Time Spiral™ “timeshifted” cards, which were rarer than that set’s rare cards, have had purple expansion symbols. (Prior to the Exodus™ set, all expansion symbols were black, regardless of rarity. Also, prior to the Sixth Edition core set, with the exception of the Simplified Chinese Fifth Edition core set, Magic core sets didn’t have expansion symbols at all.)"
   {:db/ident :mtg.rules/|206_2|,
    :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
    :skos/broader :mtg.rules/ExpansionSymbol,
    :skos/definition
-   "The color of the expansion symbol indicates the rarity of the card within its set. A red-orange symbol indicates the card is mythic rare. A gold symbol indicates the card is rare. A silver symbol indicates the card is uncommon. A black or white symbol indicates the card is common or is a basic land. A purple symbol signifies a special rarity; to date, only the Time Spiral® “timeshifted” cards, which were rarer than that set’s rare cards, have had purple expansion symbols. (Prior to the Exodus™ set, all expansion symbols were black, regardless of rarity. Also, prior to the Sixth Edition core set, with the exception of the Simplified Chinese Fifth Edition core set, Magic core sets didn’t have expansion symbols at all.)",
+   "The color of the expansion symbol indicates the rarity of the card within its set. A red-orange symbol indicates the card is mythic rare. A gold symbol indicates the card is rare. A silver symbol indicates the card is uncommon. A black or white symbol indicates the card is common or is a basic land. A purple symbol signifies a special rarity; to date, only the Time Spiral™ “timeshifted” cards, which were rarer than that set’s rare cards, have had purple expansion symbols. (Prior to the Exodus™ set, all expansion symbols were black, regardless of rarity. Also, prior to the Sixth Edition core set, with the exception of the Simplified Chinese Fifth Edition core set, Magic core sets didn’t have expansion symbols at all.)",
    :skos/notation "206.2"})
 
 (def |206_3a|
@@ -12026,12 +12069,12 @@
    :skos/notation "207.2b"})
 
 (def |207_2c|
-  "An ability word appears in italics at the beginning of some abilities. Ability words are similar to keywords in that they tie together cards that have similar functionality, but they have no special rules meaning and no individual entries in the Comprehensive Rules. The ability words are adamant, addendum, alliance, battalion, bloodrush, channel, chroma, cohort, constellation, converge, council’s dilemma, coven, delirium, domain, eminence, enrage, fateful hour, ferocious, formidable, grandeur, hellbent, heroic, imprint, inspired, join forces, kinship, landfall, lieutenant, magecraft, metalcraft, morbid, pack tactics, parley, radiance, raid, rally, revolt, spell mastery, strive, sweep, tempting offer, threshold, undergrowth, and will of the council."
+  "An ability word appears in italics at the beginning of some abilities. Ability words are similar to keywords in that they tie together cards that have similar functionality, but they have no special rules meaning and no individual entries in the Comprehensive Rules. The ability words are adamant, addendum, alliance, battalion, bloodrush, channel, chroma, cohort, constellation, converge, council’s dilemma, coven, delirium, domain, eminence, enrage, fateful hour, ferocious, formidable, grandeur, hellbent, heroic, imprint, inspired, join forces, kinship, landfall, lieutenant, magecraft, metalcraft, morbid, pack tactics, parley, radiance, raid, rally, revolt, secret council, spell mastery, strive, sweep, tempting offer, threshold, undergrowth, and will of the council."
   {:db/ident :mtg.rules/|207_2c|,
    :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
    :skos/broader :mtg.rules/|207_2|,
    :skos/definition
-   "An ability word appears in italics at the beginning of some abilities. Ability words are similar to keywords in that they tie together cards that have similar functionality, but they have no special rules meaning and no individual entries in the Comprehensive Rules. The ability words are adamant, addendum, alliance, battalion, bloodrush, channel, chroma, cohort, constellation, converge, council’s dilemma, coven, delirium, domain, eminence, enrage, fateful hour, ferocious, formidable, grandeur, hellbent, heroic, imprint, inspired, join forces, kinship, landfall, lieutenant, magecraft, metalcraft, morbid, pack tactics, parley, radiance, raid, rally, revolt, spell mastery, strive, sweep, tempting offer, threshold, undergrowth, and will of the council.",
+   "An ability word appears in italics at the beginning of some abilities. Ability words are similar to keywords in that they tie together cards that have similar functionality, but they have no special rules meaning and no individual entries in the Comprehensive Rules. The ability words are adamant, addendum, alliance, battalion, bloodrush, channel, chroma, cohort, constellation, converge, council’s dilemma, coven, delirium, domain, eminence, enrage, fateful hour, ferocious, formidable, grandeur, hellbent, heroic, imprint, inspired, join forces, kinship, landfall, lieutenant, magecraft, metalcraft, morbid, pack tactics, parley, radiance, raid, rally, revolt, secret council, spell mastery, strive, sweep, tempting offer, threshold, undergrowth, and will of the council.",
    :skos/notation "207.2c"})
 
 (def |207_2d|
@@ -12078,7 +12121,8 @@
    :skos/broader :mtg.rules/TextBox,
    :skos/definition
    "One card (Cryptic Spires) has a set of symbols below the text box that represent each color and an ability that instructs a player to circle two of those colors as they create their deck. To circle a color, the player circles (or otherwise clearly indicates) that color’s symbol. The mana symbol of each circled color is considered part of that card’s printed rules text (see rule 613.1) and affects that card’s color identity (see rule 903.4).",
-   :skos/notation "207.5"})
+   :skos/notation "207.5",
+   :skos/related :mtg.rules/|903_4|})
 
 (def |208_1|
   "A creature card has two numbers separated by a slash printed in its lower right corner. The first number is its power (the amount of damage it deals in combat); the second is its toughness (the amount of damage needed to destroy it). For example, 2/3 means the object has power 2 and toughness 3. Power and toughness can be modified or set to particular values by effects."
@@ -14390,12 +14434,12 @@
    :skos/notation "406.3b"})
 
 (def |406_3|
-  "Exiled cards are, by default, kept face up and may be examined by any player at any time. Cards “exiled face down” can’t be examined by any player except when instructions allow it. However, if a player is instructed to look at a card and then exile it face down, or once a player is allowed to look at a card exiled face down, that player may continue to look at that card as long as it remains exiled, even if the instruction allowing the player to do so no longer applies."
+  "Exiled cards are, by default, kept face up and may be examined by any player at any time. Cards “exiled face down” can’t be examined by any player except when instructions allow it. However, if a player is instructed to look at a card and then exile it face down, or once a player is allowed to look at a card exiled face down, that player may continue to look at that card until it leaves the exile zone or is part of a pile of cards that are shuffled, even if the instruction allowing the player to do so no longer applies."
   {:db/ident :mtg.rules/|406_3|,
    :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
    :skos/broader :mtg.rules/Exile,
    :skos/definition
-   "Exiled cards are, by default, kept face up and may be examined by any player at any time. Cards “exiled face down” can’t be examined by any player except when instructions allow it. However, if a player is instructed to look at a card and then exile it face down, or once a player is allowed to look at a card exiled face down, that player may continue to look at that card as long as it remains exiled, even if the instruction allowing the player to do so no longer applies.",
+   "Exiled cards are, by default, kept face up and may be examined by any player at any time. Cards “exiled face down” can’t be examined by any player except when instructions allow it. However, if a player is instructed to look at a card and then exile it face down, or once a player is allowed to look at a card exiled face down, that player may continue to look at that card until it leaves the exile zone or is part of a pile of cards that are shuffled, even if the instruction allowing the player to do so no longer applies.",
    :skos/notation "406.3"})
 
 (def |406_4|
@@ -16768,6 +16812,15 @@
    "If a static ability allows a player to take an action and creates a delayed triggered ability if that player does so, the source of that delayed triggered ability is the object with that static ability. The controller of that delayed triggered ability is the same as the controller of that object at the time the action was taken.",
    :skos/notation "603.7g"})
 
+(def |603_7h|
+  "An activated or triggered ability may create a delayed triggered ability that triggers when the ability that created it has resolved a certain number of times in a turn. In that case, that delayed triggered ability is created only once, during the appropriate resolution of that ability."
+  {:db/ident :mtg.rules/|603_7h|,
+   :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
+   :skos/broader :mtg.rules/|603_7|,
+   :skos/definition
+   "An activated or triggered ability may create a delayed triggered ability that triggers when the ability that created it has resolved a certain number of times in a turn. In that case, that delayed triggered ability is created only once, during the appropriate resolution of that ability.",
+   :skos/notation "603.7h"})
+
 (def |603_7|
   "An effect may create a delayed triggered ability that can do something at a later time. A delayed triggered ability will contain “when,” “whenever,” or “at,” although that word won’t usually begin the ability."
   {:db/ident :mtg.rules/|603_7|,
@@ -17434,13 +17487,22 @@
    "As the final part of an instant or sorcery spell’s resolution, the spell is put into its owner’s graveyard. As the final part of an ability’s resolution, the ability is removed from the stack and ceases to exist.",
    :skos/notation "608.2m"})
 
+(def |608_2n|
+  "Once all possible steps described in 608.2c–m are completed, any abilities that trigger when that spell or ability resolves trigger."
+  {:db/ident :mtg.rules/|608_2n|,
+   :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
+   :skos/broader :mtg.rules/|608_2|,
+   :skos/definition
+   "Once all possible steps described in 608.2c–m are completed, any abilities that trigger when that spell or ability resolves trigger.",
+   :skos/notation "608.2n"})
+
 (def |608_2|
-  "If the object that’s resolving is an instant spell, a sorcery spell, or an ability, its resolution may involve several steps. The steps described in rules 608.2a and 608.2b are followed first. The steps described in rules 608.2c–k are then followed as appropriate, in no specific order. The step described in rule 608.2m is followed last."
+  "If the object that’s resolving is an instant spell, a sorcery spell, or an ability, its resolution may involve several steps. The steps described in rules 608.2a and 608.2b are followed first. The steps described in rules 608.2c–k are then followed as appropriate, in no specific order. The steps described in rule 608.2m and 608.2n are followed last."
   {:db/ident :mtg.rules/|608_2|,
    :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
    :skos/broader :mtg.rules/ResolvingSpellsAndAbilities,
    :skos/definition
-   "If the object that’s resolving is an instant spell, a sorcery spell, or an ability, its resolution may involve several steps. The steps described in rules 608.2a and 608.2b are followed first. The steps described in rules 608.2c–k are then followed as appropriate, in no specific order. The step described in rule 608.2m is followed last.",
+   "If the object that’s resolving is an instant spell, a sorcery spell, or an ability, its resolution may involve several steps. The steps described in rules 608.2a and 608.2b are followed first. The steps described in rules 608.2c–k are then followed as appropriate, in no specific order. The steps described in rule 608.2m and 608.2n are followed last.",
    :skos/notation "608.2"})
 
 (def |608_3a|
@@ -17566,12 +17628,12 @@
    :skos/notation "609.4a"})
 
 (def |609_4b|
-  "If an effect allows a player to spend mana “as though it were mana of any [type or color],” this affects only how the player may pay a cost. It doesn’t change that cost, and it doesn’t change what mana was actually spent to pay that cost."
+  "If an effect allows a player to spend mana “as though it were mana of any [type or color],” this affects only how the player may pay a cost. It doesn’t change that cost, and it doesn’t change what mana was actually spent to pay that cost. The same is true for effects that say “mana of any type can be spent.”"
   {:db/ident :mtg.rules/|609_4b|,
    :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
    :skos/broader :mtg.rules/|609_4|,
    :skos/definition
-   "If an effect allows a player to spend mana “as though it were mana of any [type or color],” this affects only how the player may pay a cost. It doesn’t change that cost, and it doesn’t change what mana was actually spent to pay that cost.",
+   "If an effect allows a player to spend mana “as though it were mana of any [type or color],” this affects only how the player may pay a cost. It doesn’t change that cost, and it doesn’t change what mana was actually spent to pay that cost. The same is true for effects that say “mana of any type can be spent.”",
    :skos/notation "609.4b"})
 
 (def |609_4|
@@ -19033,12 +19095,12 @@
    :skos/related :mtg.rules/|707_10|})
 
 (def |700_2|
-  "A spell or ability is modal if it has two or more options in a bulleted list preceded by instructions for a player to choose a number of those options, such as “Choose one —.” Each of those options is a mode. Modal cards printed prior to the Khans of Tarkir® set didn’t use bulleted lists for the modes; these cards have received errata in the Oracle card reference so the modes do appear in a bulleted list."
+  "A spell or ability is modal if it has two or more options in a bulleted list preceded by instructions for a player to choose a number of those options, such as “Choose one —.” Each of those options is a mode. Modal cards printed prior to the Khans of Tarkir™ set didn’t use bulleted lists for the modes; these cards have received errata in the Oracle card reference so the modes do appear in a bulleted list."
   {:db/ident :mtg.rules/|700_2|,
    :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
    :skos/broader :mtg.rules/AdditionalRules,
    :skos/definition
-   "A spell or ability is modal if it has two or more options in a bulleted list preceded by instructions for a player to choose a number of those options, such as “Choose one —.” Each of those options is a mode. Modal cards printed prior to the Khans of Tarkir® set didn’t use bulleted lists for the modes; these cards have received errata in the Oracle card reference so the modes do appear in a bulleted list.",
+   "A spell or ability is modal if it has two or more options in a bulleted list preceded by instructions for a player to choose a number of those options, such as “Choose one —.” Each of those options is a mode. Modal cards printed prior to the Khans of Tarkir™ set didn’t use bulleted lists for the modes; these cards have received errata in the Oracle card reference so the modes do appear in a bulleted list.",
    :skos/notation "700.2"})
 
 (def |700_3a|
@@ -20591,22 +20653,40 @@
    :skos/notation   "701.43"})
 
 (def |701_44a|
-  "To amass N means “If you don’t control an Army creature, create a 0/0 black Zombie Army creature token. Choose an Army creature you control. Put N +1/+1 counters on that creature.”"
+  "To amass [subtype] N means “If you don’t control an Army creature, create a 0/0 black [subtype] Army creature token. Choose an Army creature you control. Put N +1/+1 counters on that creature. If it isn’t a [subtype], it becomes a [subtype] in addition to its other types.”"
   {:db/ident :mtg.rules/|701_44a|,
    :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
    :skos/broader :mtg.rules/|701_44|,
    :skos/definition
-   "To amass N means “If you don’t control an Army creature, create a 0/0 black Zombie Army creature token. Choose an Army creature you control. Put N +1/+1 counters on that creature.”",
+   "To amass [subtype] N means “If you don’t control an Army creature, create a 0/0 black [subtype] Army creature token. Choose an Army creature you control. Put N +1/+1 counters on that creature. If it isn’t a [subtype], it becomes a [subtype] in addition to its other types.”",
    :skos/notation "701.44a"})
 
 (def |701_44b|
-  "The phrase “the [subtype] you amassed” refers to the creature you chose, whether or not it received counters."
+  "A player “amassed” after the process described in rule 701.44a is complete, even if some or all of those actions were impossible."
   {:db/ident :mtg.rules/|701_44b|,
    :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
    :skos/broader :mtg.rules/|701_44|,
    :skos/definition
-   "The phrase “the [subtype] you amassed” refers to the creature you chose, whether or not it received counters.",
+   "A player “amassed” after the process described in rule 701.44a is complete, even if some or all of those actions were impossible.",
    :skos/notation "701.44b"})
+
+(def |701_44c|
+  "The phrases “the Army you amassed” and “the amassed Army” refer to the creature you chose, whether or not it received counters."
+  {:db/ident :mtg.rules/|701_44c|,
+   :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
+   :skos/broader :mtg.rules/|701_44|,
+   :skos/definition
+   "The phrases “the Army you amassed” and “the amassed Army” refer to the creature you chose, whether or not it received counters.",
+   :skos/notation "701.44c"})
+
+(def |701_44d|
+  "Some older cards were printed with amass N without including a subtype. Those cards have received errata in the Oracle card reference so that they read “amass Zombies N.”"
+  {:db/ident :mtg.rules/|701_44d|,
+   :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
+   :skos/broader :mtg.rules/|701_44|,
+   :skos/definition
+   "Some older cards were printed with amass N without including a subtype. Those cards have received errata in the Oracle card reference so that they read “amass Zombies N.”",
+   :skos/notation "701.44d"})
 
 (def |701_44|
   "Amass"
@@ -20904,6 +20984,50 @@
    :skos/broader    :mtg.rules/KeywordActions,
    :skos/definition "Incubate",
    :skos/notation   "701.51"})
+
+(def |701_52a|
+  "Certain spells and abilities have the text “the Ring tempts you.” Each time the Ring tempts you, choose a creature you control. That creature becomes your Ring-bearer until another creature becomes your Ring-bearer or another player gains control of it."
+  {:db/ident :mtg.rules/|701_52a|,
+   :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
+   :skos/broader :mtg.rules/|701_52|,
+   :skos/definition
+   "Certain spells and abilities have the text “the Ring tempts you.” Each time the Ring tempts you, choose a creature you control. That creature becomes your Ring-bearer until another creature becomes your Ring-bearer or another player gains control of it.",
+   :skos/notation "701.52a"})
+
+(def |701_52b|
+  "Ring-bearer is a designation a permanent can have. Being a Ring-bearer is not a copiable value."
+  {:db/ident :mtg.rules/|701_52b|,
+   :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
+   :skos/broader :mtg.rules/|701_52|,
+   :skos/definition
+   "Ring-bearer is a designation a permanent can have. Being a Ring-bearer is not a copiable value.",
+   :skos/notation "701.52b"})
+
+(def |701_52c|
+  "If a player doesn’t have an emblem named The Ring at the time the Ring tempts them, they get an emblem named The Ring before choosing a creature to be their Ring-bearer. The Ring has “Your Ring-bearer is legendary and can’t be blocked by creatures with greater power.” As long as the Ring has tempted that player two or more times, it has “Whenever your Ring-bearer attacks, draw a card, then discard a card.” As long as the Ring has tempted that player three or more times, it has “Whenever your Ring-bearer becomes blocked by a creature, the blocking creature’s controller sacrifices it at end of combat.” As long as the Ring has tempted that player four or more times, it has “Whenever your Ring-bearer deals combat damage to a player, each opponent loses 3 life.”"
+  {:db/ident :mtg.rules/|701_52c|,
+   :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
+   :skos/broader :mtg.rules/|701_52|,
+   :skos/definition
+   "If a player doesn’t have an emblem named The Ring at the time the Ring tempts them, they get an emblem named The Ring before choosing a creature to be their Ring-bearer. The Ring has “Your Ring-bearer is legendary and can’t be blocked by creatures with greater power.” As long as the Ring has tempted that player two or more times, it has “Whenever your Ring-bearer attacks, draw a card, then discard a card.” As long as the Ring has tempted that player three or more times, it has “Whenever your Ring-bearer becomes blocked by a creature, the blocking creature’s controller sacrifices it at end of combat.” As long as the Ring has tempted that player four or more times, it has “Whenever your Ring-bearer deals combat damage to a player, each opponent loses 3 life.”",
+   :skos/notation "701.52c"})
+
+(def |701_52d|
+  "Some abilities trigger “Whenever the Ring tempts you.” The Ring tempts a player whenever they complete the actions in 701.52a, even if some or all of those actions were impossible."
+  {:db/ident :mtg.rules/|701_52d|,
+   :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
+   :skos/broader :mtg.rules/|701_52|,
+   :skos/definition
+   "Some abilities trigger “Whenever the Ring tempts you.” The Ring tempts a player whenever they complete the actions in 701.52a, even if some or all of those actions were impossible.",
+   :skos/notation "701.52d"})
+
+(def |701_52|
+  "The Ring Tempts You"
+  {:db/ident        :mtg.rules/|701_52|,
+   :rdf/type        [:mtg.rules/Rule :prov/Entity :skos/Concept],
+   :skos/broader    :mtg.rules/KeywordActions,
+   :skos/definition "The Ring Tempts You",
+   :skos/notation   "701.52"})
 
 (def |701_5a|
   "To counter a spell or ability means to cancel it, removing it from the stack. It doesn’t resolve and none of its effects occur. A countered spell is put into its owner’s graveyard."
@@ -22012,7 +22136,8 @@
    :skos/broader :mtg.rules/|702_124|,
    :skos/definition
    "A rule or effect that refers to your commander’s color identity refers to the combined color identities of your two commanders. See rule 903.4.",
-   :skos/notation "702.124c"})
+   :skos/notation "702.124c",
+   :skos/related :mtg.rules/|903_4|})
 
 (def |702_124d|
   "Except for determining the color identity of your commander, the two commanders function independently. When casting a commander with partner, ignore how many times your other commander has been cast (see rule 903.8). When determining whether a player has been dealt 21 or more combat damage by the same commander, consider damage from each of your two commanders separately (see rule 903.10a)."
@@ -22021,7 +22146,8 @@
    :skos/broader :mtg.rules/|702_124|,
    :skos/definition
    "Except for determining the color identity of your commander, the two commanders function independently. When casting a commander with partner, ignore how many times your other commander has been cast (see rule 903.8). When determining whether a player has been dealt 21 or more combat damage by the same commander, consider damage from each of your two commanders separately (see rule 903.10a).",
-   :skos/notation "702.124d"})
+   :skos/notation "702.124d",
+   :skos/related [:mtg.rules/|903_10a| :mtg.rules/|903_8|]})
 
 (def |702_124e|
   "If an effect refers to your commander while you have two commanders, it refers to either one. If an effect causes you to perform an action on your commander and it could affect both, you choose which it refers to at the time the effect is applied."
@@ -22712,12 +22838,12 @@
    :skos/notation "702.143c"})
 
 (def |702_143d|
-  "If an effect states that a card in exile becomes foretold, that card becomes a foretold card. That effect may give the card a foretell cost. That card may be cast for any foretell cost it has after the turn it became a foretold card has ended, even if the resulting spell doesn’t have foretell."
+  "If an effect states that a card in exile becomes foretold, that card becomes a foretold card. That effect may give the card a foretell cost. That card’s owner may look at that card as long as it remains in exile and it may be cast for any foretell cost it has after the turn it became a foretold card has ended, even if the resulting spell doesn’t have foretell."
   {:db/ident :mtg.rules/|702_143d|,
    :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
    :skos/broader :mtg.rules/|702_143|,
    :skos/definition
-   "If an effect states that a card in exile becomes foretold, that card becomes a foretold card. That effect may give the card a foretell cost. That card may be cast for any foretell cost it has after the turn it became a foretold card has ended, even if the resulting spell doesn’t have foretell.",
+   "If an effect states that a card in exile becomes foretold, that card becomes a foretold card. That effect may give the card a foretell cost. That card’s owner may look at that card as long as it remains in exile and it may be cast for any foretell cost it has after the turn it became a foretold card has ended, even if the resulting spell doesn’t have foretell.",
    :skos/notation "702.143d"})
 
 (def |702_143e|
@@ -23477,14 +23603,13 @@
    :skos/notation "702.165a"})
 
 (def |702_165b|
-  "The order of printed abilities is part of an object’s copiable values. See rule 707.2."
+  "If a permanent enters the battlefield as a copy of a permanent with a backup ability or a token is created that is a copy of that permanent, the order of abilities printed on it is maintained."
   {:db/ident :mtg.rules/|702_165b|,
    :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
    :skos/broader :mtg.rules/|702_165|,
    :skos/definition
-   "The order of printed abilities is part of an object’s copiable values. See rule 707.2.",
-   :skos/notation "702.165b",
-   :skos/related :mtg.rules/|707_2|})
+   "If a permanent enters the battlefield as a copy of a permanent with a backup ability or a token is created that is a copy of that permanent, the order of abilities printed on it is maintained.",
+   :skos/notation "702.165b"})
 
 (def |702_165c|
   "Only abilities printed on the object with backup are granted by its backup ability. Any abilities gained by a permanent, whether due to a copy effect, an effect that grants an ability to a permanent, or an effect that creates a token with certain abilities, are not granted by a backup ability."
@@ -26364,12 +26489,12 @@
    :skos/notation "702.82b"})
 
 (def |702_82c|
-  "“Devour [type] N” means “As this object enters the battlefield, you may sacrifice any number of [type] permanents. This permanent enters the battlefield with N +1/+1 counters on it for each permanent sacrificed this way.”"
+  "“Devour [quality] N” means “As this object enters the battlefield, you may sacrifice any number of [quality] permanents. This permanent enters the battlefield with N +1/+1 counters on it for each permanent sacrificed this way.”"
   {:db/ident :mtg.rules/|702_82c|,
    :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
    :skos/broader :mtg.rules/|702_82|,
    :skos/definition
-   "“Devour [type] N” means “As this object enters the battlefield, you may sacrifice any number of [type] permanents. This permanent enters the battlefield with N +1/+1 counters on it for each permanent sacrificed this way.”",
+   "“Devour [quality] N” means “As this object enters the battlefield, you may sacrifice any number of [quality] permanents. This permanent enters the battlefield with N +1/+1 counters on it for each permanent sacrificed this way.”",
    :skos/notation "702.82c"})
 
 (def |702_82|
@@ -28427,12 +28552,12 @@
    :skos/notation "712.11a"})
 
 (def |712_11b|
-  "A player casting a modal double-faced card as a spell chooses which face they are casting before putting it onto the stack."
+  "A player casting a modal double-faced card or a copy of a modal double-faced card as a spell chooses which face they are casting before putting it onto the stack."
   {:db/ident :mtg.rules/|712_11b|,
    :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
    :skos/broader :mtg.rules/|712_11|,
    :skos/definition
-   "A player casting a modal double-faced card as a spell chooses which face they are casting before putting it onto the stack.",
+   "A player casting a modal double-faced card or a copy of a modal double-faced card as a spell chooses which face they are casting before putting it onto the stack.",
    :skos/notation "712.11b"})
 
 (def |712_11c|
@@ -28464,12 +28589,12 @@
    :skos/related :mtg.rules/CastingSpells})
 
 (def |712_12|
-  "A player playing a modal double-faced card as a land chooses one of its faces that’s a land before putting it onto the battlefield. It enters the battlefield with that face up. See rule 305, “Lands.”"
+  "A player playing a modal double-faced card or a copy of a modal double-faced card as a land chooses one of its faces that’s a land before putting it onto the battlefield. It enters the battlefield with that face up. See rule 305, “Lands.”"
   {:db/ident :mtg.rules/|712_12|,
    :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
    :skos/broader :mtg.rules/DoubleFacedCards,
    :skos/definition
-   "A player playing a modal double-faced card as a land chooses one of its faces that’s a land before putting it onto the battlefield. It enters the battlefield with that face up. See rule 305, “Lands.”",
+   "A player playing a modal double-faced card or a copy of a modal double-faced card as a land chooses one of its faces that’s a land before putting it onto the battlefield. It enters the battlefield with that face up. See rule 305, “Lands.”",
    :skos/notation "712.12",
    :skos/related :mtg.rules/Lands})
 
@@ -28649,7 +28774,8 @@
    "If multiple replacement effects could be applied to the event of a melded permanent leaving the battlefield or being put into the new zone, applying one of those replacement effects to one of the two cards affects both cards. If the melded permanent is a commander, it may be exempt from this rule; see rules 903.9b–c.",
    :skos/example
    "Leyline of the Void is an enchantment that reads, in part, “If a card would be put into an opponent’s graveyard from anywhere, exile it instead.” Wheel of Sun and Moon is an Aura with enchant player and the ability “If a card would be put into enchanted player’s graveyard from anywhere, instead that card is revealed and put on the bottom of its owner’s library.” If the controller of Chittering Host is affected by both cards’ effects, that player chooses one effect to apply to the event and Midnight Scavengers and Graf Rats are both moved to the appropriate zone.",
-   :skos/notation "712.21d"})
+   :skos/notation "712.21d",
+   :skos/related [:mtg.rules/|903_9c| :mtg.rules/|903_9b|]})
 
 (def |712_21e|
   "If an effect needs to know the number of objects that changed zones, a melded permanent among those objects counts as one object that moved. If the effect needs to know the number of cards that changed zones, that melded permanent counts as two cards that moved."
@@ -28672,21 +28798,21 @@
    :skos/notation "712.21"})
 
 (def |712_2a|
-  "A transforming double-faced card’s front face is marked by a front-face symbol in its upper left corner. On cards printed starting with The Brothers’ War™ release, that symbol is a single white triangle pointed upward inside a black circle. Transforming double-faced cards printed in older sets have different front-face symbols. On Magic Origins® and Core Set 2019 double-faced cards, the front-face symbol is a modified Planeswalker icon. On cards in the Innistrad® block, Shadows over Innistrad set, and Innistrad: Midnight Hunt set, as well as on Ulrich of the Krallenhorde in the Eldritch Moon™ set, the front-face symbol is a sun. On other Eldritch Moon double-faced cards, the front-face symbol is a full moon. On Ixalan™ and Rivals of Ixalan™ cards, the front-face symbol is a compass rose. On Kamigawa®: Neon Dynasty double-faced cards, the front-face symbol is a closed fan."
+  "A transforming double-faced card’s front face is marked by a front-face symbol in its upper left corner. On cards printed starting with The Brothers’ War™ release, that symbol is a single white triangle pointed upward inside a black circle. Transforming double-faced cards printed in older sets have different front-face symbols. On Magic Origins™ and Core Set 2019 double-faced cards, the front-face symbol is a modified Planeswalker icon. On cards in the Innistrad® block, Shadows over Innistrad set, and Innistrad: Midnight Hunt set, as well as on Ulrich of the Krallenhorde in the Eldritch Moon™ set, the front-face symbol is a sun. On other Eldritch Moon double-faced cards, the front-face symbol is a full moon. On Ixalan® and Rivals of Ixalan™ cards, the front-face symbol is a compass rose. On Kamigawa®: Neon Dynasty double-faced cards, the front-face symbol is a closed fan."
   {:db/ident :mtg.rules/|712_2a|,
    :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
-   :skos/broader :mtg.rules/|712_2|,
+   :skos/broader :mtg.rules/DoubleFacedCards,
    :skos/definition
-   "A transforming double-faced card’s front face is marked by a front-face symbol in its upper left corner. On cards printed starting with The Brothers’ War™ release, that symbol is a single white triangle pointed upward inside a black circle. Transforming double-faced cards printed in older sets have different front-face symbols. On Magic Origins® and Core Set 2019 double-faced cards, the front-face symbol is a modified Planeswalker icon. On cards in the Innistrad® block, Shadows over Innistrad set, and Innistrad: Midnight Hunt set, as well as on Ulrich of the Krallenhorde in the Eldritch Moon™ set, the front-face symbol is a sun. On other Eldritch Moon double-faced cards, the front-face symbol is a full moon. On Ixalan™ and Rivals of Ixalan™ cards, the front-face symbol is a compass rose. On Kamigawa®: Neon Dynasty double-faced cards, the front-face symbol is a closed fan.",
+   "A transforming double-faced card’s front face is marked by a front-face symbol in its upper left corner. On cards printed starting with The Brothers’ War™ release, that symbol is a single white triangle pointed upward inside a black circle. Transforming double-faced cards printed in older sets have different front-face symbols. On Magic Origins™ and Core Set 2019 double-faced cards, the front-face symbol is a modified Planeswalker icon. On cards in the Innistrad® block, Shadows over Innistrad set, and Innistrad: Midnight Hunt set, as well as on Ulrich of the Krallenhorde in the Eldritch Moon™ set, the front-face symbol is a sun. On other Eldritch Moon double-faced cards, the front-face symbol is a full moon. On Ixalan® and Rivals of Ixalan™ cards, the front-face symbol is a compass rose. On Kamigawa®: Neon Dynasty double-faced cards, the front-face symbol is a closed fan.",
    :skos/notation "712.2a"})
 
 (def |712_2b|
-  "A transforming double-faced card’s back face is marked by a back-face symbol in its upper left corner. On cards printed starting with The Brothers’ War release, that symbol is a single white triangle pointed downward inside a black circle. Transforming double-faced cards printed in older sets have different front-face symbols. On Magic Origins and Core Set 2019 double-faced cards, the back-face symbol is a full Planeswalker icon. On cards in the Innistrad block, Shadows over Innistrad set, and Innistrad: Midnight Hunt set, as well as on Ulrich, Uncontested Alpha in the Eldritch Moon set, the back-face symbol is a crescent moon. On other Eldritch Moon double-faced cards, the back-face symbol is a stylized image of Emrakul. On Ixalan and Rivals of Ixalan cards, the back-face symbol is a land icon. On Kamigawa: Neon Dynasty double-faced cards, the back-face symbol is an open fan."
+  "A transforming double-faced card’s back face is marked by a back-face symbol in its upper left or upper right corner. On cards printed starting with The Brothers’ War release, that symbol is a single white triangle pointed downward inside a black circle. Transforming double-faced cards printed in older sets have different front-face symbols. On Magic Origins and Core Set 2019 double-faced cards, the back-face symbol is a full Planeswalker icon. On cards in the Innistrad block, Shadows over Innistrad set, and Innistrad: Midnight Hunt set, as well as on Ulrich, Uncontested Alpha in the Eldritch Moon set, the back-face symbol is a crescent moon. On other Eldritch Moon double-faced cards, the back-face symbol is a stylized image of Emrakul. On Ixalan and Rivals of Ixalan cards, the back-face symbol is a land icon. On Kamigawa: Neon Dynasty double-faced cards, the back-face symbol is an open fan."
   {:db/ident :mtg.rules/|712_2b|,
    :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
-   :skos/broader :mtg.rules/|712_2|,
+   :skos/broader :mtg.rules/DoubleFacedCards,
    :skos/definition
-   "A transforming double-faced card’s back face is marked by a back-face symbol in its upper left corner. On cards printed starting with The Brothers’ War release, that symbol is a single white triangle pointed downward inside a black circle. Transforming double-faced cards printed in older sets have different front-face symbols. On Magic Origins and Core Set 2019 double-faced cards, the back-face symbol is a full Planeswalker icon. On cards in the Innistrad block, Shadows over Innistrad set, and Innistrad: Midnight Hunt set, as well as on Ulrich, Uncontested Alpha in the Eldritch Moon set, the back-face symbol is a crescent moon. On other Eldritch Moon double-faced cards, the back-face symbol is a stylized image of Emrakul. On Ixalan and Rivals of Ixalan cards, the back-face symbol is a land icon. On Kamigawa: Neon Dynasty double-faced cards, the back-face symbol is an open fan.",
+   "A transforming double-faced card’s back face is marked by a back-face symbol in its upper left or upper right corner. On cards printed starting with The Brothers’ War release, that symbol is a single white triangle pointed downward inside a black circle. Transforming double-faced cards printed in older sets have different front-face symbols. On Magic Origins and Core Set 2019 double-faced cards, the back-face symbol is a full Planeswalker icon. On cards in the Innistrad block, Shadows over Innistrad set, and Innistrad: Midnight Hunt set, as well as on Ulrich, Uncontested Alpha in the Eldritch Moon set, the back-face symbol is a crescent moon. On other Eldritch Moon double-faced cards, the back-face symbol is a stylized image of Emrakul. On Ixalan and Rivals of Ixalan cards, the back-face symbol is a land icon. On Kamigawa: Neon Dynasty double-faced cards, the back-face symbol is an open fan.",
    :skos/notation "712.2b"})
 
 (def |712_2c|
@@ -28707,32 +28833,32 @@
    "Transforming double-faced cards have a Magic card face on each side and include abilities on one or both of their faces that allow the card to either “transform” or “convert” (turn over to its other face) and/or allow the card to be cast or enter the battlefield “transformed” or “converted” (with its back face up).",
    :skos/notation "712.2"})
 
-(def |712_3d|
+(def |712_3a|
   "A modal double-faced card’s front face is marked by a front-face symbol in its upper left corner. The front-face symbol is a single black triangle inside a sideways teardrop."
-  {:db/ident :mtg.rules/|712_3d|,
+  {:db/ident :mtg.rules/|712_3a|,
    :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
    :skos/broader :mtg.rules/|712_3|,
    :skos/definition
    "A modal double-faced card’s front face is marked by a front-face symbol in its upper left corner. The front-face symbol is a single black triangle inside a sideways teardrop.",
-   :skos/notation "712.3d"})
+   :skos/notation "712.3a"})
 
-(def |712_3e|
+(def |712_3b|
   "A modal double-faced card’s back face is marked by a back-face symbol in its upper left corner. The back-face symbol is two white triangles inside a sideways teardrop."
-  {:db/ident :mtg.rules/|712_3e|,
+  {:db/ident :mtg.rules/|712_3b|,
    :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
    :skos/broader :mtg.rules/|712_3|,
    :skos/definition
    "A modal double-faced card’s back face is marked by a back-face symbol in its upper left corner. The back-face symbol is two white triangles inside a sideways teardrop.",
-   :skos/notation "712.3e"})
+   :skos/notation "712.3b"})
 
-(def |712_3f|
+(def |712_3c|
   "Each face of a modal double-faced card includes a hint bar in the lower left corner with information about the opposite face. This is reminder text and has no effect on game play."
-  {:db/ident :mtg.rules/|712_3f|,
+  {:db/ident :mtg.rules/|712_3c|,
    :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
    :skos/broader :mtg.rules/|712_3|,
    :skos/definition
    "Each face of a modal double-faced card includes a hint bar in the lower left corner with information about the opposite face. This is reminder text and has no effect on game play.",
-   :skos/notation "712.3f"})
+   :skos/notation "712.3c"})
 
 (def |712_3|
   "Modal double-faced cards have a Magic card face on each side. These faces are independent from one another."
@@ -29769,6 +29895,15 @@
    "If the monarch leaves the game, the active player becomes the monarch at the same time as that player leaves the game. If the active player is leaving the game or if there is no active player, the next player in turn order becomes the monarch. If no player still in the game can become the monarch, the game continues with no monarch.",
    :skos/notation "721.4"})
 
+(def |721_5|
+  "If the result of a continuous effect generated by a static ability is determined based on who is currently the monarch, but there is no monarch in the game as that effect begins to apply, that effect does nothing until a player becomes the monarch. See rule 613, 'Continuous Effects.'"
+  {:db/ident :mtg.rules/|721_5|,
+   :rdf/type [:mtg.rules/Rule :prov/Entity :skos/Concept],
+   :skos/broader :mtg.rules/TheMonarch,
+   :skos/definition
+   "If the result of a continuous effect generated by a static ability is determined based on who is currently the monarch, but there is no monarch in the game as that effect begins to apply, that effect does nothing until a player becomes the monarch. See rule 613, 'Continuous Effects.'",
+   :skos/notation "721.5"})
+
 (def |722_1|
   "The initiative is a designation a player can have. There is no initiative in a game until an effect instructs a player to take the initiative. A player who currently has the initiative designation is said to have the initiative."
   {:db/ident :mtg.rules/|722_1|,
@@ -30196,7 +30331,8 @@
    :skos/broader :mtg.rules/|725_3|,
    :skos/definition
    "If multiple replacement effects could be applied to the event of a merged permanent leaving the battlefield or being put into the new zone, applying one of those replacement effects to the object applies it to all components of the object. If the merged permanent is a commander, it may be exempt from this rule; see rules 903.9b–c.",
-   :skos/notation "725.3d"})
+   :skos/notation "725.3d",
+   :skos/related [:mtg.rules/|903_9c| :mtg.rules/|903_9b|]})
 
 (def |725_3e|
   "If a replacement effect applies to a 'card' being put into a zone without also including tokens, that effect applies to all components of the merged permanent if it's not a token, including components that are tokens. If the merged permanent is a token but some of its components are cards, the merged permanent and its token components are put into the appropriate zone, and the components that are cards are moved by the replacement effect."
