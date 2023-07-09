@@ -161,7 +161,9 @@
         (filter (comp some? val))
         (cond-> (-> {:db/ident (oracle-ident name)
                      :rdf/type (into [:scryfall/Card]
-                                     (keep (fn [typename] (get @types typename)))
+                                     (comp
+                                       (mapcat #(str/split % #" "))
+                                       (keep (fn [typename] (get @types typename))))
                                      (str/split type_line #" — "))}
                     (assoc :scryfall/name name)
                     (assoc :scryfall/uri scryfall_uri)
