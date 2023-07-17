@@ -39,11 +39,7 @@
   (start [this]
     this)
   (stop [this]
-    this)
-
-  rdf/NamespaceSpitter
-  (emit [_ arg-map]
-    (rdf/emit [boot/mtg boot/rules boot/scryfall] arg-map)))
+    this))
 
 (defn text-search
   ([query]
