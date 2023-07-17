@@ -27,17 +27,16 @@
    [net.cgrand.enlive-html :as html]
    [net.wikipunk.boot]
    [net.wikipunk.ext]
-   [net.wikipunk.mop :as mop :refer [isa? descendants parents ancestors]]
+   [net.wikipunk.mop :as mop]
    [net.wikipunk.openai :as openai]
    [net.wikipunk.rdf :as rdf :refer [doc]]
    [net.wikipunk.qdrant :as qdrant]
    [zprint.core :as zprint]
    [net.wikipunk.mtg :as mtg]
    [xtdb.api :as xt]
-   [net.wikipunk.punk.db :as db]
+   [net.wikipunk.datomic.boot :as db]
    [net.wikipunk.mtg.boot :as boot]
-   [datomic.client.api :as d])
-  (:refer-clojure :exclude [isa? descendants parents ancestors]))
+   [datomic.client.api :as d]))
 
 (set-init
   (fn [_]

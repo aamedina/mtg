@@ -11,7 +11,9 @@
  :aliases
  {:dev
   {:extra-deps
-   {com.walmartlabs/schematic
+   {com.datomic/dev-local
+    {:mvn/version "1.0.243"}
+    com.walmartlabs/schematic
     {:mvn/version "1.3.0"}
     com.stuartsierra/component.repl
     {:mvn/version "0.2.0"}

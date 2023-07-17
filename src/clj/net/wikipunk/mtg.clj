@@ -37,6 +37,7 @@
 (defrecord MTG []
   com/Lifecycle
   (start [this]
+    (defmethod rdf/infer-datomic-type :skos/notation [_] :db.type/string)
     this)
   (stop [this]
     this))
