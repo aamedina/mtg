@@ -91,7 +91,10 @@ jobs:
           if [ -d resources/qdrant-snapshots ]; then
             cp -a resources/qdrant-snapshots dist/
           fi
-          tar -czf dist/mtg_rules_artifacts_${GITHUB_REF_NAME}.tar.gz -C dist .
+          # Don't write the tarball into the directory being archived; GNU tar will exit 1.
+          tarball="mtg_rules_artifacts_${GITHUB_REF_NAME}.tar.gz"
+          tar -czf "${tarball}" -C dist .
+          mv -f "${tarball}" dist/
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
