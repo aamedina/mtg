@@ -27,6 +27,12 @@ Payload keys you can rely on:
 - `rules_token`: `YYYYMMDD` extracted from `scheme`
 - `jsonld`: the full JSON-LD node (verbatim)
 
+Embedding metadata (useful for audits and incremental re-embeds):
+
+- `embedding_model`: embedding model name used at ingest time
+- `embedding_dimensions`: vector size stored in the collection
+- `embedding_text_sha256`: SHA-256 of the exact text that was embedded (built by `rules_text_builder`)
+
 Indexes created automatically by the CLI:
 
 - keyword indexes: `kind`, `uri`, `label`, `notation`, `broader`, `references`, `scheme`, `rules_token`
@@ -44,6 +50,17 @@ Payload keys you can rely on:
 - `mana_cost`, `type_line`, `oracle_text`
 - `cmc` (number), `colors` (array), `color_identity` (array), `keywords` (array)
 - `jsonld`: the full 1:1 Scryfall JSON-LD node
+
+What gets embedded (important):
+
+- Embeddings are computed from a small, semantic text built from `name`, `type_line`, `oracle_text`, and `keywords`.
+- The full `jsonld` payload is stored for retrieval, but it is **not** what gets embedded.
+
+Embedding metadata (useful for audits and incremental re-embeds):
+
+- `embedding_model`
+- `embedding_dimensions`
+- `embedding_text_sha256` (built by `cards_text_builder`)
 
 Indexes created automatically by the CLI:
 

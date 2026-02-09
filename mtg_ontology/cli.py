@@ -201,13 +201,14 @@ def cmd_rules_upsert_qdrant(args: argparse.Namespace) -> None:
 
     ensure_payload_indexes(client, args.collection, indexes=_RULES_PAYLOAD_INDEXES)
 
-    total = upsert_documents(
+    stats = upsert_documents(
         client,
         args.collection,
         concepts,
         text_builder=rules_text_builder,
         payload_builder=rules_payload_builder,
         embedder=embedder,
+        embedding_model=embedder.config.model,
         batch_size=args.batch_size,
     )
 
@@ -215,7 +216,8 @@ def cmd_rules_upsert_qdrant(args: argparse.Namespace) -> None:
         json.dumps(
             {
                 "collection": args.collection,
-                "upserted": total,
+                "upserted": stats.upserted,
+                "skipped": stats.skipped,
                 "embedding_model": embedder.config.model,
                 "embedding_dimensions": embedder.vector_size,
                 "qdrant_url": config.url,
@@ -335,13 +337,14 @@ def cmd_cards_collection(args: argparse.Namespace) -> None:
 
     ensure_payload_indexes(client, args.collection, indexes=_CARDS_PAYLOAD_INDEXES)
 
-    total = upsert_documents(
+    stats = upsert_documents(
         client,
         args.collection,
         nodes,
         text_builder=cards_text_builder,
         payload_builder=cards_payload_builder,
         embedder=embedder,
+        embedding_model=embedder.config.model,
         batch_size=args.batch_size,
     )
 
@@ -352,7 +355,8 @@ def cmd_cards_collection(args: argparse.Namespace) -> None:
                 "source": source,
                 "cards_input": len(cards),
                 "cards_selected": len(filtered),
-                "upserted": total,
+                "upserted": stats.upserted,
+                "skipped": stats.skipped,
                 "jsonld": str(output_path),
                 "embedding_model": embedder.config.model,
                 "embedding_dimensions": embedder.vector_size,
@@ -379,13 +383,14 @@ def cmd_cards_upsert_jsonld(args: argparse.Namespace) -> None:
 
     ensure_payload_indexes(client, args.collection, indexes=_CARDS_PAYLOAD_INDEXES)
 
-    total = upsert_documents(
+    stats = upsert_documents(
         client,
         args.collection,
         cards,
         text_builder=cards_text_builder,
         payload_builder=cards_payload_builder,
         embedder=embedder,
+        embedding_model=embedder.config.model,
         batch_size=args.batch_size,
     )
 
@@ -394,7 +399,8 @@ def cmd_cards_upsert_jsonld(args: argparse.Namespace) -> None:
             {
                 "collection": args.collection,
                 "cards": len(cards),
-                "upserted": total,
+                "upserted": stats.upserted,
+                "skipped": stats.skipped,
                 "embedding_model": embedder.config.model,
                 "embedding_dimensions": embedder.vector_size,
                 "qdrant_url": config.url,

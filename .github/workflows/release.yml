@@ -35,6 +35,25 @@ jobs:
           echo "UID=$(id -u)" >> "${GITHUB_ENV}"
           echo "GID=$(id -g)" >> "${GITHUB_ENV}"
 
+      - name: Resolve Pinned Scryfall Oracle Dataset
+        shell: bash
+        run: |
+          set -euo pipefail
+          ORACLE_JSONLD="$(ls -1 resources/scryfall/oracle-cards-*.jsonld.gz 2>/dev/null | sort | tail -n 1 || true)"
+          if [ -z "${ORACLE_JSONLD}" ]; then
+            echo "No pinned oracle-cards JSON-LD found at resources/scryfall/oracle-cards-*.jsonld.gz" >&2
+            exit 1
+          fi
+          BASENAME="$(basename "${ORACLE_JSONLD}")"
+          if [[ ! "${BASENAME}" =~ ^oracle-cards-([0-9]{14})\.jsonld\.gz$ ]]; then
+            echo "Could not parse oracle token from filename: ${BASENAME}" >&2
+            exit 1
+          fi
+          ORACLE_TOKEN="${BASH_REMATCH[1]}"
+          echo "ORACLE_TOKEN=${ORACLE_TOKEN}" >> "${GITHUB_ENV}"
+          echo "ORACLE_JSONLD=${ORACLE_JSONLD}" >> "${GITHUB_ENV}"
+          echo "ORACLE_COLLECTION=mtg_oracle_cards_${ORACLE_TOKEN}" >> "${GITHUB_ENV}"
+
       - name: Start Qdrant
         run: |
           docker compose up -d qdrant
@@ -78,6 +97,38 @@ jobs:
             --collection "${QDRANT_COLLECTION}" \
             --output-dir resources/qdrant-snapshots
 
+      - name: Restore Previous Oracle Cards Snapshot (Best Effort)
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          SNAPSHOT="$(python scripts/download_previous_oracle_snapshot.py --output-dir resources/qdrant-snapshots || true)"
+          if [ -z "${SNAPSHOT}" ]; then
+            echo "no previous oracle snapshot found; will embed from scratch"
+            exit 0
+          fi
+          docker compose run --rm mtg-ontology qdrant recover-snapshot \
+            --collection "${ORACLE_COLLECTION}" \
+            --snapshot-path "${SNAPSHOT}"
+          # Don't re-upload a previous release's snapshot as part of this release.
+          rm -f "${SNAPSHOT}"
+
+      - name: Upsert Oracle Cards Into Qdrant (OpenAI embeddings)
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          docker compose run --rm mtg-ontology cards upsert-jsonld \
+            --input-jsonld "${ORACLE_JSONLD}" \
+            --collection "${ORACLE_COLLECTION}" \
+            --embedding-model text-embedding-3-small
+
+      - name: Snapshot Oracle Cards Collection
+        run: |
+          docker compose run --rm mtg-ontology qdrant snapshot-collection \
+            --collection "${ORACLE_COLLECTION}" \
+            --output-dir resources/qdrant-snapshots
+
       - name: Package release assets
         run: |
           mkdir -p dist
@@ -85,6 +136,9 @@ jobs:
           cp -a resources/mtg/rules.context.jsonld dist/
           cp -a docs/RULES_SKOS_MODEL.md dist/
           cp -a docs/QDRANT_QUERY_GUIDE.md dist/
+          cp -a docs/SCRYFALL_JSONLD_MODEL.md dist/
+          cp -a resources/scryfall/context.jsonld dist/
+          cp -a "${ORACLE_JSONLD}" dist/
           cp -a "resources/MagicCompRules/${RULES_TOKEN}.txt" dist/ || true
           cp -a "resources/MagicCompRules/${RULES_TOKEN}.json" dist/ || true
           # Include snapshot files (may be multiple)
@@ -92,7 +146,7 @@ jobs:
             cp -a resources/qdrant-snapshots dist/
           fi
           # Don't write the tarball into the directory being archived; GNU tar will exit 1.
-          tarball="mtg_rules_artifacts_${GITHUB_REF_NAME}.tar.gz"
+          tarball="mtg_artifacts_${GITHUB_REF_NAME}.tar.gz"
           tar -czf "${tarball}" -C dist .
           mv -f "${tarball}" dist/
 
@@ -100,10 +154,13 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            dist/mtg_rules_artifacts_${{ github.ref_name }}.tar.gz
+            dist/mtg_artifacts_${{ github.ref_name }}.tar.gz
             dist/rules.skos.jsonld
             dist/rules.context.jsonld
             dist/RULES_SKOS_MODEL.md
             dist/QDRANT_QUERY_GUIDE.md
+            dist/SCRYFALL_JSONLD_MODEL.md
+            dist/context.jsonld
+            dist/oracle-cards-*.jsonld.gz
             dist/qdrant-snapshots/*
           generate_release_notes: true

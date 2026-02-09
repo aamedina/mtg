@@ -251,7 +251,9 @@ Tagging `rules-YYYYMMDD` triggers `.github/workflows/release.yml`:
 
 - regenerates rules SKOS for that `YYYYMMDD`
 - upserts into a dockerized Qdrant using OpenAI embeddings
-- snapshots the collection and uploads it as a release artifact
+- snapshots the rules collection and uploads it as a release artifact
+- upserts the pinned Scryfall oracle-cards JSON-LD into a separate Qdrant collection
+- snapshots the oracle-cards collection and uploads it as a release artifact
 
 Example:
 
@@ -259,3 +261,8 @@ Example:
 git tag rules-20260116
 git push origin rules-20260116
 ```
+
+Incremental oracle-cards embeddings:
+
+- The release workflow will try to download the most recent oracle-cards snapshot from GitHub releases and restore it into Qdrant first.
+- Then it upserts the pinned oracle-cards JSON-LD and only embeds cards whose embedding text is missing or has changed (new cards, text updates, model changes).

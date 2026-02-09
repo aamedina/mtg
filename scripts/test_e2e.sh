@@ -18,6 +18,8 @@ TS="$(date +%Y%m%d%H%M%S)"
 RULES_COLLECTION="${PREFIX}_rules_${RULES_TOKEN}_${TS}"
 CARDS_COLLECTION="${PREFIX}_cards_${TS}"
 RESTORED_COLLECTION="${RULES_COLLECTION}_restored"
+CARDS_SAMPLE_COLLECTION="${CARDS_COLLECTION}_sample"
+CARDS_SAMPLE_RESTORED_COLLECTION="${CARDS_SAMPLE_COLLECTION}_restored"
 
 echo "[e2e] start qdrant"
 docker compose up -d qdrant >/dev/null
@@ -83,12 +85,31 @@ PY
   " >/dev/null
 
 echo "[e2e] upsert small sample cards (offline fixture): ${CARDS_COLLECTION}_sample"
-docker compose run --rm mtg-ontology cards build-collection \
-  --input-json resources/scryfall/sample-cards.json \
-  --collection "${CARDS_COLLECTION}_sample" \
-  --output-jsonld /tmp/sample.cards.jsonld.gz \
-  --embedding-model text-embedding-3-small \
-  --recreate >/dev/null
+docker compose run --rm --entrypoint bash mtg-ontology -lc "
+  set -euo pipefail
+  mkdir -p dist
+  python -m mtg_ontology.cli cards build-collection \
+    --input-json resources/scryfall/sample-cards.json \
+    --collection \"${CARDS_SAMPLE_COLLECTION}\" \
+    --output-jsonld dist/e2e-sample.cards.jsonld.gz \
+    --embedding-model text-embedding-3-small \
+    --recreate >/dev/null
+
+  # Incremental check: running the same upsert again should skip re-embedding unchanged cards.
+  python -m mtg_ontology.cli cards upsert-jsonld \
+    --input-jsonld dist/e2e-sample.cards.jsonld.gz \
+    --collection \"${CARDS_SAMPLE_COLLECTION}\" \
+    --embedding-model text-embedding-3-small >/tmp/e2e.sample.upsert.json
+
+  python - <<'PY'
+import json
+from pathlib import Path
+data = json.loads(Path('/tmp/e2e.sample.upsert.json').read_text(encoding='utf-8'))
+assert data['upserted'] == 0, data
+assert data['skipped'] == 2, data
+print('incremental: ok')
+PY
+" >/dev/null
 
 echo "[e2e] upsert real cards from scryfall api: ${CARDS_COLLECTION}"
 docker compose run --rm mtg-ontology cards build-collection \
@@ -227,6 +248,42 @@ o = client.get_collection(orig)
 r = client.get_collection(restored)
 assert o.points_count == r.points_count, (o.points_count, r.points_count)
 for key in ['kind','uri','label','notation','broader','references','scheme','rules_token']:
+    assert key in (r.payload_schema or {}), f\"missing restored payload index: {key}\"
+print('ok')
+PY" >/dev/null
+
+echo "[e2e] snapshot sample cards collection (indexes must be included)"
+docker compose run --rm mtg-ontology qdrant snapshot-collection \
+  --collection "${CARDS_SAMPLE_COLLECTION}" \
+  --output-dir resources/qdrant-snapshots >/dev/null
+
+cards_snap="$(ls -1t resources/qdrant-snapshots/${CARDS_SAMPLE_COLLECTION}--*.snapshot | head -n 1)"
+if [[ -z "${cards_snap}" ]]; then
+  echo "snapshot not found for ${CARDS_SAMPLE_COLLECTION}" >&2
+  exit 1
+fi
+
+echo "[e2e] recover sample cards snapshot into ${CARDS_SAMPLE_RESTORED_COLLECTION}"
+docker compose run --rm mtg-ontology qdrant recover-snapshot \
+  --collection "${CARDS_SAMPLE_RESTORED_COLLECTION}" \
+  --snapshot-path "${cards_snap}" >/dev/null
+
+echo "[e2e] verify restored sample cards collection has points + payload indexes"
+docker compose run --rm --no-deps \
+  -e "CARDS_SAMPLE_COLLECTION=${CARDS_SAMPLE_COLLECTION}" \
+  -e "CARDS_SAMPLE_RESTORED_COLLECTION=${CARDS_SAMPLE_RESTORED_COLLECTION}" \
+  --entrypoint bash mtg-ontology -lc "python - <<'PY'
+import os
+from qdrant_client import QdrantClient
+
+client = QdrantClient(url=os.getenv('QDRANT_URL','http://qdrant:6333'), timeout=30)
+orig = os.environ['CARDS_SAMPLE_COLLECTION']
+restored = os.environ['CARDS_SAMPLE_RESTORED_COLLECTION']
+
+o = client.get_collection(orig)
+r = client.get_collection(restored)
+assert o.points_count == r.points_count, (o.points_count, r.points_count)
+for key in ['kind','uri','id','oracle_id','name','set','collector_number','lang','layout','rarity','cmc','colors','color_identity','keywords']:
     assert key in (r.payload_schema or {}), f\"missing restored payload index: {key}\"
 print('ok')
 PY" >/dev/null

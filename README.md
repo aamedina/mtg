@@ -123,7 +123,11 @@ Pushing a tag like `rules-20260116` runs `.github/workflows/release.yml`:
 1. Fetch + regenerate `resources/mtg/rules.skos.jsonld` for the tagged `YYYYMMDD` rules release
 2. Upsert into a dockerized Qdrant using `secrets.OPENAI_API_KEY` (required)
 3. Snapshot the tag-specific collection `mtg_rules_<YYYYMMDD>`
-4. Upload the JSON-LD + snapshot files as GitHub release assets
+4. Upsert the pinned Scryfall oracle-cards JSON-LD into `mtg_oracle_cards_<ORACLE_TOKEN>`
+5. Snapshot the oracle-cards collection
+6. Upload the JSON-LD + snapshot files as GitHub release assets
+
+Oracle-cards embeddings are incremental: the release workflow will restore the most recent oracle-cards snapshot (when available) and only embed cards whose embedding text is missing or has changed.
 
 ## Data Sources
 

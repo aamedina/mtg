@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 from collections.abc import Callable, Iterable
 from dataclasses import dataclass
 from typing import Any, Protocol
@@ -29,6 +30,14 @@ class QdrantConfig:
     api_key: str | None = None
     timeout: float = 30.0
     distance: models.Distance = models.Distance.COSINE
+
+
+@dataclass(frozen=True)
+class UpsertStats:
+    """Basic counters returned by upsert_documents."""
+
+    upserted: int
+    skipped: int
 
 
 def create_client(config: QdrantConfig) -> QdrantClient:
@@ -95,35 +104,99 @@ def upsert_documents(
     text_builder: Callable[[dict[str, Any]], str],
     payload_builder: Callable[[dict[str, Any]], dict[str, Any]],
     embedder: Embedder,
+    embedding_model: str | None = None,
     batch_size: int = 64,
-) -> int:
-    """Upsert document dicts into Qdrant using provided embedder."""
-    total = 0
+) -> UpsertStats:
+    """Upsert document dicts into Qdrant using provided embedder.
+
+    Notes:
+    - Each point ID is deterministic (UUIDv5 of `@id` / `id` / embedding text fallback).
+    - Embeddings are computed from `text_builder` only; payload does not affect embeddings.
+    """
+    total_upserted = 0
+    total_skipped = 0
 
     for doc_batch in iter_chunks(docs, batch_size):
-        texts = [text_builder(doc) for doc in doc_batch]
-        vectors = embedder.embed(texts)
-        if len(vectors) != len(doc_batch):
-            raise RuntimeError(
-                f"Embedder output mismatch: {len(vectors)} vectors for {len(doc_batch)} docs"
-            )
+        # Prepare deterministic IDs + payloads up front so we can do incremental checks.
+        batch_ids: list[str] = []
+        batch_texts: list[str] = []
+        batch_payloads: list[dict[str, Any]] = []
 
-        points: list[models.PointStruct] = []
-        for doc, text, vector in zip(doc_batch, texts, vectors):
+        for doc in doc_batch:
+            text = text_builder(doc)
             uri = doc.get("@id") or doc.get("id") or ""
+            point_id = stable_uuid(uri or text)
+
             payload = payload_builder(doc)
             if uri:
                 payload.setdefault("uri", uri)
 
+            # Store a fingerprint of the embedded text so we can skip re-embedding unchanged docs.
+            payload["embedding_text_sha256"] = hashlib.sha256(text.encode("utf-8")).hexdigest()
+            if embedding_model:
+                payload["embedding_model"] = embedding_model
+            payload["embedding_dimensions"] = embedder.vector_size
+
+            batch_ids.append(point_id)
+            batch_texts.append(text)
+            batch_payloads.append(payload)
+
+        # Determine which docs are missing or have changed embedding text.
+        # If the existing point doesn't have our fingerprint fields, treat it as needing re-embedding.
+        existing = client.retrieve(
+            collection_name=collection_name,
+            ids=batch_ids,
+            with_payload=["embedding_model", "embedding_text_sha256", "embedding_dimensions"],
+            with_vectors=False,
+        )
+        existing_by_id = {str(record.id): (record.payload or {}) for record in existing}
+
+        embed_ids: list[str] = []
+        embed_texts: list[str] = []
+        embed_payloads: list[dict[str, Any]] = []
+
+        for point_id, text, payload in zip(batch_ids, batch_texts, batch_payloads):
+            prev = existing_by_id.get(point_id)
+            if not prev:
+                embed_ids.append(point_id)
+                embed_texts.append(text)
+                embed_payloads.append(payload)
+                continue
+            if prev.get("embedding_model") != payload.get("embedding_model"):
+                embed_ids.append(point_id)
+                embed_texts.append(text)
+                embed_payloads.append(payload)
+                continue
+            if prev.get("embedding_dimensions") != payload.get("embedding_dimensions"):
+                embed_ids.append(point_id)
+                embed_texts.append(text)
+                embed_payloads.append(payload)
+                continue
+            if prev.get("embedding_text_sha256") != payload.get("embedding_text_sha256"):
+                embed_ids.append(point_id)
+                embed_texts.append(text)
+                embed_payloads.append(payload)
+                continue
+            total_skipped += 1
+
+        if not embed_ids:
+            continue
+
+        vectors = embedder.embed(embed_texts)
+        if len(vectors) != len(embed_ids):
+            raise RuntimeError(f"Embedder output mismatch: {len(vectors)} vectors for {len(embed_ids)} docs")
+
+        points: list[models.PointStruct] = []
+        for point_id, payload, vector in zip(embed_ids, embed_payloads, vectors):
             points.append(
                 models.PointStruct(
-                    id=stable_uuid(uri or text),
+                    id=point_id,
                     vector=vector,
                     payload=payload,
                 )
             )
 
         client.upsert(collection_name=collection_name, points=points, wait=True)
-        total += len(points)
+        total_upserted += len(points)
 
-    return total
+    return UpsertStats(upserted=total_upserted, skipped=total_skipped)

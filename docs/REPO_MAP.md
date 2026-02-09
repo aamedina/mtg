@@ -3,6 +3,7 @@
 ## Top Level
 
 - `mtg_ontology/`: Python package (the implementation)
+- `scripts/`: local test suite and GitHub Actions helpers
 - `resources/`: committed artifacts + generated outputs intended for reuse (also the only Clojure classpath path)
 - `docker-compose.yml`: local reproducible Qdrant + a Dockerized CLI runner (`mtg-ontology`)
 - `.github/workflows/ci.yml`: smoke checks for PRs/pushes (no OpenAI key required)
