@@ -45,6 +45,12 @@ This avoids re-embedding the full oracle-cards dataset.
 ./scripts/bootstrap_qdrant_from_release.sh rules-20260116
 ```
 
+If you hit GitHub API rate limits while downloading release assets, set `GITHUB_TOKEN` and rerun:
+
+```bash
+export GITHUB_TOKEN="..."
+```
+
 ### 3) Ask Questions (Retrieval Helper)
 
 Once Qdrant is populated (either by restoring snapshots or embedding locally), retrieve grounded
@@ -57,7 +63,7 @@ export MTG_CARDS_COLLECTION="mtg_oracle_cards_20260208220524"
 ./scripts/mtg_retrieve.py "how does ward work?"
 ```
 
-For a full Codex setup (skill install + prompts to test), see `docs/CODEX_AGENT_GUIDE.md`.
+For a full Codex setup (repo-local skill + prompts to test), see `docs/CODEX_AGENT_GUIDE.md`.
 
 ### 4) Run The Local Test Suite (Recommended)
 

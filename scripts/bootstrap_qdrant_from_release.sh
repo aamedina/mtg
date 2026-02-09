@@ -9,7 +9,8 @@ out_dir="${OUT_DIR:-resources/qdrant-snapshots}"
 
 echo "[bootstrap] start qdrant"
 docker compose up -d qdrant >/dev/null
-./scripts/wait_for_qdrant.sh "http://localhost:6333" 60 >/dev/null
+# After Qdrant upgrades, the first start may need extra time for internal migrations.
+./scripts/wait_for_qdrant.sh "http://localhost:6333" 180 >/dev/null
 
 echo "[bootstrap] download snapshots for ${repo}@${tag}"
 payload="$(python scripts/download_release_snapshots.py --repo "${repo}" --tag "${tag}" --output-dir "${out_dir}")"
@@ -20,7 +21,7 @@ echo "[bootstrap] recover snapshots into qdrant"
 echo "${payload}" | python -c 'import json,sys; p=json.load(sys.stdin); [print(str(d.get("collection")) + "\t" + str(d.get("path"))) for d in p.get("downloads",[])]' | while IFS=$'\t' read -r collection path; do
   docker compose run --rm mtg-ontology qdrant recover-snapshot \
     --collection "${collection}" \
-    --snapshot-path "${path}" >/dev/null
+    --snapshot-path "${path}" >/dev/null </dev/null
 done
 
 rules_collection="$(echo "${payload}" | python -c 'import json,sys; p=json.load(sys.stdin); print(next((d.get("collection") for d in p.get("downloads",[]) if d.get("kind")=="rules"), ""))')"

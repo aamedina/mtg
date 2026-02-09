@@ -16,8 +16,10 @@ import json
 import re
 import sys
 import urllib.request
+from urllib.error import HTTPError, URLError
+from datetime import datetime
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import timezone
 from pathlib import Path
 from typing import Any
 
@@ -36,15 +38,29 @@ def _parse_dt(value: str) -> datetime:
     return dt.replace(tzinfo=timezone.utc)
 
 
-def _http_get_json(url: str) -> Any:
-    req = urllib.request.Request(url, headers={"Accept": "application/vnd.github+json"})
+def _http_get_json(url: str, *, token: str | None = None) -> Any:
+    headers = {
+        "Accept": "application/vnd.github+json",
+        # GitHub API requires a UA for some clients, and it helps debug traffic.
+        "User-Agent": "mtg-ontology-snapshots",
+    }
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+        headers["X-GitHub-Api-Version"] = "2022-11-28"
+    req = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(req, timeout=30) as resp:  # noqa: S310
         return json.loads(resp.read().decode("utf-8"))
 
 
-def _download(url: str, output_path: Path) -> None:
+def _download(url: str, output_path: Path, *, token: str | None = None) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    req = urllib.request.Request(url, headers={"Accept": "application/octet-stream"})
+    headers = {
+        "Accept": "application/octet-stream",
+        "User-Agent": "mtg-ontology-snapshots",
+    }
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    req = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(req, timeout=600) as resp, output_path.open("wb") as f:  # noqa: S310
         while True:
             chunk = resp.read(1024 * 1024)
@@ -64,9 +80,141 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--repo", default="aamedina/mtg", help="GitHub repo in owner/name form")
     ap.add_argument("--tag", required=True, help="Release tag name, e.g. rules-20260116")
     ap.add_argument("--output-dir", default="resources/qdrant-snapshots")
+    ap.add_argument(
+        "--github-token",
+        default=None,
+        help="Optional GitHub token to avoid rate limits (or set env GITHUB_TOKEN).",
+    )
     args = ap.parse_args(argv)
 
-    release = _http_get_json(f"https://api.github.com/repos/{args.repo}/releases/tags/{args.tag}")
+    import os
+
+    token = args.github_token or os.environ.get("GITHUB_TOKEN") or None
+
+    output_dir = Path(args.output_dir)
+
+    try:
+        release = _http_get_json(
+            f"https://api.github.com/repos/{args.repo}/releases/tags/{args.tag}",
+            token=token,
+        )
+    except HTTPError as e:
+        # Fallback: if the GitHub API is unavailable (common for unauthenticated rate limits),
+        # use whatever snapshot files already exist locally.
+        if e.code != 403:
+            raise
+        body = ""
+        try:
+            body = e.read().decode("utf-8", errors="replace")
+        except Exception:
+            body = ""
+        if "rate limit" not in body.lower():
+            raise
+
+        rules_re = re.compile(r"^mtg_rules_\d{8}--.*\.snapshot$")
+        oracle_re = re.compile(r"^mtg_oracle_cards_\d{14}--.*\.snapshot$")
+
+        rules_files = [p for p in output_dir.glob("mtg_rules_*.snapshot") if rules_re.match(p.name)]
+        oracle_files = [p for p in output_dir.glob("mtg_oracle_cards_*.snapshot") if oracle_re.match(p.name)]
+
+        def choose(paths: list[Path]) -> Path | None:
+            if not paths:
+                return None
+            return sorted(paths, key=lambda p: (p.stat().st_mtime, p.stat().st_size), reverse=True)[0]
+
+        rules_path = choose(rules_files)
+        oracle_path = choose(oracle_files)
+
+        result: dict[str, Any] = {
+            "repo": args.repo,
+            "tag": args.tag,
+            "warning": "github_api_unavailable_using_local_snapshots",
+            "downloads": [],
+        }
+        for path, kind in [(rules_path, "rules"), (oracle_path, "oracle_cards")]:
+            if not path:
+                continue
+            collection = path.name.split("--", 1)[0]
+            updated_at = datetime.fromtimestamp(path.stat().st_mtime, tz=timezone.utc).isoformat()
+            result["downloads"].append(
+                {
+                    "kind": kind,
+                    "collection": collection,
+                    "asset": path.name,
+                    "path": str(path),
+                    "updated_at": updated_at,
+                    "size": path.stat().st_size,
+                }
+            )
+
+        if not result["downloads"]:
+            print(
+                json.dumps(
+                    {
+                        "error": "github api rate limit exceeded and no local snapshots found",
+                        "hint": "Set GITHUB_TOKEN (classic PAT with public_repo scope is enough for public repos).",
+                        "output_dir": str(output_dir),
+                    },
+                    indent=2,
+                )
+            )
+            return 2
+
+        print(json.dumps(result, indent=2))
+        return 0
+    except URLError:
+        # No network / DNS / TLS etc. If the user has already downloaded snapshots, use them.
+        rules_re = re.compile(r"^mtg_rules_\d{8}--.*\.snapshot$")
+        oracle_re = re.compile(r"^mtg_oracle_cards_\d{14}--.*\.snapshot$")
+
+        rules_files = [p for p in output_dir.glob("mtg_rules_*.snapshot") if rules_re.match(p.name)]
+        oracle_files = [p for p in output_dir.glob("mtg_oracle_cards_*.snapshot") if oracle_re.match(p.name)]
+
+        def choose(paths: list[Path]) -> Path | None:
+            if not paths:
+                return None
+            return sorted(paths, key=lambda p: (p.stat().st_mtime, p.stat().st_size), reverse=True)[0]
+
+        rules_path = choose(rules_files)
+        oracle_path = choose(oracle_files)
+
+        if not rules_path and not oracle_path:
+            print(
+                json.dumps(
+                    {
+                        "error": "network unavailable and no local snapshots found",
+                        "output_dir": str(output_dir),
+                    },
+                    indent=2,
+                )
+            )
+            return 2
+
+        result: dict[str, Any] = {
+            "repo": args.repo,
+            "tag": args.tag,
+            "warning": "network_unavailable_using_local_snapshots",
+            "downloads": [],
+        }
+        for path, kind in [(rules_path, "rules"), (oracle_path, "oracle_cards")]:
+            if not path:
+                continue
+            collection = path.name.split("--", 1)[0]
+            updated_at = datetime.fromtimestamp(path.stat().st_mtime, tz=timezone.utc).isoformat()
+            result["downloads"].append(
+                {
+                    "kind": kind,
+                    "collection": collection,
+                    "asset": path.name,
+                    "path": str(path),
+                    "updated_at": updated_at,
+                    "size": path.stat().st_size,
+                }
+            )
+
+        print(json.dumps(result, indent=2))
+        return 0
+
     if not isinstance(release, dict):
         raise SystemExit("Unexpected GitHub API response for release.")
 
@@ -98,7 +246,6 @@ def main(argv: list[str] | None = None) -> int:
     rules = _select_latest(rules_assets)
     oracle = _select_latest(oracle_assets)
 
-    output_dir = Path(args.output_dir)
     result: dict[str, Any] = {"repo": args.repo, "tag": args.tag, "downloads": []}
 
     for chosen in [rules, oracle]:
@@ -106,7 +253,7 @@ def main(argv: list[str] | None = None) -> int:
             continue
         out_path = output_dir / chosen.name
         if not out_path.exists() or out_path.stat().st_size != chosen.size:
-            _download(chosen.url, out_path)
+            _download(chosen.url, out_path, token=token)
         kind = "rules" if chosen is rules else "oracle_cards"
         collection = chosen.name.split("--", 1)[0]
         result["downloads"].append(
@@ -130,4 +277,3 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

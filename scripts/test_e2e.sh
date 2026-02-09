@@ -23,7 +23,8 @@ CARDS_SAMPLE_RESTORED_COLLECTION="${CARDS_SAMPLE_COLLECTION}_restored"
 
 echo "[e2e] start qdrant"
 docker compose up -d qdrant >/dev/null
-./scripts/wait_for_qdrant.sh "http://localhost:6333" 60 >/dev/null
+# After Qdrant upgrades, the first start may need extra time for internal migrations.
+./scripts/wait_for_qdrant.sh "http://localhost:6333" 180 >/dev/null
 
 echo "[e2e] build docker image"
 docker compose build mtg-ontology >/dev/null

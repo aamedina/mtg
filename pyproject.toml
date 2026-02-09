@@ -9,7 +9,7 @@ description = "MTG comprehensive rules and Scryfall JSON-LD tooling with Qdrant 
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-  "qdrant-client==1.13.2",
+  "qdrant-client==1.16.2",
   "requests==2.32.3",
 ]
 

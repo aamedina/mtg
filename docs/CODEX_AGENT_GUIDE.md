@@ -40,6 +40,12 @@ This avoids embedding the full oracle-cards dataset locally.
 ./scripts/bootstrap_qdrant_from_release.sh rules-20260116
 ```
 
+If you hit GitHub API rate limits while downloading release assets, set a token:
+
+```bash
+export GITHUB_TOKEN="..."
+```
+
 That script prints the exact `MTG_RULES_COLLECTION` and `MTG_CARDS_COLLECTION` names to export.
 
 ### Option B: Build Locally (Costs OpenAI Embeddings)
@@ -62,18 +68,14 @@ docker compose run --rm mtg-ontology cards upsert-jsonld \
   --collection mtg_oracle_cards_20260208220524
 ```
 
-## 4) Install The Codex Skill
+## 4) Use The Repo Skill In Codex (No Install)
 
-This repo ships an optional Codex skill at `skills/mtg-qdrant-expert/`.
+This repo includes a Codex skill checked in at:
 
-Symlink it into your Codex skills directory:
+- `.agents/skills/mtg-qdrant-expert/`
 
-```bash
-mkdir -p ~/.codex/skills
-ln -s "$(pwd)/skills/mtg-qdrant-expert" ~/.codex/skills/mtg-qdrant-expert
-```
-
-Then, in Codex, enable the `mtg-qdrant-expert` skill for your session.
+Codex discovers repo-local skills automatically when you launch Codex inside the repository.
+If you don't see the skill after pulling updates, restart Codex.
 
 ## 5) Retrieval (What The Agent Should Do)
 
@@ -122,3 +124,8 @@ See `docs/QDRANT_QUERY_GUIDE.md` for agent-friendly query patterns, including:
 - semantic search + filter patterns for cards
 - `MatchText` lexical constraints on `oracle_text`, `type_line`, and `name_ft`
 
+## Using The Skill Explicitly
+
+If you want to force Codex to use this skill, mention it in your prompt:
+
+- `$mtg-qdrant-expert`

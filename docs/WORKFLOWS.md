@@ -105,6 +105,12 @@ dataset, restore the published Qdrant snapshots from a tag:
 ./scripts/bootstrap_qdrant_from_release.sh rules-20260116
 ```
 
+If you hit GitHub API rate limits while downloading release assets, set:
+
+```bash
+export GITHUB_TOKEN="..."
+```
+
 This will:
 
 - start Dockerized Qdrant

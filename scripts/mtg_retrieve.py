@@ -99,6 +99,15 @@ def _parse_rules_notation(text: str) -> str | None:
 def _infer_card_filters(question: str) -> ParsedCardFilters:
     q = question.lower()
 
+    # Heuristic: some queries are clearly trying to match oracle text ("cards that say ...",
+    # quoted phrases, or "Whenever/When you cast ..."). In those cases, don't over-constrain
+    # `type_line` based on words like "artifact" or "instant" that are likely part of the
+    # desired oracle text rather than the card's own type.
+    quoted_phrases = re.findall(r'"([^"]+)"', question) + re.findall(r"'([^']+)'", question)
+    wants_oracle_text = bool(quoted_phrases) or bool(
+        re.search(r"\b(cards?\s+that\s+(say|read))\b", q) or re.search(r"\b(whenever|when)\s+you\s+cast\b", q)
+    )
+
     # Mana value hints: "one mana", "2 mana", "mana value 3"
     cmc = None
     m = re.search(r"\b(mana value|mv)\s*(\d+)\b", q)
@@ -126,6 +135,60 @@ def _infer_card_filters(question: str) -> ParsedCardFilters:
     # This helps prevent obviously-wrong matches when the structural filters are broad.
     oracle_tokens: list[str] = []
 
+    # If the user provided a literal oracle text fragment (quotes), treat it as a lexical constraint.
+    # Keep the token list short to avoid over-filtering.
+    stop = {
+        "a",
+        "an",
+        "the",
+        "to",
+        "of",
+        "and",
+        "or",
+        "for",
+        "on",
+        "in",
+        "into",
+        "from",
+        "with",
+        "without",
+        "your",
+        "you",
+        "this",
+        "that",
+        "these",
+        "those",
+        "it",
+        "its",
+        "they",
+        "them",
+        "their",
+        "each",
+        "all",
+        "any",
+        "may",
+        "can",
+        "be",
+        "is",
+        "are",
+        "was",
+        "were",
+        "have",
+        "has",
+        "had",
+        "if",
+        "then",
+    }
+    for phrase in quoted_phrases:
+        tokens = [t for t in re.findall(r"[a-z0-9]+", phrase.lower()) if t and t not in stop]
+        oracle_tokens.extend(tokens[:6])
+
+    # Common oracle-text pattern: "Whenever you cast ..."
+    if re.search(r"\b(whenever|when)\s+you\s+cast\b", q):
+        oracle_tokens.extend(["whenever", "cast"])
+        if "spell" in q or "spells" in q:
+            oracle_tokens.append("spell")
+
     m = re.search(r"\bdeal(?:s)?\s+(\d+)\s+damage\b", q)
     if m:
         oracle_tokens.extend(["damage", m.group(1)])
@@ -134,6 +197,12 @@ def _infer_card_filters(question: str) -> ParsedCardFilters:
 
     if "counter" in q and ("spell" in q or "spells" in q):
         oracle_tokens.extend(["counter", "spell"])
+
+    # If the query is targeting oracle text, treat type words as oracle-text hints instead of
+    # card type-line constraints.
+    if wants_oracle_text and types:
+        oracle_tokens.extend(types)
+        types = []
 
     return ParsedCardFilters(
         cmc=cmc,
