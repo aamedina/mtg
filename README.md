@@ -36,6 +36,21 @@ then snapshot the collection for distribution.
 docker compose up -d qdrant
 ```
 
+### 1.5) Run The Local Test Suite (Recommended)
+
+Smoke (no OpenAI key required):
+
+```bash
+./scripts/test_smoke.sh
+```
+
+End-to-end (requires `OPENAI_API_KEY`):
+
+```bash
+export OPENAI_API_KEY="..."
+./scripts/test_e2e.sh
+```
+
 ### 2) Generate rules SKOS JSON-LD
 
 Fetch the latest rules and regenerate `resources/mtg/rules.skos.jsonld`:

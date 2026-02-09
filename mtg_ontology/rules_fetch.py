@@ -31,6 +31,26 @@ class RulesDownload:
     output_path: Path
 
 
+def _write_metadata_if_changed(path: Path, metadata: dict) -> None:
+    """Write metadata JSON only when meaningful fields have changed.
+
+    This keeps local runs from constantly dirtying the git worktree just because timestamps changed.
+    """
+    if path.exists():
+        try:
+            existing = json.loads(path.read_text(encoding="utf-8"))
+            # Compare everything except fetched_at, which is inherently non-deterministic.
+            existing_cmp = dict(existing)
+            existing_cmp.pop("fetched_at", None)
+            metadata_cmp = dict(metadata)
+            metadata_cmp.pop("fetched_at", None)
+            if existing_cmp == metadata_cmp:
+                return
+        except Exception:  # noqa: BLE001
+            pass
+    path.write_text(json.dumps(metadata, indent=2), encoding="utf-8")
+
+
 def _clean_candidate_url(url: str) -> str:
     return url.replace(" ", "%20")
 
@@ -103,8 +123,10 @@ def fetch_rules_by_token(output_dir: Path, *, release_token: str, url: str | Non
     resolved_url = _clean_candidate_url(url or construct_rules_url(token))
     target_path = output_dir / f"{token}.txt"
 
+    downloaded = False
     if not target_path.exists():
         download_rules_text(resolved_url, target_path)
+        downloaded = True
 
     metadata = {
         "fetched_at": datetime.now(timezone.utc).isoformat(),
@@ -112,7 +134,11 @@ def fetch_rules_by_token(output_dir: Path, *, release_token: str, url: str | Non
         "release_token": token,
         "local_path": str(target_path),
     }
-    (output_dir / f"{token}.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
+    metadata_path = output_dir / f"{token}.json"
+    if downloaded:
+        metadata_path.write_text(json.dumps(metadata, indent=2), encoding="utf-8")
+    else:
+        _write_metadata_if_changed(metadata_path, metadata)
 
     return RulesDownload(url=resolved_url, release_token=token, output_path=target_path)
 
@@ -123,8 +149,10 @@ def fetch_latest_rules(output_dir: Path) -> RulesDownload:
     url, release_token = discover_latest_rules_url()
     target_path = output_dir / f"{release_token}.txt"
 
+    downloaded = False
     if not target_path.exists():
         download_rules_text(url, target_path)
+        downloaded = True
 
     metadata = {
         "fetched_at": datetime.now(timezone.utc).isoformat(),
@@ -132,6 +160,10 @@ def fetch_latest_rules(output_dir: Path) -> RulesDownload:
         "release_token": release_token,
         "local_path": str(target_path),
     }
-    (output_dir / "latest.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
+    metadata_path = output_dir / "latest.json"
+    if downloaded:
+        metadata_path.write_text(json.dumps(metadata, indent=2), encoding="utf-8")
+    else:
+        _write_metadata_if_changed(metadata_path, metadata)
 
     return RulesDownload(url=url, release_token=release_token, output_path=target_path)

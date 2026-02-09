@@ -33,7 +33,10 @@ class QdrantConfig:
 
 def create_client(config: QdrantConfig) -> QdrantClient:
     """Instantiate a Qdrant client from config."""
-    return QdrantClient(url=config.url, api_key=config.api_key, timeout=config.timeout)
+    # Avoid passing empty/falsey keys; qdrant-client warns when an API key is used over http.
+    if config.api_key:
+        return QdrantClient(url=config.url, api_key=config.api_key, timeout=config.timeout)
+    return QdrantClient(url=config.url, timeout=config.timeout)
 
 
 def ensure_collection(

@@ -15,6 +15,28 @@ Environment variables:
 - `OPENAI_API_KEY` is required for any Qdrant upsert (rules or cards).
 - See `.env.example` for the full list.
 
+## Local Test Suite
+
+Smoke test (no OpenAI key required):
+
+```bash
+./scripts/test_smoke.sh
+```
+
+End-to-end test (requires `OPENAI_API_KEY`; starts Dockerized Qdrant, upserts rules + cards, runs query assertions, snapshots + restores):
+
+```bash
+export OPENAI_API_KEY="..."
+./scripts/test_e2e.sh
+```
+
+Tuning knobs (optional):
+
+- `RULES_TOKEN=20260116` (default)
+- `CARDS_QUERY='set:m20 lang:en'` (default)
+- `CARDS_MAX=30` (default)
+- `PREFIX=local` (default; prefixes collection names)
+
 ## Comprehensive Rules -> SKOS JSON-LD
 
 Regenerate from the latest Wizards rules TXT:
