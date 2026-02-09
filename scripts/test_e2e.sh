@@ -33,25 +33,50 @@ docker compose run --rm --no-deps \
     set -euo pipefail
     token='${RULES_TOKEN}'
     src_url=\"https://media.wizards.com/\${token:0:4}/downloads/MagicCompRules%20\${token}.txt\"
+    # Parse directly from the pinned fixture
     python -m mtg_ontology.cli rules parse \
       --input-file \"resources/MagicCompRules/\${token}.txt\" \
       --release-token \"\${token}\" \
       --source-url \"\${src_url}\" \
-      --output /tmp/rules.skos.jsonld
-    python -m mtg_ontology.cli rules validate --input-jsonld /tmp/rules.skos.jsonld
+      --output /tmp/rules.parse.jsonld
+    python -m mtg_ontology.cli rules validate --input-jsonld /tmp/rules.parse.jsonld
+
+    # Also exercise the \"refresh\" workflow (what GitHub release tags run), but in a temp dir
+    tmp_rules_dir=\$(mktemp -d)
+    cp -f \"resources/MagicCompRules/\${token}.txt\" \"\${tmp_rules_dir}/\${token}.txt\"
+    python -m mtg_ontology.cli rules refresh \
+      --release-token \"\${token}\" \
+      --rules-dir \"\${tmp_rules_dir}\" \
+      --output /tmp/rules.refresh.jsonld
+    python -m mtg_ontology.cli rules validate --input-jsonld /tmp/rules.refresh.jsonld
+
+    # \"parse\" and \"refresh\" should be identical for the same input file.
     python - <<'PY'
 import hashlib
 from pathlib import Path
 def sha256(path: str) -> str:
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
-a = sha256('/tmp/rules.skos.jsonld')
+a = sha256('/tmp/rules.parse.jsonld')
+b = sha256('/tmp/rules.refresh.jsonld')
+if a != b:
+    raise SystemExit('rules parse != rules refresh for the same input/token; expected identical JSON-LD')
+print('parse==refresh: ok')
+PY
+
+    # Ensure the committed artifact is deterministic for this token.
+    python - <<'PY'
+import hashlib
+from pathlib import Path
+def sha256(path: str) -> str:
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+a = sha256('/tmp/rules.refresh.jsonld')
 b = sha256('resources/mtg/rules.skos.jsonld')
 if a != b:
     raise SystemExit('rules.skos.jsonld is not deterministic for this token; generated output differs from committed file')
 print('deterministic: ok')
 PY
     python -m mtg_ontology.cli rules upsert-qdrant \
-      --input-jsonld /tmp/rules.skos.jsonld \
+      --input-jsonld /tmp/rules.refresh.jsonld \
       --collection \"\${RULES_COLLECTION}\" \
       --embedding-model text-embedding-3-small \
       --recreate
