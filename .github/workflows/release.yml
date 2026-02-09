@@ -165,4 +165,6 @@ jobs:
             dist/context.jsonld
             dist/oracle-cards-*.jsonld.gz
             dist/qdrant-snapshots/*
+          overwrite_files: true
+          fail_on_unmatched_files: true
           generate_release_notes: true
