@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mtg-ontology"
+version = "0.1.0"
+description = "MTG comprehensive rules and Scryfall JSON-LD tooling with Qdrant ingestion"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "qdrant-client==1.13.2",
+  "requests==2.32.3",
+]
+
+[project.scripts]
+mtg-ontology = "mtg_ontology.cli:main"
+
+[tool.setuptools]
+packages = ["mtg_ontology"]

@@ -1,0 +1,49 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build CLI Image
+        run: |
+          docker compose build mtg-ontology
+
+      - name: Rules Parse + Validate (Pinned Fixture)
+        run: |
+          docker compose run --rm --no-deps --entrypoint bash mtg-ontology -lc '
+            set -euo pipefail
+            python -m mtg_ontology.cli rules parse \
+              --input-file resources/MagicCompRules/20260116.txt \
+              --release-token 20260116 \
+              --source-url "https://media.wizards.com/2026/downloads/MagicCompRules%2020260116.txt" \
+              --output /tmp/rules.skos.jsonld
+            python -m mtg_ontology.cli rules validate --input-jsonld /tmp/rules.skos.jsonld
+          '
+
+      - name: Scryfall JSON -> JSON-LD (Small Fixture)
+        run: |
+          docker compose run --rm --no-deps --entrypoint bash mtg-ontology -lc '
+            set -euo pipefail
+            python -m mtg_ontology.cli scryfall export-jsonld \
+              --input-json resources/scryfall/sample-cards.json \
+              --output /tmp/sample-cards.jsonld
+            python - <<PY
+import json
+doc = json.load(open("/tmp/sample-cards.jsonld", "r", encoding="utf-8"))
+assert "@context" in doc
+assert isinstance(doc.get("@graph"), list) and len(doc["@graph"]) == 2
+assert all(node.get("@id") for node in doc["@graph"])
+print("ok")
+PY
+          '
+

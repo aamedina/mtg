@@ -1,0 +1,23 @@
+[
+  {
+    "object": "card",
+    "id": "00000000-0000-0000-0000-000000000001",
+    "uri": "https://api.scryfall.com/cards/00000000-0000-0000-0000-000000000001",
+    "name": "Sample Card One",
+    "released_at": "2020-01-01",
+    "type_line": "Creature \u2014 Human",
+    "oracle_text": "This is a small fixture used for CI.",
+    "keywords": []
+  },
+  {
+    "object": "card",
+    "id": "00000000-0000-0000-0000-000000000002",
+    "uri": "https://api.scryfall.com/cards/00000000-0000-0000-0000-000000000002",
+    "name": "Sample Card Two",
+    "released_at": "2020-01-02",
+    "type_line": "Instant",
+    "oracle_text": "Another small fixture.",
+    "keywords": ["Flying"]
+  }
+]
+

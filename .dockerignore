@@ -1,0 +1,13 @@
+.git
+.venv
+.qdrant
+dist
+__pycache__
+*.pyc
+
+# Large datasets are mounted at runtime; keep images small.
+resources/scryfall/*.json
+resources/scryfall/*.jsonld
+resources/scryfall/*.gz
+resources/MagicCompRules/*.txt
+resources/mtg/rules.skos.jsonld

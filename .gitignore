@@ -26,3 +26,18 @@
 /classes
 /target
 .vocab/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.env
+
+# Qdrant local storage + generated artifacts
+.qdrant/
+dist/
+resources/qdrant-snapshots/
+
+# Scryfall bulk exports are large; keep compressed `.gz` in git and ignore uncompressed.
+resources/scryfall/oracle-cards-*.json
+resources/scryfall/oracle-cards-*.jsonld

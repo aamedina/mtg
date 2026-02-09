@@ -1,0 +1,36 @@
+services:
+  qdrant:
+    image: qdrant/qdrant:v1.13.4
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    # Qdrant uses RocksDB for payload and indexes, which can open many files.
+    # Keep this explicit so local runs match CI behavior and avoid "Too many open files".
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
+    volumes:
+      - qdrant_storage:/qdrant/storage
+    restart: unless-stopped
+
+  # CLI runner container used to keep local runs and GitHub Actions consistent.
+  # Usage examples are in docs/WORKFLOWS.md.
+  mtg-ontology:
+    build: .
+    depends_on:
+      - qdrant
+    # Run as the host user so generated files under ./resources aren't owned by root.
+    user: "${UID:-1000}:${GID:-1000}"
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      QDRANT_URL: http://qdrant:6333
+      QDRANT_API_KEY: ${QDRANT_API_KEY-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY-}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL-https://api.openai.com/v1}
+      OPENAI_EMBEDDING_MODEL: ${OPENAI_EMBEDDING_MODEL-text-embedding-3-small}
+
+volumes:
+  qdrant_storage:
