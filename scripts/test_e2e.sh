@@ -95,6 +95,35 @@ docker compose run --rm --entrypoint bash mtg-ontology -lc "
     --embedding-model text-embedding-3-small \
     --recreate >/dev/null
 
+  # Simulate upgrading an older snapshot:
+  # - legacy per-point embedding metadata fields (to be cleaned)
+  # - missing derived lookup field name_ft (to be backfilled)
+  python - <<'PY'
+from qdrant_client import QdrantClient
+from qdrant_client.http import models
+
+client = QdrantClient(url='http://qdrant:6333', timeout=30)
+collection = '${CARDS_SAMPLE_COLLECTION}'
+
+points, _ = client.scroll(collection_name=collection, limit=10, with_payload=False, with_vectors=False)
+ids = [p.id for p in points]
+assert len(ids) == 2, ids
+
+client.set_payload(
+    collection_name=collection,
+    payload={'embedding_model': 'legacy', 'embedding_dimensions': 1234},
+    points=ids,
+    wait=True,
+)
+client.delete_payload(collection_name=collection, keys=['name_ft'], points=ids, wait=True)
+
+# Ensure the test preconditions actually hold.
+p = client.retrieve(collection_name=collection, ids=ids, with_payload=True, with_vectors=False)
+assert any('embedding_model' in (pt.payload or {}) for pt in p)
+assert all('name_ft' not in (pt.payload or {}) for pt in p)
+print('preconditions: ok')
+PY
+
   # Incremental check: running the same upsert again should skip re-embedding unchanged cards.
   python -m mtg_ontology.cli cards upsert-jsonld \
     --input-jsonld dist/e2e-sample.cards.jsonld.gz \
@@ -107,7 +136,24 @@ from pathlib import Path
 data = json.loads(Path('/tmp/e2e.sample.upsert.json').read_text(encoding='utf-8'))
 assert data['upserted'] == 0, data
 assert data['skipped'] == 2, data
+assert data['payload_patched'] == 2, data
+assert data['payload_cleaned'] == 2, data
 print('incremental: ok')
+PY
+
+  python - <<'PY'
+from qdrant_client import QdrantClient
+
+client = QdrantClient(url='http://qdrant:6333', timeout=30)
+collection = '${CARDS_SAMPLE_COLLECTION}'
+points, _ = client.scroll(collection_name=collection, limit=10, with_payload=True, with_vectors=False)
+assert len(points) == 2
+for pt in points:
+    payload = pt.payload or {}
+    assert payload.get('name_ft'), payload
+    assert 'embedding_model' not in payload, payload
+    assert 'embedding_dimensions' not in payload, payload
+print('payload backfill+cleanup: ok')
 PY
 " >/dev/null
 
@@ -124,6 +170,7 @@ echo "[e2e] run agent-style queries (vector + filters + exact lookups)"
 docker compose run --rm --no-deps \
   -e "RULES_COLLECTION=${RULES_COLLECTION}" \
   -e "CARDS_COLLECTION=${CARDS_COLLECTION}" \
+  -e "CARDS_SAMPLE_COLLECTION=${CARDS_SAMPLE_COLLECTION}" \
   --entrypoint bash mtg-ontology -lc "python - <<'PY'
 import os
 from qdrant_client import QdrantClient
@@ -133,6 +180,7 @@ from mtg_ontology.embeddings import OpenAIEmbedder, OpenAIEmbeddingConfig, resol
 
 rules_collection = os.environ['RULES_COLLECTION']
 cards_collection = os.environ['CARDS_COLLECTION']
+cards_sample_collection = os.environ['CARDS_SAMPLE_COLLECTION']
 
 client = QdrantClient(url=os.getenv('QDRANT_URL', 'http://qdrant:6333'), timeout=30)
 embedder = OpenAIEmbedder(OpenAIEmbeddingConfig(api_key=resolve_openai_api_key(), model=os.getenv('OPENAI_EMBEDDING_MODEL','text-embedding-3-small')))
@@ -154,10 +202,15 @@ def qpoints(collection: str, q: str, flt=None, limit=5, include=None):
 # Ensure payload indexes exist (schema shows indexed fields)
 rules_info = client.get_collection(rules_collection)
 cards_info = client.get_collection(cards_collection)
+cards_sample_info = client.get_collection(cards_sample_collection)
 for key in ['kind','uri','label','notation','broader','references','scheme','rules_token']:
     assert key in (rules_info.payload_schema or {}), f\"missing rules payload index: {key}\"
-for key in ['kind','uri','id','oracle_id','name','set','collector_number','lang','layout','rarity','cmc','colors','color_identity','keywords']:
+for key in ['kind','uri','id','oracle_id','name','name_ft','set','collector_number','lang','layout','rarity','cmc','colors','color_identity','keywords']:
     assert key in (cards_info.payload_schema or {}), f\"missing cards payload index: {key}\"
+for key in ['oracle_text','type_line']:
+    assert key in (cards_info.payload_schema or {}), f\"missing cards full-text payload index: {key}\"
+for key in ['oracle_text','type_line','name_ft']:
+    assert key in (cards_sample_info.payload_schema or {}), f\"missing sample cards text index: {key}\"
 
 # Rules semantic search (kind=rule)
 flt = models.Filter(must=[models.FieldCondition(key='kind', match=models.MatchValue(value='rule'))])
@@ -212,6 +265,25 @@ back, _ = client.scroll(
     with_vectors=False,
 )
 assert len(back) >= 1 and back[0].payload.get('id') == card_id
+
+# Cards lexical lookup (sample collection): MatchText on name_ft + oracle_text
+records, _ = client.scroll(
+    collection_name=cards_sample_collection,
+    scroll_filter=models.Filter(must=[models.FieldCondition(key='name_ft', match=models.MatchText(text='sample'))]),
+    limit=10,
+    with_payload=models.PayloadSelectorInclude(include=['name']),
+    with_vectors=False,
+)
+assert len(records) == 2, f\"expected 2 sample cards via name_ft, got {len(records)}\"
+
+records, _ = client.scroll(
+    collection_name=cards_sample_collection,
+    scroll_filter=models.Filter(must=[models.FieldCondition(key='oracle_text', match=models.MatchText(text='fixture'))]),
+    limit=10,
+    with_payload=models.PayloadSelectorInclude(include=['name','oracle_text']),
+    with_vectors=False,
+)
+assert records, \"expected at least one sample card via oracle_text MatchText\"
 
 print('ok')
 PY" >/dev/null
@@ -283,7 +355,7 @@ restored = os.environ['CARDS_SAMPLE_RESTORED_COLLECTION']
 o = client.get_collection(orig)
 r = client.get_collection(restored)
 assert o.points_count == r.points_count, (o.points_count, r.points_count)
-for key in ['kind','uri','id','oracle_id','name','set','collector_number','lang','layout','rarity','cmc','colors','color_identity','keywords']:
+for key in ['kind','uri','id','oracle_id','name','name_ft','set','collector_number','lang','layout','rarity','cmc','colors','color_identity','keywords']:
     assert key in (r.payload_schema or {}), f\"missing restored payload index: {key}\"
 print('ok')
 PY" >/dev/null

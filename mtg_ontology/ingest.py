@@ -106,14 +106,43 @@ def rules_text_builder(node: dict[str, Any]) -> str:
 def cards_text_builder(node: dict[str, Any]) -> str:
     """Build vector text for card concepts."""
     name = str(node.get("name") or "")
-    oracle_text = str(node.get("oracle_text") or "")
     type_line = str(node.get("type_line") or "")
+
+    # Many multi-faced cards (adventure/transform/split) omit top-level oracle_text and
+    # instead include it per face in card_faces. For semantic search, we embed the full
+    # oracle text across faces when present.
+    oracle_text = _card_oracle_text(node)
     keywords = node.get("keywords") or []
     if isinstance(keywords, list):
         keyword_text = ", ".join(str(value) for value in keywords)
     else:
         keyword_text = str(keywords)
     return "\n".join(part for part in [name, type_line, oracle_text, keyword_text] if part)
+
+
+def _card_oracle_text(node: dict[str, Any]) -> str:
+    """Return best-effort oracle text for a card node.
+
+    Scryfall sometimes provides `oracle_text` only within `card_faces`. We preserve the raw
+    JSON-LD under `jsonld`; this helper only supports search/quoting convenience fields.
+    """
+    value = node.get("oracle_text")
+    if value:
+        return str(value)
+
+    faces = node.get("card_faces") or []
+    if not isinstance(faces, list):
+        return ""
+
+    parts: list[str] = []
+    for face in faces:
+        if not isinstance(face, dict):
+            continue
+        txt = face.get("oracle_text")
+        if txt:
+            parts.append(str(txt))
+
+    return "\n//\n".join(parts)
 
 
 def rules_payload_builder(node: dict[str, Any]) -> dict[str, Any]:
@@ -161,13 +190,16 @@ def rules_payload_builder(node: dict[str, Any]) -> dict[str, Any]:
 def cards_payload_builder(node: dict[str, Any]) -> dict[str, Any]:
     """Build a compact, query-friendly payload for Scryfall card JSON-LD nodes."""
     uri = str(node.get("@id") or node.get("uri") or "")
+    name = node.get("name")
+    oracle_text = _card_oracle_text(node)
     return {
         "uri": uri,
         "kind": "card",
         # Common, indexable fields
         "id": node.get("id"),
         "oracle_id": node.get("oracle_id"),
-        "name": node.get("name"),
+        "name": name,
+        "name_ft": name,
         "set": node.get("set"),
         "collector_number": node.get("collector_number"),
         "lang": node.get("lang"),
@@ -180,7 +212,30 @@ def cards_payload_builder(node: dict[str, Any]) -> dict[str, Any]:
         "colors": node.get("colors"),
         "color_identity": node.get("color_identity"),
         "keywords": node.get("keywords"),
-        "oracle_text": node.get("oracle_text"),
+        # Best-effort oracle text for agent quoting and full-text filtering.
+        "oracle_text": oracle_text,
         # Full, 1:1 Scryfall JSON-LD
         "jsonld": node,
     }
+
+
+def cards_payload_patch_builder(node: dict[str, Any], prev_payload: dict[str, Any] | None) -> dict[str, Any]:
+    """Backfill derived payload fields on previously-ingested card points.
+
+    This is used to upgrade older snapshots without forcing a full re-embed.
+    """
+    prev_payload = prev_payload or {}
+    patch: dict[str, Any] = {}
+
+    # Ensure `name_ft` exists for fast case-insensitive lookups.
+    name = node.get("name")
+    if name and prev_payload.get("name_ft") != name:
+        patch["name_ft"] = name
+
+    # Ensure `oracle_text` is present for multi-faced cards (derived from card_faces).
+    if not prev_payload.get("oracle_text"):
+        oracle_text = _card_oracle_text(node)
+        if oracle_text:
+            patch["oracle_text"] = oracle_text
+
+    return patch

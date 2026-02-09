@@ -64,7 +64,19 @@ def main(argv: list[str] | None = None) -> int:
         print("", end="")
         return 0
 
-    pattern = re.compile(str(args.pattern))
+    pattern_value = str(args.pattern)
+    # If this workflow is running with a pinned oracle dataset token, prefer restoring
+    # a snapshot for that exact collection. This avoids accidentally restoring an older
+    # token's snapshot after the pinned oracle dataset changes.
+    if pattern_value == _DEFAULT_PATTERN:
+        oracle_collection = os.environ.get("ORACLE_COLLECTION") or ""
+        oracle_token = os.environ.get("ORACLE_TOKEN") or ""
+        if oracle_collection:
+            pattern_value = rf"^{re.escape(oracle_collection)}--.*\.snapshot$"
+        elif oracle_token:
+            pattern_value = rf"^mtg_oracle_cards_{re.escape(oracle_token)}--.*\.snapshot$"
+
+    pattern = re.compile(pattern_value)
     releases = _github_api_get(f"https://api.github.com/repos/{repo}/releases?per_page=50", token=token)
     if not isinstance(releases, list):
         print("", end="")

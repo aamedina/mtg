@@ -135,6 +135,7 @@ jobs:
           cp -a resources/mtg/rules.skos.jsonld dist/
           cp -a resources/mtg/rules.context.jsonld dist/
           cp -a docs/RULES_SKOS_MODEL.md dist/
+          cp -a docs/CODEX_AGENT_GUIDE.md dist/
           cp -a docs/QDRANT_QUERY_GUIDE.md dist/
           cp -a docs/SCRYFALL_JSONLD_MODEL.md dist/
           cp -a resources/scryfall/context.jsonld dist/
@@ -158,6 +159,7 @@ jobs:
             dist/rules.skos.jsonld
             dist/rules.context.jsonld
             dist/RULES_SKOS_MODEL.md
+            dist/CODEX_AGENT_GUIDE.md
             dist/QDRANT_QUERY_GUIDE.md
             dist/SCRYFALL_JSONLD_MODEL.md
             dist/context.jsonld

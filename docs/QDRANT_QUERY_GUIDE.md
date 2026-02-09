@@ -27,10 +27,8 @@ Payload keys you can rely on:
 - `rules_token`: `YYYYMMDD` extracted from `scheme`
 - `jsonld`: the full JSON-LD node (verbatim)
 
-Embedding metadata (useful for audits and incremental re-embeds):
+Embedding metadata (useful for incremental re-embeds):
 
-- `embedding_model`: embedding model name used at ingest time
-- `embedding_dimensions`: vector size stored in the collection
 - `embedding_text_sha256`: SHA-256 of the exact text that was embedded (built by `rules_text_builder`)
 
 Indexes created automatically by the CLI:
@@ -49,6 +47,7 @@ Payload keys you can rely on:
 - `name`, `set`, `collector_number`, `lang`, `layout`, `rarity`
 - `mana_cost`, `type_line`, `oracle_text`
 - `cmc` (number), `colors` (array), `color_identity` (array), `keywords` (array)
+- `name_ft`: derived from `name` (full-text indexed, case-insensitive token lookup)
 - `jsonld`: the full 1:1 Scryfall JSON-LD node
 
 What gets embedded (important):
@@ -56,16 +55,30 @@ What gets embedded (important):
 - Embeddings are computed from a small, semantic text built from `name`, `type_line`, `oracle_text`, and `keywords`.
 - The full `jsonld` payload is stored for retrieval, but it is **not** what gets embedded.
 
-Embedding metadata (useful for audits and incremental re-embeds):
+Notes:
 
-- `embedding_model`
-- `embedding_dimensions`
+- For multi-faced cards (transform/adventure/split), Scryfall often omits top-level `oracle_text`.
+  In Qdrant payload, `oracle_text` is filled from `card_faces[*].oracle_text` when needed, joined with `//`.
+  The original face structure is always preserved under `jsonld.card_faces`.
+
+Embedding metadata (useful for incremental re-embeds):
+
 - `embedding_text_sha256` (built by `cards_text_builder`)
 
 Indexes created automatically by the CLI:
 
 - keyword indexes: `kind`, `uri`, `id`, `oracle_id`, `name`, `set`, `collector_number`, `lang`, `layout`, `rarity`, `colors`, `color_identity`, `keywords`
 - float index: `cmc`
+- full-text indexes (on disk): `oracle_text`, `type_line`
+- full-text indexes (on disk): `name_ft` (a case-insensitive, tokenized copy of `name`)
+
+### Why These Indexes?
+
+- **Keyword indexes** make exact filters fast (`set=mh3`, `color_identity` contains `U`, etc.).
+- **Float index** on `cmc` makes mana value range filters fast.
+- **Full-text indexes** make token-based constraints fast (especially important for `oracle_text` on a large collection).
+  - These are set to `on_disk=true` to keep RAM usage predictable. If you run Qdrant with plenty of memory and want
+    faster text filters, you can switch them to in-memory indexes by setting `on_disk=false` and reindexing.
 
 ## Python Examples (qdrant-client)
 
@@ -197,6 +210,43 @@ flt = models.Filter(
     ]
 )
 hits = vsearch("mtg_cards_mh3", "search your library for a land", flt=flt, limit=10)
+```
+
+### Cards: lexical filter on oracle text (full-text index)
+
+This uses Qdrant's text index to filter by tokens in `oracle_text`. It is best used as a *constraint*
+for vector search (hybrid), not as a standalone ranking method.
+
+```python
+flt = models.Filter(
+    must=[
+        models.FieldCondition(key="oracle_text", match=models.MatchText(text="counter target spell")),
+    ]
+)
+hits = vsearch("mtg_oracle_cards_20260208220524", "two mana counterspell", flt=flt, limit=10)
+```
+
+Note: `MatchText` is token-based. If you need an exact phrase match, post-filter on the returned
+payload (`"Counter target spell" in oracle_text`) after retrieval.
+
+### Cards: lookup by (approximate) name (full-text index)
+
+If you have a user-provided card name that might not match Scryfall casing/punctuation exactly,
+use `name_ft`:
+
+```python
+flt = models.Filter(
+    must=[
+        models.FieldCondition(key="name_ft", match=models.MatchText(text="panharmonicon")),
+    ]
+)
+records, _ = client.scroll(
+    collection_name="mtg_oracle_cards_20260208220524",
+    scroll_filter=flt,
+    limit=5,
+    with_payload=models.PayloadSelectorInclude(include=["name", "uri", "oracle_text"]),
+    with_vectors=False,
+)
 ```
 
 ### Cards: exact lookup by set + collector number

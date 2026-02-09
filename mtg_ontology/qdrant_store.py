@@ -38,6 +38,8 @@ class UpsertStats:
 
     upserted: int
     skipped: int
+    payload_patched: int
+    payload_cleaned: int
 
 
 def create_client(config: QdrantConfig) -> QdrantClient:
@@ -67,6 +69,19 @@ def ensure_collection(
             collection_name=collection_name,
             vectors_config=models.VectorParams(size=vector_size, distance=distance),
             on_disk_payload=True,
+        )
+        return
+
+    # If the collection exists, verify its vector size matches the configured embedder.
+    # Otherwise Qdrant will reject upserts with a vector size mismatch.
+    info = client.get_collection(collection_name)
+    vectors = getattr(getattr(info, "config", None), "params", None)
+    existing_vectors = getattr(vectors, "vectors", None)
+    existing_size = getattr(existing_vectors, "size", None)
+    if existing_size and int(existing_size) != int(vector_size):
+        raise RuntimeError(
+            f"Collection '{collection_name}' exists with vector size {existing_size}, "
+            f"but this run expects {vector_size}. Use --recreate or select the original embedding model."
         )
 
 
@@ -104,8 +119,11 @@ def upsert_documents(
     text_builder: Callable[[dict[str, Any]], str],
     payload_builder: Callable[[dict[str, Any]], dict[str, Any]],
     embedder: Embedder,
-    embedding_model: str | None = None,
+    payload_patch_builder: Callable[[dict[str, Any], dict[str, Any] | None], dict[str, Any]] | None = None,
+    inspect_payload_keys: list[str] | None = None,
+    delete_payload_keys: list[str] | None = None,
     batch_size: int = 64,
+    update_batch_size: int = 256,
 ) -> UpsertStats:
     """Upsert document dicts into Qdrant using provided embedder.
 
@@ -115,6 +133,8 @@ def upsert_documents(
     """
     total_upserted = 0
     total_skipped = 0
+    total_patched = 0
+    total_cleaned = 0
 
     for doc_batch in iter_chunks(docs, batch_size):
         # Prepare deterministic IDs + payloads up front so we can do incremental checks.
@@ -133,9 +153,6 @@ def upsert_documents(
 
             # Store a fingerprint of the embedded text so we can skip re-embedding unchanged docs.
             payload["embedding_text_sha256"] = hashlib.sha256(text.encode("utf-8")).hexdigest()
-            if embedding_model:
-                payload["embedding_model"] = embedding_model
-            payload["embedding_dimensions"] = embedder.vector_size
 
             batch_ids.append(point_id)
             batch_texts.append(text)
@@ -143,31 +160,35 @@ def upsert_documents(
 
         # Determine which docs are missing or have changed embedding text.
         # If the existing point doesn't have our fingerprint fields, treat it as needing re-embedding.
+        keys = ["embedding_text_sha256"]
+        if inspect_payload_keys:
+            keys.extend([k for k in inspect_payload_keys if k not in keys])
+        if delete_payload_keys:
+            keys.extend([k for k in delete_payload_keys if k not in keys])
         existing = client.retrieve(
             collection_name=collection_name,
             ids=batch_ids,
-            with_payload=["embedding_model", "embedding_text_sha256", "embedding_dimensions"],
+            with_payload=keys,
             with_vectors=False,
         )
         existing_by_id = {str(record.id): (record.payload or {}) for record in existing}
+        existing_ids = list(existing_by_id.keys())
+        needs_cleanup = False
+        if delete_payload_keys and existing_ids:
+            # Only issue delete operations when at least one point still has legacy keys.
+            for prev in existing_by_id.values():
+                if any(key in prev for key in delete_payload_keys):
+                    needs_cleanup = True
+                    break
 
         embed_ids: list[str] = []
         embed_texts: list[str] = []
         embed_payloads: list[dict[str, Any]] = []
+        patch_ops: list[models.SetPayloadOperation] = []
 
-        for point_id, text, payload in zip(batch_ids, batch_texts, batch_payloads):
+        for doc, point_id, text, payload in zip(doc_batch, batch_ids, batch_texts, batch_payloads):
             prev = existing_by_id.get(point_id)
             if not prev:
-                embed_ids.append(point_id)
-                embed_texts.append(text)
-                embed_payloads.append(payload)
-                continue
-            if prev.get("embedding_model") != payload.get("embedding_model"):
-                embed_ids.append(point_id)
-                embed_texts.append(text)
-                embed_payloads.append(payload)
-                continue
-            if prev.get("embedding_dimensions") != payload.get("embedding_dimensions"):
                 embed_ids.append(point_id)
                 embed_texts.append(text)
                 embed_payloads.append(payload)
@@ -178,8 +199,34 @@ def upsert_documents(
                 embed_payloads.append(payload)
                 continue
             total_skipped += 1
+            if payload_patch_builder:
+                patch = payload_patch_builder(doc, prev)
+                if patch:
+                    patch_ops.append(
+                        models.SetPayloadOperation(
+                            set_payload=models.SetPayload(payload=patch, points=[point_id])
+                        )
+                    )
+                    total_patched += 1
 
         if not embed_ids:
+            # Even if we didn't embed, we may still want to update payload for derived fields
+            # or clean up legacy keys.
+            ops: list[
+                models.DeletePayloadOperation
+                | models.SetPayloadOperation
+            ] = []
+            if needs_cleanup and delete_payload_keys and existing_ids:
+                ops.append(
+                    models.DeletePayloadOperation(
+                        delete_payload=models.DeletePayload(keys=delete_payload_keys, points=existing_ids)
+                    )
+                )
+                total_cleaned += len(existing_ids)
+            ops.extend(patch_ops)
+            if ops:
+                for op_chunk in iter_chunks(ops, update_batch_size):
+                    client.batch_update_points(collection_name=collection_name, update_operations=op_chunk, wait=True)
             continue
 
         vectors = embedder.embed(embed_texts)
@@ -199,4 +246,26 @@ def upsert_documents(
         client.upsert(collection_name=collection_name, points=points, wait=True)
         total_upserted += len(points)
 
-    return UpsertStats(upserted=total_upserted, skipped=total_skipped)
+        # Apply payload backfills/cleanup for the points we did not re-embed.
+        ops2: list[
+            models.DeletePayloadOperation
+            | models.SetPayloadOperation
+        ] = []
+        if needs_cleanup and delete_payload_keys and existing_ids:
+            ops2.append(
+                models.DeletePayloadOperation(
+                    delete_payload=models.DeletePayload(keys=delete_payload_keys, points=existing_ids)
+                )
+            )
+            total_cleaned += len(existing_ids)
+        ops2.extend(patch_ops)
+        if ops2:
+            for op_chunk in iter_chunks(ops2, update_batch_size):
+                client.batch_update_points(collection_name=collection_name, update_operations=op_chunk, wait=True)
+
+    return UpsertStats(
+        upserted=total_upserted,
+        skipped=total_skipped,
+        payload_patched=total_patched,
+        payload_cleaned=total_cleaned,
+    )

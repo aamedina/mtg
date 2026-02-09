@@ -4,6 +4,7 @@
 
 - `mtg_ontology/`: Python package (the implementation)
 - `scripts/`: local test suite and GitHub Actions helpers
+- `skills/`: optional Codex skills (agent instructions for querying rules + cards in Qdrant)
 - `resources/`: committed artifacts + generated outputs intended for reuse (also the only Clojure classpath path)
 - `docker-compose.yml`: local reproducible Qdrant + a Dockerized CLI runner (`mtg-ontology`)
 - `.github/workflows/ci.yml`: smoke checks for PRs/pushes (no OpenAI key required)
@@ -12,6 +13,7 @@
 - `docs/RULES_SKOS_MODEL.md`: rules SKOS modeling documentation
 - `docs/SCRYFALL_JSONLD_MODEL.md`: Scryfall JSON-LD modeling documentation
 - `docs/QDRANT_QUERY_GUIDE.md`: query patterns + payload fields for agents using Qdrant
+- `docs/CODEX_AGENT_GUIDE.md`: how to use this repo with Codex (skill + local Qdrant)
 - `.env.example`: environment variables used by the CLI and docker-compose
 
 ## `resources/` Layout

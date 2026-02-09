@@ -16,6 +16,7 @@ from .embeddings import OpenAIEmbedder, OpenAIEmbeddingConfig, resolve_openai_ap
 from .ingest import (
     cards_text_builder,
     cards_payload_builder,
+    cards_payload_patch_builder,
     load_jsonld_graph,
     rules_text_builder,
     rules_payload_builder,
@@ -64,12 +65,32 @@ _CARDS_PAYLOAD_INDEXES = {
     "id": models.PayloadSchemaType.KEYWORD,
     "oracle_id": models.PayloadSchemaType.KEYWORD,
     "name": models.PayloadSchemaType.KEYWORD,
+    # Full-text version of `name` for fast case-insensitive lookup by tokens.
+    "name_ft": models.TextIndexParams(
+        type=models.TextIndexType.TEXT,
+        tokenizer=models.TokenizerType.WORD,
+        lowercase=True,
+        on_disk=True,
+    ),
     "set": models.PayloadSchemaType.KEYWORD,
     "collector_number": models.PayloadSchemaType.KEYWORD,
     "lang": models.PayloadSchemaType.KEYWORD,
     "layout": models.PayloadSchemaType.KEYWORD,
     "rarity": models.PayloadSchemaType.KEYWORD,
     "cmc": models.PayloadSchemaType.FLOAT,
+    # Full-text fields: enable fast lexical filtering (MatchText) and hybrid queries.
+    "oracle_text": models.TextIndexParams(
+        type=models.TextIndexType.TEXT,
+        tokenizer=models.TokenizerType.WORD,
+        lowercase=True,
+        on_disk=True,
+    ),
+    "type_line": models.TextIndexParams(
+        type=models.TextIndexType.TEXT,
+        tokenizer=models.TokenizerType.WORD,
+        lowercase=True,
+        on_disk=True,
+    ),
     # Array fields
     "colors": models.PayloadSchemaType.KEYWORD,
     "color_identity": models.PayloadSchemaType.KEYWORD,
@@ -94,6 +115,19 @@ def _qdrant_config_from_args(args: argparse.Namespace) -> QdrantConfig:
     url = args.qdrant_url or os.getenv("QDRANT_URL", "http://localhost:6333")
     # docker-compose often passes empty strings for unset env vars; treat those as missing.
     api_key = args.qdrant_api_key or os.getenv("QDRANT_API_KEY") or None
+    # Avoid noisy warnings for the common local-dev setup:
+    # - dockerized Qdrant at http://localhost:6333 or http://qdrant:6333
+    # - a global QDRANT_API_KEY exported in the shell for some other environment
+    #
+    # If the API key came from the environment (not an explicit flag) and the URL is local+http,
+    # ignore it. If someone really wants an API key over plain HTTP, they can pass --qdrant-api-key.
+    if not args.qdrant_api_key and api_key:
+        try:
+            parsed = urlparse(url)
+            if parsed.scheme == "http" and (parsed.hostname or "") in {"localhost", "127.0.0.1", "qdrant"}:
+                api_key = None
+        except Exception:  # noqa: BLE001
+            pass
     timeout = float(args.qdrant_timeout or os.getenv("QDRANT_TIMEOUT", "30"))
     return QdrantConfig(url=url, api_key=api_key, timeout=timeout)
 
@@ -208,7 +242,7 @@ def cmd_rules_upsert_qdrant(args: argparse.Namespace) -> None:
         text_builder=rules_text_builder,
         payload_builder=rules_payload_builder,
         embedder=embedder,
-        embedding_model=embedder.config.model,
+        delete_payload_keys=["embedding_model", "embedding_dimensions"],
         batch_size=args.batch_size,
     )
 
@@ -218,6 +252,8 @@ def cmd_rules_upsert_qdrant(args: argparse.Namespace) -> None:
                 "collection": args.collection,
                 "upserted": stats.upserted,
                 "skipped": stats.skipped,
+                "payload_patched": stats.payload_patched,
+                "payload_cleaned": stats.payload_cleaned,
                 "embedding_model": embedder.config.model,
                 "embedding_dimensions": embedder.vector_size,
                 "qdrant_url": config.url,
@@ -344,7 +380,9 @@ def cmd_cards_collection(args: argparse.Namespace) -> None:
         text_builder=cards_text_builder,
         payload_builder=cards_payload_builder,
         embedder=embedder,
-        embedding_model=embedder.config.model,
+        payload_patch_builder=cards_payload_patch_builder,
+        inspect_payload_keys=["name_ft", "oracle_text"],
+        delete_payload_keys=["embedding_model", "embedding_dimensions"],
         batch_size=args.batch_size,
     )
 
@@ -357,6 +395,8 @@ def cmd_cards_collection(args: argparse.Namespace) -> None:
                 "cards_selected": len(filtered),
                 "upserted": stats.upserted,
                 "skipped": stats.skipped,
+                "payload_patched": stats.payload_patched,
+                "payload_cleaned": stats.payload_cleaned,
                 "jsonld": str(output_path),
                 "embedding_model": embedder.config.model,
                 "embedding_dimensions": embedder.vector_size,
@@ -390,7 +430,9 @@ def cmd_cards_upsert_jsonld(args: argparse.Namespace) -> None:
         text_builder=cards_text_builder,
         payload_builder=cards_payload_builder,
         embedder=embedder,
-        embedding_model=embedder.config.model,
+        payload_patch_builder=cards_payload_patch_builder,
+        inspect_payload_keys=["name_ft", "oracle_text"],
+        delete_payload_keys=["embedding_model", "embedding_dimensions"],
         batch_size=args.batch_size,
     )
 
@@ -401,6 +443,8 @@ def cmd_cards_upsert_jsonld(args: argparse.Namespace) -> None:
                 "cards": len(cards),
                 "upserted": stats.upserted,
                 "skipped": stats.skipped,
+                "payload_patched": stats.payload_patched,
+                "payload_cleaned": stats.payload_cleaned,
                 "embedding_model": embedder.config.model,
                 "embedding_dimensions": embedder.vector_size,
                 "qdrant_url": config.url,
@@ -461,6 +505,34 @@ def cmd_qdrant_recover(args: argparse.Namespace) -> None:
                 "qdrant_url": config.url,
                 "result": payload.get("result"),
                 "status": payload.get("status"),
+            },
+            indent=2,
+        )
+    )
+
+
+def cmd_qdrant_ensure_indexes(args: argparse.Namespace) -> None:
+    config = _qdrant_config_from_args(args)
+    client = create_client(config)
+
+    if args.schema == "rules":
+        indexes = _RULES_PAYLOAD_INDEXES
+    elif args.schema == "cards":
+        indexes = _CARDS_PAYLOAD_INDEXES
+    else:
+        raise RuntimeError(f"Unknown schema: {args.schema}")
+
+    ensure_payload_indexes(client, args.collection, indexes=indexes, wait=bool(args.wait))
+
+    info = client.get_collection(args.collection)
+    keys = sorted((info.payload_schema or {}).keys())
+    print(
+        json.dumps(
+            {
+                "collection": args.collection,
+                "schema": args.schema,
+                "indexed_fields": keys,
+                "qdrant_url": config.url,
             },
             indent=2,
         )
@@ -595,6 +667,24 @@ def build_parser() -> argparse.ArgumentParser:
     qdrant_recover.add_argument("--qdrant-api-key", default=None)
     qdrant_recover.add_argument("--qdrant-timeout", default=None)
     qdrant_recover.set_defaults(func=cmd_qdrant_recover)
+
+    qdrant_indexes = qdrant_sub.add_parser(
+        "ensure-indexes",
+        help="Ensure payload indexes exist for a collection (rules or cards schema)",
+    )
+    qdrant_indexes.add_argument("--collection", required=True)
+    qdrant_indexes.add_argument("--schema", choices=["rules", "cards"], required=True)
+    qdrant_indexes.add_argument(
+        "--no-wait",
+        dest="wait",
+        action="store_false",
+        default=True,
+        help="Do not wait for index creation to finish (default: wait).",
+    )
+    qdrant_indexes.add_argument("--qdrant-url", default=None)
+    qdrant_indexes.add_argument("--qdrant-api-key", default=None)
+    qdrant_indexes.add_argument("--qdrant-timeout", default=None)
+    qdrant_indexes.set_defaults(func=cmd_qdrant_ensure_indexes)
 
     return parser
 

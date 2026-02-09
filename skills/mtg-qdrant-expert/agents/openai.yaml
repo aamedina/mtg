@@ -1,0 +1,4 @@
+interface:
+  display_name: "MTG Qdrant Expert"
+  short_description: "Answer MTG rules and card questions via Qdrant retrieval"
+  default_prompt: "Use the repo's Qdrant collections (rules + cards) to answer Magic: The Gathering questions. Always retrieve context from Qdrant first (use ./scripts/mtg_retrieve.py or the query patterns in docs/QDRANT_QUERY_GUIDE.md), then answer with precise rule citations and exact oracle text."

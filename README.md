@@ -15,6 +15,7 @@ then snapshot the collection for distribution.
 - `docs/REPO_MAP.md` (what files exist and why)
 - `docs/WORKFLOWS.md` (copy/paste commands)
 - `docs/QDRANT_QUERY_GUIDE.md` (agent-friendly query patterns)
+- `docs/CODEX_AGENT_GUIDE.md` (Codex skill setup + prompts to test)
 - `docs/RULES_SKOS_MODEL.md` (rules SKOS modeling)
 - `docs/SCRYFALL_JSONLD_MODEL.md` (Scryfall JSON-LD mapping)
 
@@ -36,7 +37,29 @@ then snapshot the collection for distribution.
 docker compose up -d qdrant
 ```
 
-### 1.5) Run The Local Test Suite (Recommended)
+### 2) (Recommended) Restore Prebuilt Qdrant Snapshots From A Release
+
+This avoids re-embedding the full oracle-cards dataset.
+
+```bash
+./scripts/bootstrap_qdrant_from_release.sh rules-20260116
+```
+
+### 3) Ask Questions (Retrieval Helper)
+
+Once Qdrant is populated (either by restoring snapshots or embedding locally), retrieve grounded
+context for an agent with:
+
+```bash
+. .venv/bin/activate
+export MTG_RULES_COLLECTION="mtg_rules_20260116"
+export MTG_CARDS_COLLECTION="mtg_oracle_cards_20260208220524"
+./scripts/mtg_retrieve.py "how does ward work?"
+```
+
+For a full Codex setup (skill install + prompts to test), see `docs/CODEX_AGENT_GUIDE.md`.
+
+### 4) Run The Local Test Suite (Recommended)
 
 Smoke (no OpenAI key required):
 

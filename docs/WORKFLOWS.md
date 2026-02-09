@@ -96,6 +96,22 @@ To wipe local Qdrant storage:
 docker compose down -v
 ```
 
+## Bootstrap From A GitHub Release (Fastest)
+
+If you want to use this repo as a local knowledge base without paying to re-embed the full oracle-cards
+dataset, restore the published Qdrant snapshots from a tag:
+
+```bash
+./scripts/bootstrap_qdrant_from_release.sh rules-20260116
+```
+
+This will:
+
+- start Dockerized Qdrant
+- download the latest rules + oracle snapshot assets for that tag
+- recover them into Qdrant
+- ensure payload indexes exist (including on-disk full-text indexes)
+
 ## Dockerized End-to-End (Recommended)
 
 Use the `mtg-ontology` service in `docker-compose.yml` to run the same commands CI runs:
@@ -165,6 +181,21 @@ docker compose up -d qdrant
 docker compose run --rm mtg-ontology qdrant recover-snapshot \
   --collection mtg_rules_20260116 \
   --snapshot-path resources/qdrant-snapshots/mtg_rules_20260116--<snapshot_name>.snapshot
+```
+
+If you're restoring a snapshot created by an older release of this repo, ensure the latest payload
+indexes exist (safe to run even if they're already present):
+
+```bash
+docker compose run --rm mtg-ontology qdrant ensure-indexes \
+  --collection mtg_rules_20260116 \
+  --schema rules
+```
+
+```bash
+docker compose run --rm mtg-ontology qdrant ensure-indexes \
+  --collection mtg_oracle_cards_20260208220524 \
+  --schema cards
 ```
 
 ## Scryfall Bulk (Pinned URL) -> JSON-LD
@@ -266,3 +297,4 @@ Incremental oracle-cards embeddings:
 
 - The release workflow will try to download the most recent oracle-cards snapshot from GitHub releases and restore it into Qdrant first.
 - Then it upserts the pinned oracle-cards JSON-LD and only embeds cards whose embedding text is missing or has changed (new cards, text updates, model changes).
+- The upsert step also backfills derived payload fields (`name_ft`, best-effort `oracle_text` for multi-faced cards) and removes legacy per-point embedding metadata keys when present, without re-embedding unchanged cards.
